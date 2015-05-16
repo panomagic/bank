@@ -14,15 +14,13 @@ public class AccountType {
         this.accTypeID = accTypeID;
     }
 
-    enum AccType {DEBIT, CREDIT}
-
     private AccType accountType;
 
-    public String getAccountType() {
-        return this.accountType.toString();
+    public AccType getAccountType() {
+        return accountType;
     }
 
-    public void setAccountType(String accountType) {
-        this.accountType = AccType.valueOf(accountType);
+    public void setAccountType(AccType accountType) {
+        this.accountType = accountType;
     }
 }

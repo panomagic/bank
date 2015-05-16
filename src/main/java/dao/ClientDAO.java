@@ -14,7 +14,7 @@ public class ClientDAO {
         try {
             preparedStatement = connection.prepareStatement("INSERT INTO clients (fullName, gender, dateOfBirth, dateOfReg) VALUES(?,?,?,?)");
             preparedStatement.setString(1, client.getFullName());
-            preparedStatement.setString(2, new String(new char[]{client.getGender()}));
+            preparedStatement.setString(2, new String(client.getGender().displayGender()));
             preparedStatement.setDate(3, new Date(client.getDateOfBirth().getTime()));
             preparedStatement.setDate(4, new Date(client.getDateOfReg().getTime()));
 

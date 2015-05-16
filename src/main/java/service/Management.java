@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class Management {
 
@@ -47,25 +48,28 @@ public class Management {
 
     public static void main(String[] args) {
 
-        //Тестим ввод нового клиента:
-/*        bean.Client client = new bean.Client();
-        client.setFullName("Grigorieva Roza"); //получили из формы сервлета
-        client.setGender('f');
+        /*Тестим ввод нового клиента:
+        bean.Client client = new bean.Client();
+        client.setFullName("Pavlova Dasha"); //получили из формы сервлета
+        client.setGender(Gender.FEMALE);
 
-        client.setDateOfBirth(new Date("05/10/1982"));  //заменить с использованием Calendar
-        client.setDateOfReg(new Date("15/09/2013"));
+        client.setDateOfBirth(new Date("06/11/1985"));  //заменить с использованием Calendar
+        client.setDateOfReg(new Date("19/03/2014"));
 
-        dao4.ClientDAO clientDAO = new dao4.ClientDAO();
+        dao.ClientDAO clientDAO = new dao.ClientDAO();
         try {
             clientDAO.addClient(client);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        System.out.println(client.getGender().genderAsString());
+
 */
         /*тестим удаление клиента
         bean.Client client = new bean.Client();
         client.setClientID(8); //получили из формы сервлета ФИО, СОЗДАТЬ метод по определению clientID из фамилии и даты рождения
-        dao4.ClientDAO clientDAO = new dao4.ClientDAO();
+        dao.ClientDAO clientDAO = new dao.ClientDAO();
         try {
             clientDAO.deleteClient(client);
         } catch (SQLException e) {
@@ -73,9 +77,9 @@ public class Management {
         }
 */
 
-    /*тестим добавление счета
+    //тестим добавление счета
         Account account = new Account();
-        account.setClientID(7);
+        account.setClientID(16);
         account.setAccTypeID(1);
         account.setCurrencyID(3);
 
@@ -85,12 +89,11 @@ public class Management {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    */
 
     /*тестим удаление счета
         bean.Account account = new bean.Account();
         account.setAccountID(9);
-        dao4.AccountDAO accountDAO = new dao4.AccountDAO();
+        dao.AccountDAO accountDAO = new dao.AccountDAO();
         try {
             accountDAO.deleteAccount(account);
         } catch (SQLException e) {
@@ -100,14 +103,15 @@ public class Management {
 /*тестим получение счета
         bean.Account account = null;
         try {
-            account = new dao4.AccountDAO().getAccountByID(10);
+            account = new dao.AccountDAO().getAccountByID(10);
         } catch (SQLException e) {
+            e.printStackTrace();
             e.printStackTrace();
         }
         System.out.println(account.getClientID() + ", на счету " + account.getBalance());
         */
 
-    //тестим добавление транзакции (перевод)
+    /*тестим добавление транзакции (перевод)
         Transaction transaction = new Transaction();
         transaction.setCurrencyID(1);
         transaction.setPayerID(7);
@@ -122,5 +126,6 @@ public class Management {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        */
     }
 }

@@ -11,7 +11,7 @@ public class Client {
 
     private int clientID;
     private String fullName;
-    private char gender;
+    private Gender gender;
     private Date dateOfBirth;
     private Date dateOfReg;
 
@@ -34,11 +34,11 @@ public class Client {
         this.fullName = fullName;
     }
 
-    public char getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(char gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
 
@@ -65,13 +65,5 @@ public class Client {
 
     public void setClientsAccounts(Set clientsAccounts) {
         this.clientsAccounts = clientsAccounts;
-    }
-
-    enum Gender {MALE, FEMALE}
-
-    public static Gender defineGender(char gender) {
-        if (gender == 'f')
-            return Gender.FEMALE;
-        else return Gender.MALE;
     }
 }
