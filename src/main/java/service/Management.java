@@ -1,7 +1,7 @@
 package service;
 
 import bean.*;
-import dao4.TransactionDAO3;
+import dao.*;
 import com.mysql.fabric.jdbc.FabricMySQLDriver;
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -116,7 +116,7 @@ public class Management {
         transaction.setRecipientAccID(8);
         transaction.setTransTypeID(3);
         transaction.setSum(new BigDecimal(2.50));
-        TransactionDAO3 transactionDAO = new TransactionDAO3();
+        TransactionDAO transactionDAO = new TransactionDAO();
         try {
             transactionDAO.addTransaction(transaction);
         } catch (SQLException e) {
