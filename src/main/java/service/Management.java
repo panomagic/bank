@@ -48,13 +48,13 @@ public class Management {
 
     public static void main(String[] args) {
 
-        /*Тестим ввод нового клиента:
+        //Тестим ввод нового клиента:
         bean.Client client = new bean.Client();
-        client.setFullName("Pavlova Dasha"); //получили из формы сервлета
-        client.setGender(Gender.FEMALE);
+        client.setFullName("Nikolaev Nikolai"); //получили из формы сервлета
+        client.setGender(Gender.MALE);
 
-        client.setDateOfBirth(new Date("06/11/1985"));  //заменить с использованием Calendar
-        client.setDateOfReg(new Date("19/03/2014"));
+        client.setDateOfBirth(new Date("01/08/1992"));  //MM-dd-yyyy заменить с использованием Calendar
+        client.setDateOfReg(new Date("01/07/2013"));    //MM-dd-yyyy
 
         dao.ClientDAO clientDAO = new dao.ClientDAO();
         try {
@@ -65,7 +65,7 @@ public class Management {
 
         System.out.println(client.getGender().genderAsString());
 
-*/
+
         /*тестим удаление клиента
         bean.Client client = new bean.Client();
         client.setClientID(8); //получили из формы сервлета ФИО, СОЗДАТЬ метод по определению clientID из фамилии и даты рождения
@@ -77,7 +77,7 @@ public class Management {
         }
 */
 
-    //тестим добавление счета
+    /*тестим добавление счета
         Account account = new Account();
         account.setClientID(16);
         account.setAccTypeID(1);
@@ -89,7 +89,7 @@ public class Management {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+*/
     /*тестим удаление счета
         bean.Account account = new bean.Account();
         account.setAccountID(9);

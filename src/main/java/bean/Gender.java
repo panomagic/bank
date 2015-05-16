@@ -5,11 +5,11 @@ import java.util.Locale;
 public enum Gender { MALE("m"), FEMALE("f");
 
     private String displayGender;
-    private Gender(String displayGender) {
+    Gender(String displayGender) {
         this.displayGender = displayGender;
     }
 
-    public String displayGender() {
+    public String genderAsChar() {      //метод для работы с БД
         return this.displayGender;
     }
 
