@@ -14,7 +14,7 @@ public class Management {
 
     private static final String URL = "jdbc:mysql://localhost:3306/bank";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "970195";
+    private static final String PASSWORD = "******";
 
     private static String getURL() {
         return URL;
@@ -63,7 +63,7 @@ public class Management {
             e.printStackTrace();
         }
 
-        System.out.println(client.getGender().genderAsString());
+        // System.out.println(client.getGender().genderAsString());
 
 
         /*тестим удаление клиента
