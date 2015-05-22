@@ -11,10 +11,13 @@
     <title>TESTSERVLET</title>
 </head>
 <body>
-  <h1>
+  <br>
     <%
-      String name = request.getParameter("name");
+      String name = (String) request.getAttribute("name");
+      double num = Math.random();
     %>
-    Hello <%= name%> from JSP TestServlet</h1>
+    Hello <%= name%> from JSP TestServlet<br>
+    Наше случайное число равно <%= num %>
+  </h1>
 </body>
 </html>
