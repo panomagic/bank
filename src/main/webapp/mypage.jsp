@@ -14,10 +14,10 @@
   <br>
     <%
       String name = (String) request.getAttribute("name");
-      double num = Math.random();
+      double num1 = Math.random();
     %>
     Hello <%= name%> from JSP TestServlet<br>
-    Наше случайное число равно <%= num %>
+    Наше случайное число равно <%= num1 %>
   </h1>
 </body>
 </html>
