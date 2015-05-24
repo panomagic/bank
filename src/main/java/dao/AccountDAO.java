@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AccountDAO {
     public void addAccount(Account account) throws SQLException {
@@ -71,6 +73,48 @@ public class AccountDAO {
         }
         return account;
     }
+
+
+    //получение списка всех счетов
+    public List getAllAccounts() throws SQLException {
+        List accountsList = new ArrayList();
+
+        Connection connection = Management.getDBConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM accounts");
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Account account = new Account();
+                account.setAccountID(resultSet.getInt("accountID"));
+                account.setClientID(resultSet.getInt("clients_clientID"));
+                account.setCurrencyID(resultSet.getInt("currencies_currencyID"));
+                account.setAccTypeID(resultSet.getInt("accountTypes_accTypeID"));
+                account.setBalance(resultSet.getBigDecimal("balance"));
+                accountsList.add(account);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (resultSet != null)
+                resultSet.close();
+
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+
+            if (connection != null) {
+                connection.close();
+                System.out.println("Соединение с БД закрыто");
+            }
+        }
+        return accountsList;
+    }
+
 
     public void deleteAccount(Account account) throws SQLException {
         Connection connection = Management.getDBConnection();

@@ -6,13 +6,24 @@
     <display-name>Archetype Created Web Application</display-name>
 
     <servlet>
-        <servlet-name>testServlet</servlet-name>
+        <servlet-name>testservlet</servlet-name>
         <servlet-class>servlet.TestServlet</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>viewclients</servlet-name>
+        <servlet-class>servlet.ViewClients</servlet-class>
+    </servlet>
+
+
     <servlet-mapping>
-        <servlet-name>testServlet</servlet-name>
+        <servlet-name>testservlet</servlet-name>
         <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>viewclients</servlet-name>
+        <url-pattern>/viewclients</url-pattern>
     </servlet-mapping>
 
 </web-app>

@@ -9,11 +9,12 @@ import java.io.IOException;
 public class TestServlet extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+    public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        req.setAttribute("name", "vp");
 
-        req.getRequestDispatcher("mypage.jsp").forward(req, resp);  // указываем диспетчеру jsp-страницу, к-я будет отображаться при обращении к данному методуGET
-                                    //метод forward перенаправляет запрос на jsp-страницу
+       request.setAttribute("name", "vp2");
+
+        request.getRequestDispatcher("index.jsp").forward(request, response);
+
     }
 }

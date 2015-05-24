@@ -1,23 +1,36 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: user
-  Date: 16.05.2015
-  Time: 18:28
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="bean.Client" %>
+<%@ page import="java.util.Iterator" %>
+<%@ page import="java.util.List" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>TESTSERVLET</title>
+    <title>View clients</title>
 </head>
 <body>
-  <br>
-    <%
-      String name = (String) request.getAttribute("name");
-      double num1 = Math.random();
-    %>
-    Hello <%= name%> from JSP TestServlet<br>
-    Наше случайное число равно <%= num1 %>
-  </h1>
+  <h2>
+      Таблица клиентов банка
+  </h2>
+          <table border="1">
+              <tr>
+                  <th><b>ID</b></th>
+                  <th><b>Полное имя</b></th>
+                  <th><b>Пол</b></th>
+                  <th><b>Дата рождения</b></th>
+                  <th><b>Дата регистрации</b></th>
+              </tr>
+              <% List clients = (List) request.getAttribute("allClients");
+                  for (Iterator iterator = clients.iterator(); iterator.hasNext(); ) {
+                      Client client = (Client) iterator.next();
+              %>
+              <tr>
+                  <td width="30"><%= client.getClientID() %></td>
+                  <td width="100"><%= client.getFullName() %></td>
+                  <td width="70"><%= client.getGender().genderAsString() %></td>
+                  <td width="100"><%= client.getDateOfBirth() %></td>
+                  <td width="100"><%= client.getDateOfReg() %></td>
+              </tr>
+              <% } %>
+          </table>
 </body>
 </html>

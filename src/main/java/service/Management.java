@@ -14,7 +14,7 @@ public class Management {
 
     private static final String URL = "jdbc:mysql://localhost:3306/bank";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "******";
+    private static final String PASSWORD = "970195";
 
     private static String getURL() {
         return URL;
@@ -105,7 +105,6 @@ public class Management {
         try {
             account = new dao.AccountDAO().getAccountByID(10);
         } catch (SQLException e) {
-            e.printStackTrace();
             e.printStackTrace();
         }
         System.out.println(account.getClientID() + ", на счету " + account.getBalance());
