@@ -1,6 +1,5 @@
 package servlet;
 
-
 import bean.*;
 import dao.*;
 
@@ -18,7 +17,6 @@ public class ViewClients extends HttpServlet {
     @Override
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         //создаем инстанс драйвера jdbc для подключения Tomcat к MySQL
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -29,7 +27,6 @@ public class ViewClients extends HttpServlet {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-
         /*
         Account account = null;
         try {
@@ -37,11 +34,8 @@ public class ViewClients extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         String accountToString = account.getClientID() + ", на счету " + account.getBalance();
-
         request.setAttribute("account", accountToString);
-
         request.getRequestDispatcher("mypage.jsp").forward(request, response);
         */
 
@@ -52,9 +46,7 @@ public class ViewClients extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         request.setAttribute("allAccounts", accounts);
-
         request.getRequestDispatcher("mypage.jsp").forward(request, response);
         */
 
@@ -68,38 +60,5 @@ public class ViewClients extends HttpServlet {
         request.setAttribute("allClients", clients);
 
         request.getRequestDispatcher("mypage.jsp").forward(request, response);
-
-
     }
-
-
-
-
-
-    public static void main(String[] args) {
-        /*Account account = null;
-        try {
-            account = new AccountDAO().getAccountByID(10);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        String accountToString = account.getClientID() + ", на счету " + account.getBalance();
-        System.out.println(accountToString);*/
-        System.out.println(Gender.valueOf("m").genderAsString());
-        /*List clients = new ArrayList();
-        try {
-            clients = new ClientDAO().getAllClients();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        for (int i = 0; i < clients.size(); i++) {
-            Client client = (Client) clients.get(i);
-            System.out.println(client.getFullName());
-            System.out.println(client.getGender());
-        }*/
-
-
-    }
-
 }
