@@ -94,4 +94,79 @@ public class ClientDAO {
         }
         return clientsList;
     }
+
+    public Client getClientByID(int clientID) throws SQLException {
+        Connection connection = Management.getDBConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Client client = new Client();
+
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM clients WHERE clientID = ?");
+            preparedStatement.setInt(1, clientID);
+            resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()) {
+                client.setClientID(resultSet.getInt("clientID"));
+                client.setFullName(resultSet.getString("fullName"));
+                client.setGender(Gender.fromString(resultSet.getString("gender")));
+                client.setDateOfBirth(resultSet.getDate("dateOfBirth"));
+                client.setDateOfReg(resultSet.getDate("dateOfReg"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (resultSet != null)
+                resultSet.close();
+
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+
+            if (connection != null) {
+                connection.close();
+                System.out.println("Соединение с БД закрыто");
+            }
+        }
+        return client;
+    }
+
+
+    public Client getClientByAccountID(int accID) throws SQLException {
+        Connection connection = Management.getDBConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        Account account = new Account();
+
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM accounts WHERE accountID = ?");
+            preparedStatement.setInt(1, accID);
+            resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()) {
+                account.setAccountID(resultSet.getInt("accountID"));
+                account.setClientID(resultSet.getInt("clients_clientID"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (resultSet != null)
+                resultSet.close();
+
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+
+            if (connection != null) {
+                connection.close();
+                System.out.println("Соединение с БД закрыто");
+            }
+        }
+
+        ClientDAO clientDAO = new ClientDAO();
+        Client client = clientDAO.getClientByID(account.getClientID());
+        return client;
+    }
 }
