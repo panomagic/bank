@@ -20,6 +20,11 @@
         <servlet-class>servlet.ViewAccounts</servlet-class>
     </servlet>
 
+    <servlet>
+        <servlet-name>addclient</servlet-name>
+        <servlet-class>servlet.AddClient</servlet-class>
+    </servlet>
+
 
     <servlet-mapping>
         <servlet-name>testservlet</servlet-name>
@@ -34,6 +39,11 @@
     <servlet-mapping>
         <servlet-name>viewaccounts</servlet-name>
         <url-pattern>/viewaccounts</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>addclient</servlet-name>
+        <url-pattern>/addclient</url-pattern>
     </servlet-mapping>
 
 </web-app>
