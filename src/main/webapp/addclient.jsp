@@ -9,7 +9,7 @@
 
 <form name="addclient" method="POST">
   <p><b>ФИО клиента:</b><br>
-    <input type="text" name="fullname" size="50"> <%--Реализовать кириллицу!--%>
+    <input type="text" name="fullname" placeholder="ФИО" size="50">
   </p>
   <p><b>Пол:</b><br>
     <input type="radio" name="gender" value="m"> Мужской<br>

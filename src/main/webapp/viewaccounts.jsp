@@ -8,31 +8,39 @@
 <head>
   <title>Счета</title>
 </head>
-<body>
-<h2>
-  Таблица счетов, открытых клиентами банка
-</h2>
-<table border="1">
-  <tr>
-    <th><b>ID счета</b></th>
-    <th><b>Владелец</b></th>
-    <th><b>ID типа счета</b></th>
-    <th><b>ID валюты</b></th>
-    <th><b>Баланс счета</b></th>
-  </tr>
-  <% List accounts = (List) request.getAttribute("allAccounts");
-    for (Iterator iterator = accounts.iterator(); iterator.hasNext(); ) {
-      Account account = (Account) iterator.next();
-      Client client = new ClientDAO().getClientByAccountID(account.getAccountID());
-  %>
-  <tr>
-    <td width="30"><%= account.getAccountID() %></td>
-    <td width="150"><%= client.getFullName() %></td>
-    <td width="100"><%= account.getAccTypeID() %></td>
-    <td width="70"><%= account.getCurrencyID() %></td>
-    <td width="100"><%= account.getBalance() %></td>
-  </tr>
-  <% } %>
-</table>
-</body>
+  <body>
+    <h2>
+      Таблица счетов, открытых клиентами банка
+    </h2>
+  <table border="1">
+    <tr>
+      <th><b>ID счета</b></th>
+      <th><b>Владелец</b></th>
+      <th><b>ID типа счета</b></th>
+      <th><b>ID валюты</b></th>
+      <th><b>Баланс счета</b></th>
+      <th colspan=2><b>Действие</b></th>
+    </tr>
+      <% List accounts = (List) request.getAttribute("allAccounts");
+        for (Iterator iterator = accounts.iterator(); iterator.hasNext(); ) {
+          Account account = (Account) iterator.next();
+          Client client = new ClientDAO().getClientByAccountID(account.getAccountID());
+      %>
+    <tr>
+      <td width="30"><%= account.getAccountID() %></td>
+      <td width="150"><%= client.getFullName() %></td>
+      <td width="100"><%= account.getAccTypeID() %></td>
+      <td width="70"><%= account.getCurrencyID() %></td>
+      <td width="100"><%= account.getBalance() %></td>
+      <td width="90">
+        <a href="updatedeleteaccount?action=edit&accountID=<%= account.getAccountID() %>">Изменить</a>
+      </td>
+      <td width="90">
+        <a href="updatedeleteaccount?action=delete&accountID=<%= account.getAccountID() %>">Удалить</a>
+      </td>
+    </tr>
+    <% } %>
+  </table>
+  <p><a href="addaccount">Добавить счет</a><br>
+  </body>
 </html>

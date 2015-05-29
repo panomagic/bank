@@ -2,10 +2,8 @@ package dao;
 
 import bean.*;
 import service.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +21,31 @@ public class AccountDAO {
 
             preparedStatement.execute();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (preparedStatement != null)
+                preparedStatement.close();
+
+            if (connection != null) {
+                connection.close();
+                System.out.println("Соединение с БД закрыто");
+            }
+        }
+    }
+
+    public void updateAccount(Account account) throws SQLException {    //ДОДЕЛАТЬ МЕТОД
+        Connection connection = Management.getDBConnection();
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement("UPDATE accounts SET clients_clientID=?, currencies_currencyID=?, accountTypes_accTypeID=?, WHERE accountID=?");
+            preparedStatement.setInt(1, account.getClientID());
+            preparedStatement.setInt(2, account.getCurrencyID());
+            preparedStatement.setInt(3, account.getAccTypeID());
+            preparedStatement.setInt(4, account.getAccountID());
+
+            preparedStatement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
         }

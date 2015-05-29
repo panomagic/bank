@@ -44,7 +44,7 @@ public class AddClient extends HttpServlet {
             e.printStackTrace();
         }
 
-        System.out.println("Клиент " + client.getFullName() + " добавлен");
+        //request.setCharacterEncoding("UTF-8");
 
         //вызываем страницу с подтверждением успешного добавления клиента
         request.getRequestDispatcher("addclientresult.jsp").forward(request, response);

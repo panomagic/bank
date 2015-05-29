@@ -33,6 +33,32 @@ public class ClientDAO {
         }
     }
 
+    public void updateClient(Client client) throws SQLException {
+        Connection connection = Management.getDBConnection();
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement("UPDATE clients SET fullName=?, gender=?, dateOfBirth=?, dateOfReg=? WHERE clientID=?");
+            preparedStatement.setString(1, client.getFullName());
+            preparedStatement.setString(2, client.getGender().genderAsChar());
+            preparedStatement.setDate(3, new Date(client.getDateOfBirth().getTime()));
+            preparedStatement.setDate(4, new Date(client.getDateOfReg().getTime()));
+            preparedStatement.setInt(5, client.getClientID());
+
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (preparedStatement != null)
+                preparedStatement.close();
+
+            if (connection != null) {
+                connection.close();
+                System.out.println("Соединение с БД закрыто");
+            }
+        }
+    }
+
     public void deleteClient(Client client) throws SQLException {
         Connection connection = Management.getDBConnection();
         PreparedStatement preparedStatement = null;
