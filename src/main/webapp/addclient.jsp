@@ -6,7 +6,7 @@
   <title>Ввод нового клиента</title>
 </head>
 <body>
-
+<h2>Добавление нового клиента</h2>
 <form name="addclient" method="POST">
   <p><b>ФИО клиента:</b><br>
     <input type="text" name="fullname" placeholder="ФИО" size="50">
@@ -22,6 +22,6 @@
   <p><input type="submit" value="Сохранить">
     <input type="reset" value="Очистить"></p>
 </form>
-
+<p><a href="viewclients">Назад к списку клиентов</a></p>
 </body>
 </html>

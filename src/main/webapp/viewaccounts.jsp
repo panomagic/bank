@@ -2,6 +2,7 @@
 <%@ page import="dao.*" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.sql.SQLException" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -16,21 +17,32 @@
     <tr>
       <th><b>ID счета</b></th>
       <th><b>Владелец</b></th>
-      <th><b>ID типа счета</b></th>
-      <th><b>ID валюты</b></th>
+      <th><b>Тип счета</b></th>
+      <th><b>Валюта</b></th>
       <th><b>Баланс счета</b></th>
       <th colspan=2><b>Действие</b></th>
     </tr>
       <% List accounts = (List) request.getAttribute("allAccounts");
         for (Iterator iterator = accounts.iterator(); iterator.hasNext(); ) {
           Account account = (Account) iterator.next();
-          Client client = new ClientDAO().getClientByAccountID(account.getAccountID());
+          Client client = null;
+          Currency currency = null;
+          try {
+            client = new ClientDAO().getClientByAccountID(account.getAccountID());
+            currency = new CurrencyDAO().getCurrencyByID(account.getCurrencyID());
+          } catch (SQLException e) {
+            e.printStackTrace();
+          }
+          String accountType;
+          if(account.getAccTypeID() == 1)
+            accountType = "DEBIT";
+          else accountType = "CREDIT";
       %>
     <tr>
       <td width="30"><%= account.getAccountID() %></td>
       <td width="150"><%= client.getFullName() %></td>
-      <td width="100"><%= account.getAccTypeID() %></td>
-      <td width="70"><%= account.getCurrencyID() %></td>
+      <td width="100"><%= accountType %></td>
+      <td width="70"><%= currency.getCurrency() %></td>
       <td width="100"><%= account.getBalance() %></td>
       <td width="90">
         <a href="updatedeleteaccount?action=edit&accountID=<%= account.getAccountID() %>">Изменить</a>
@@ -42,5 +54,7 @@
     <% } %>
   </table>
   <p><a href="addaccount">Добавить счет</a><br>
+     <a href="viewclients">Вернуться к списку клиентов</a>
+  </p>
   </body>
 </html>

@@ -6,7 +6,7 @@
   </head>
   <body>
     <p>Счет был успешно удален</p>
-    <a href="viewaccounts">Вернуться к списку счетов</a>
-    <a href="viewclients">Перейти к списку клиентов</a><br>
+    <a href="viewaccounts">Вернуться к списку счетов</a><br>
+    <a href="viewclients">Перейти к списку клиентов</a>
   </body>
 </html>

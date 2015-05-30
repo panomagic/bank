@@ -1,11 +1,14 @@
 package servlet;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@WebServlet(name="testservlet", urlPatterns={"/testservlet"})
 public class TestServlet extends HttpServlet {
 
     @Override
@@ -14,7 +17,7 @@ public class TestServlet extends HttpServlet {
 
        request.setAttribute("name", "vp2");
 
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        request.getRequestDispatcher("/viewaccounts").forward(request, response);
 
     }
 }

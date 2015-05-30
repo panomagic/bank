@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.Date;
 
 public class UpdateDeleteClient extends HttpServlet {
-        Client client = new Client();
+        Client client;
 
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -21,9 +21,13 @@ public class UpdateDeleteClient extends HttpServlet {
 
         if(request.getParameter("action").equals("update")) {
             forwardPage = "updateclient.jsp";
-            client.setClientID(Integer.parseInt(request.getParameter("clientID")));
+            try {
+                client = new ClientDAO().getClientByID(Integer.parseInt(request.getParameter("clientID")));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
-
+            request.setAttribute("client", client);
 
             try {
                 new ClientDAO().updateClient(client);
@@ -32,6 +36,7 @@ public class UpdateDeleteClient extends HttpServlet {
             }
         } else if(request.getParameter("action").equals("delete")) {
             forwardPage = "deleteclient.jsp";
+            client = new Client();
             client.setClientID(Integer.parseInt(request.getParameter("clientID")));
             try {
                 new ClientDAO().deleteClient(client);
@@ -46,7 +51,30 @@ public class UpdateDeleteClient extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException
     {
-        //возвращаемся на страницу со списком клиентов - ДОБАВИТЬ СООБЩЕНИЕ "Клиент удален"
+        Client client = new Client();
+        client.setFullName(request.getParameter("fullname"));
+        client.setGender(Gender.fromString(request.getParameter("gender")));
+        client.setDateOfBirth(new Date(request.getParameter("dateofbirth")));  //УЛУЧШИТЬ РАБОТУ С ДАТАМИ!
+        client.setDateOfReg(new Date(request.getParameter("dateofreg")));    //УЛУЧШИТЬ РАБОТУ С ДАТАМИ!!!
+
+        //создаем инстанс драйвера jdbc для подключения Tomcat к MySQL
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            new ClientDAO().updateClient(client);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        //возвращаемся на страницу со списком клиентов
         request.getRequestDispatcher("viewclients").forward(request, response);
 
     }

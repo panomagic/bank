@@ -31,7 +31,7 @@
                   <td width="100"><%= client.getDateOfBirth() %></td>
                   <td width="100"><%= client.getDateOfReg() %></td>
                   <td width="90">
-                      <a href="updatedeleteclient?action=edit&clientID=<%= client.getClientID() %>">Изменить</a>
+                      <a href="updatedeleteclient?action=update&clientID=<%= client.getClientID() %>">Изменить</a>
                   </td>
                   <td width="90">
                       <a href="updatedeleteclient?action=delete&clientID=<%= client.getClientID() %>">Удалить</a>

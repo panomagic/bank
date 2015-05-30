@@ -1,21 +1,21 @@
 package servlet;
 
-import bean.Client;
-import bean.Gender;
+import bean.Account;
+import dao.AccountDAO;
 import dao.ClientDAO;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-public class AddClient extends HttpServlet {
-
+@WebServlet(name="addaccount", urlPatterns={"/addaccount"})
+public class AddAccount extends HttpServlet {
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //создаем инстанс драйвера jdbc для подключения Tomcat к MySQL
@@ -37,18 +37,18 @@ public class AddClient extends HttpServlet {
         }
 
         request.setAttribute("allClients", clients);
-        request.getRequestDispatcher("addclient.jsp").forward(request, response);
+
+        request.getRequestDispatcher("addaccount.jsp").forward(request, response);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException
     {
 
-        Client client = new Client();
-        client.setFullName(request.getParameter("fullname"));
-        client.setGender(Gender.fromString(request.getParameter("gender")));
-        client.setDateOfBirth(new Date(request.getParameter("dateofbirth")));  //УЛУЧШИТЬ РАБОТУ С ДАТАМИ!
-        client.setDateOfReg(new Date(request.getParameter("dateofreg")));    //УЛУЧШИТЬ РАБОТУ С ДАТАМИ!!!
+        Account account = new Account();
+        account.setClientID(Integer.parseInt(request.getParameter("chooseclient")));
+        account.setCurrencyID(Integer.parseInt(request.getParameter("currencyID")));
+        account.setAccTypeID(Integer.parseInt(request.getParameter("acctypeID")));
 
         //создаем инстанс драйвера jdbc для подключения Tomcat к MySQL
         try {
@@ -62,7 +62,7 @@ public class AddClient extends HttpServlet {
         }
 
         try {
-            new ClientDAO().addClient(client);
+            new AccountDAO().addAccount(account);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -70,7 +70,7 @@ public class AddClient extends HttpServlet {
         //request.setCharacterEncoding("UTF-8");
 
         //вызываем страницу с подтверждением успешного добавления клиента
-        request.getRequestDispatcher("addclientresult.jsp").forward(request, response);
+        request.getRequestDispatcher("addaccountresult.jsp").forward(request, response);
 
     }
 }
