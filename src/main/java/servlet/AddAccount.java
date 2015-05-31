@@ -44,7 +44,6 @@ public class AddAccount extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException
     {
-
         Account account = new Account();
         account.setClientID(Integer.parseInt(request.getParameter("chooseclient")));
         account.setCurrencyID(Integer.parseInt(request.getParameter("currencyID")));
@@ -67,10 +66,7 @@ public class AddAccount extends HttpServlet {
             e.printStackTrace();
         }
 
-        //request.setCharacterEncoding("UTF-8");
-
         //вызываем страницу с подтверждением успешного добавления клиента
         request.getRequestDispatcher("addaccountresult.jsp").forward(request, response);
-
     }
 }

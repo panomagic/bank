@@ -39,15 +39,15 @@
           else accountType = "CREDIT";
       %>
     <tr>
-      <td width="30"><%= account.getAccountID() %></td>
+      <td width="30" align="center"><%= account.getAccountID() %></td>
       <td width="150"><%= client.getFullName() %></td>
-      <td width="100"><%= accountType %></td>
-      <td width="70"><%= currency.getCurrency() %></td>
-      <td width="100"><%= account.getBalance() %></td>
-      <td width="90">
+      <td width="100" align="center"><%= accountType %></td>
+      <td width="70" align="center"><%= currency.getCurrency() %></td>
+      <td width="100" align="right"><%= account.getBalance() %></td>
+      <td width="90" align="center">
         <a href="updatedeleteaccount?action=update&accountID=<%= account.getAccountID() %>">Изменить</a>
       </td>
-      <td width="90">
+      <td width="90" align="center">
         <a href="updatedeleteaccount?action=delete&accountID=<%= account.getAccountID() %>">Удалить</a>
       </td>
     </tr>
@@ -55,6 +55,9 @@
   </table>
   <p><a href="addaccount">Добавить счет</a><br>
      <a href="viewclients">Вернуться к списку клиентов</a>
+  </p>
+  <p>
+    <a href="addtransaction">Сделать перевод денег</a>
   </p>
   </body>
 </html>

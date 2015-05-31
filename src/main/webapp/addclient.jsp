@@ -15,9 +15,9 @@
     <input type="radio" name="gender" value="m"> Мужской<br>
     <input type="radio" name="gender" value="f"> Женский<br>
   </p>
-  <p><b>Дата рождения (MM/dd/yyyy):</b><br>
+  <p><b>Дата рождения (dd.MM.yyyy):</b><br>
     <input type="date" name="dateofbirth"></p>
-  <p><b>Дата регистрации (MM/dd/yyyy):</b><br>
+  <p><b>Дата регистрации (dd.MM.yyyy):</b><br>
     <input type="date" name="dateofreg"></p>
   <p><input type="submit" value="Сохранить">
     <input type="reset" value="Очистить"></p>

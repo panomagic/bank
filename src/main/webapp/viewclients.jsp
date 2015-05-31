@@ -27,15 +27,15 @@
                       Client client = (Client) iterator.next();
               %>
               <tr>
-                  <td width="30"><%= client.getClientID() %></td>
+                  <td width="30" align="center"><%= client.getClientID() %></td>
                   <td width="150"><%= client.getFullName() %></td>
-                  <td width="70"><%= client.getGender().genderAsString() %></td>
-                  <td width="100"><%= sdf.format(client.getDateOfBirth()) %></td>
-                  <td width="100"><%= sdf.format(client.getDateOfReg()) %></td>
-                  <td width="90">
+                  <td width="70" align="center"><%= client.getGender().genderAsString() %></td>
+                  <td width="100" align="center"><%= sdf.format(client.getDateOfBirth()) %></td>
+                  <td width="100" align="center"><%= sdf.format(client.getDateOfReg()) %></td>
+                  <td width="90" align="center">
                       <a href="updatedeleteclient?action=update&clientID=<%= client.getClientID() %>">Изменить</a>
                   </td>
-                  <td width="90">
+                  <td width="90" align="center">
                       <a href="updatedeleteclient?action=delete&clientID=<%= client.getClientID() %>">Удалить</a>
                   </td>
               </tr>

@@ -2,8 +2,9 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="dao.AccountDAO" %>
+<%@ page import="dao.*" %>
 <%@ page import="java.sql.SQLException" %>
+<%@ page import="bean.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE HTML>
 <html>
@@ -12,62 +13,62 @@
     <title>Создание транзакции</title>
 </head>
 <body>
-  <h2>Произвести перевод денег</h2>
-  <form name="addaccount" method="POST">
-    <p><b>Выберите отправителя:</b><br>
-      <select name="choosepayer">
-        <% List clients = (List) request.getAttribute("allClients");
-          for (Iterator iterator = clients.iterator(); iterator.hasNext(); ) {
-            Client client = (Client) iterator.next();
-        %>
-        <option value="<%= client.getClientID() %>"><%= client.getFullName() %></option>
-        <% } %>
-      </select>
-
-      p><b>Выберите счет отправителя:</b><br>
+  <h2>Произвести перевод денежных средств</h2>
+  <form name="addtransaction" method="POST">
+    <p><b>Выберите счет отправителя:</b><br>
       <select name="choosepayeraccount">
-      <% List accounts = new ArrayList();
-      try {
-        accounts = new AccountDAO().getAccountsByClientID(cl);
-      } catch (SQLException e) {
-      e.printStackTrace();
-      } %>
-    </p>
-
-    <p><b>Выберите получателя:</b><br>
-      <select name="chooseclient">
-        <% List clients2 = (List) request.getAttribute("allClients");
-          for (Iterator iterator = clients2.iterator(); iterator.hasNext(); ) {
-            Client client = (Client) iterator.next();
+        <% List accounts = (List) request.getAttribute("allAccounts");
+          for (Iterator iterator = accounts.iterator(); iterator.hasNext(); ) {
+            Account account = (Account) iterator.next();
+            Client client = null;
+            Currency currency = null;
+            try {
+              client = new ClientDAO().getClientByAccountID(account.getAccountID());
+              currency = new CurrencyDAO().getCurrencyByID(account.getCurrencyID());
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+            String accountType;
+            if(account.getAccTypeID() == 1)
+              accountType = "DEBIT";
+            else accountType = "CREDIT";
         %>
-        <option value="<%= client.getClientID() %>"><%= client.getFullName() %></option>
+        <option value="<%= account.getAccountID() %>">
+            <%= client.getFullName() + "  |  " + accountType + "  |  " + currency.getCurrency() %></option>
         <% } %>
       </select>
     </p>
 
-
-
-    <p><b>Тип счета:</b><br>
-      <input type="radio" name="acctypeID" value="1"> Debit<br>
-      <input type="radio" name="acctypeID" value="2"> Credit<br>
-
-      <%--<select name="choosecurrency">
-        <% List currencies = (List) request.getAttribute("allCurrencies");
-          for (Iterator iterator = currencies.iterator(); iterator.hasNext(); ) {
-            Currency currency = (Currency) iterator.next();
+    <p><b>Выберите счет получателя:</b><br>
+      <select name="chooserecipientaccount">
+        <% List accounts2 = (List) request.getAttribute("allAccounts");
+          for (Iterator iterator = accounts2.iterator(); iterator.hasNext(); ) {
+            Account account = (Account) iterator.next();
+            Client client = null;
+            Currency currency = null;
+            try {
+              client = new ClientDAO().getClientByAccountID(account.getAccountID());
+              currency = new CurrencyDAO().getCurrencyByID(account.getCurrencyID());
+            } catch (SQLException e) {
+              e.printStackTrace();
+            }
+            String accountType;
+            if(account.getAccTypeID() == 1)
+              accountType = "DEBIT";
+            else accountType = "CREDIT";
         %>
-        <option><%= currency.getCurrency() %></option>
-        <% } %>
-      </select>--%>
+          <option value="<%= account.getAccountID() %>">
+            <%= client.getFullName() + "  |  " + accountType + "  |  " + currency.getCurrency() %></option>
+            <% } %>
+      </select>
     </p>
 
-    <p><b>Валюта:</b><br>
-      <input type="radio" name="currencyID" value="1"> UAH<br>
-      <input type="radio" name="currencyID" value="2"> USD<br>
-      <input type="radio" name="currencyID" value="3"> EUR<br>
+
+    <p><b>Введите сумму:</b><br>
+      <input type="number" size="9" name="sum" min="0.01" value="0.00" step="0.01">
     </p>
 
-    <p><input type="submit" value="Сохранить">
+    <p><input type="submit" value="Отправить">
       <input type="reset" value="Очистить"></p>
   </form>
   <p>

@@ -10,10 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class AddClient extends HttpServlet {
 
@@ -30,27 +28,21 @@ public class AddClient extends HttpServlet {
             e.printStackTrace();
         }
 
-        /*List clients = new ArrayList();
-        try {
-            clients = new ClientDAO().getAllClients();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        request.setAttribute("allClients", clients);*/
         request.getRequestDispatcher("addclient.jsp").forward(request, response);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException
     {
-
         Client client = new Client();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
         client.setFullName(request.getParameter("fullname"));
         client.setGender(Gender.fromString(request.getParameter("gender")));
-        client.setDateOfBirth(new Date(request.getParameter("dateofbirth")));  //УЛУЧШИТЬ РАБОТУ С ДАТАМИ!
-        client.setDateOfReg(new Date(request.getParameter("dateofreg")));    //УЛУЧШИТЬ РАБОТУ С ДАТАМИ!!!
+        try {
+            client.setDateOfBirth(new SimpleDateFormat("dd.MM.yyyy").parse(request.getParameter("dateofbirth")));
+            client.setDateOfReg(new SimpleDateFormat("dd.MM.yyyy").parse(request.getParameter("dateofreg")));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         //создаем инстанс драйвера jdbc для подключения Tomcat к MySQL
         try {
@@ -69,10 +61,7 @@ public class AddClient extends HttpServlet {
             e.printStackTrace();
         }
 
-        //request.setCharacterEncoding("UTF-8");
-
         //вызываем страницу с подтверждением успешного добавления клиента
         request.getRequestDispatcher("addclientresult.jsp").forward(request, response);
-
     }
 }

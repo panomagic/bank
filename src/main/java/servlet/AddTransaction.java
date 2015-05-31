@@ -1,8 +1,7 @@
 package servlet;
 
-import bean.Client;
-import dao.AccountDAO;
-import dao.ClientDAO;
+import bean.*;
+import dao.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,17 +20,87 @@ public class AddTransaction extends HttpServlet {
 
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        List clients = new ArrayList();
+        //создаем инстанс драйвера jdbc для подключения Tomcat к MySQL
         try {
-            clients = new ClientDAO().getAllClients();
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        List accounts = new ArrayList();
+        try {
+            accounts = new AccountDAO().getAllAccounts();
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-
-
-        request.setAttribute("allClients", clients);
+        request.setAttribute("allAccounts", accounts);
         request.getRequestDispatcher("addtransaction.jsp").forward(request, response);
+    }
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+        Transaction transaction = new Transaction();
+        Account payerAccount = null;
+        try {
+            payerAccount = new AccountDAO().
+                    getAccountByID(Integer.parseInt(request.getParameter("choosepayeraccount")));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        Account recipientAccount = null;
+        try {
+            recipientAccount = new AccountDAO().
+                    getAccountByID(Integer.parseInt(request.getParameter("chooserecipientaccount")));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        //проверка соответствия валюты счета получателя и отправителя
+        if(payerAccount.getCurrencyID() != recipientAccount.getCurrencyID())
+        {
+            response.sendRedirect("transcurrencymismatch.jsp");
+            return;
+        }
+
+        transaction.setCurrencyID(payerAccount.getCurrencyID());
+        transaction.setPayerID(payerAccount.getClientID());
+        transaction.setPayerAccID(payerAccount.getAccountID());
+
+        transaction.setRecipientID(recipientAccount.getClientID());
+        transaction.setRecipientAccID(recipientAccount.getAccountID());
+        transaction.setTransTypeID(3);
+        transaction.setSum(new BigDecimal(Double.parseDouble(request.getParameter("sum"))));
+        TransactionDAO transactionDAO = new TransactionDAO();
+
+        //проверка для дебитного счета плательщика (сумма транзакции не больше баланса):
+        if (payerAccount.getAccTypeID() == 1 && transaction.getSum().compareTo(payerAccount.getBalance()) == 1) {
+            response.sendRedirect("transoverdraft.jsp");
+            return;
+        }
+
+        //создаем инстанс драйвера jdbc для подключения Tomcat к MySQL
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            transactionDAO.addTransaction(transaction);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        response.sendRedirect("viewaccounts");
+        return;
     }
 }
