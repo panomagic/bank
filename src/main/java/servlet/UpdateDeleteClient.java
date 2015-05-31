@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class UpdateDeleteClient extends HttpServlet {
         Client client;

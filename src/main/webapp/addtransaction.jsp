@@ -1,9 +1,7 @@
-<%@ page import="bean.Client" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="dao.*" %>
 <%@ page import="java.sql.SQLException" %>
+<%@ page import="dao.*" %>
 <%@ page import="bean.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE HTML>
@@ -34,7 +32,8 @@
             else accountType = "CREDIT";
         %>
         <option value="<%= account.getAccountID() %>">
-            <%= client.getFullName() + "  |  " + accountType + "  |  " + currency.getCurrency() %></option>
+            <%= client.getFullName() + " | " + accountType + " | " +  account.getBalance() + " "
+                    + currency.getCurrency() %></option>
         <% } %>
       </select>
     </p>
@@ -58,7 +57,8 @@
             else accountType = "CREDIT";
         %>
           <option value="<%= account.getAccountID() %>">
-            <%= client.getFullName() + "  |  " + accountType + "  |  " + currency.getCurrency() %></option>
+            <%= client.getFullName() + " | " + accountType + " | " + account.getBalance() + " "
+                    + currency.getCurrency() %></option>
             <% } %>
       </select>
     </p>

@@ -1,7 +1,6 @@
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.Iterator" %>
 <%@ page import="bean.Client" %>
-<%@ page import="bean.Currency" %>
+<%@ page import="java.util.Iterator" %>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE HTML>
 <html>
@@ -24,8 +23,8 @@
     </p>
 
     <p><b>Тип счета:</b><br>
-      <input type="radio" name="acctypeID" value="1"> Debit<br>
-      <input type="radio" name="acctypeID" value="2"> Credit<br>
+      <input type="radio" name="acctypeID" value="1"> DEBIT<br>
+      <input type="radio" name="acctypeID" value="2"> CREDIT<br>
     </p>
 
     <p><b>Валюта:</b><br>

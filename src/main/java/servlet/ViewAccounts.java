@@ -27,22 +27,6 @@ public class ViewAccounts extends HttpServlet {
             e.printStackTrace();
         }
 
-        /*
-        Account account = null;
-        try {
-            account = new dao.AccountDAO().getAccountByID(10);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        String accountToString = account.getClientID() + ", на счету " + account.getBalance();
-
-        request.setAttribute("account", accountToString);
-
-        request.getRequestDispatcher("viewclients.jsp").forward(request, response);
-        */
-
-
         List accounts = new ArrayList();
         try {
             accounts = new AccountDAO().getAllAccounts();
@@ -53,12 +37,5 @@ public class ViewAccounts extends HttpServlet {
         request.setAttribute("allAccounts", accounts);
 
         request.getRequestDispatcher("viewaccounts.jsp").forward(request, response);
-    }
-
-    public static void main(String[] args) throws SQLException {
-        //Account account = new AccountDAO().getAccountByID(10);
-        Client client = new ClientDAO().getClientByAccountID(10);
-        //Client client = new ClientDAO().getClientByID(10);
-        System.out.println(client.getFullName());
     }
 }

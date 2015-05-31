@@ -4,8 +4,8 @@
     <title>Добавление клиента завершено</title>
 </head>
 <body>
-Клиент успешно добавлен!<br>
-<a href="viewclients">Перейти к списку клиентов</a><br>
-<a href="viewaccounts">Перейти к списку счетов</a>
+  <b>Клиент успешно добавлен!</b><br>
+  <a href="viewclients">Перейти к списку клиентов</a><br>
+  <a href="viewaccounts">Перейти к списку счетов</a>
 </body>
 </html>
