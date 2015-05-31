@@ -45,7 +45,7 @@
       <td width="70"><%= currency.getCurrency() %></td>
       <td width="100"><%= account.getBalance() %></td>
       <td width="90">
-        <a href="updatedeleteaccount?action=edit&accountID=<%= account.getAccountID() %>">Изменить</a>
+        <a href="updatedeleteaccount?action=update&accountID=<%= account.getAccountID() %>">Изменить</a>
       </td>
       <td width="90">
         <a href="updatedeleteaccount?action=delete&accountID=<%= account.getAccountID() %>">Удалить</a>

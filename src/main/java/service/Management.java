@@ -48,7 +48,7 @@ public class Management {
 
     public static void main(String[] args) {
 
-        //Тестим ввод нового клиента:
+        /*//Тестим ввод нового клиента:
         bean.Client client = new bean.Client();
         client.setFullName("Nikolaev Nikolai"); //получили из формы сервлета
         client.setGender(Gender.MALE);
@@ -64,7 +64,7 @@ public class Management {
         }
 
         // System.out.println(client.getGender().genderAsString());
-
+*/
 
         /*тестим удаление клиента
         bean.Client client = new bean.Client();
@@ -100,6 +100,20 @@ public class Management {
             e.printStackTrace();
         }
 */
+
+        //тестим изменение счета
+        bean.Account account = new bean.Account();
+        account.setAccountID(14);
+        account.setClientID(19);
+        account.setAccTypeID(1);
+        account.setCurrencyID(3);
+        dao.AccountDAO accountDAO = new dao.AccountDAO();
+        try {
+            accountDAO.updateAccount(account);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
 /*тестим получение счета
         bean.Account account = null;
         try {

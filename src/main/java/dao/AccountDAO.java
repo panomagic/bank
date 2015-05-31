@@ -39,7 +39,7 @@ public class AccountDAO {
         Connection connection = Management.getDBConnection();
         PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement("UPDATE accounts SET clients_clientID=?, currencies_currencyID=?, accountTypes_accTypeID=?, WHERE accountID=?");
+            preparedStatement = connection.prepareStatement("UPDATE accounts SET clients_clientID=?, currencies_currencyID=?, accountTypes_accTypeID=? WHERE accountID=?");
             preparedStatement.setInt(1, account.getClientID());
             preparedStatement.setInt(2, account.getCurrencyID());
             preparedStatement.setInt(3, account.getAccTypeID());
@@ -98,6 +98,47 @@ public class AccountDAO {
     }
 
 
+    //получение списка счетов конкретного клиента
+    public List getAccountsByClientID(int clientID) throws SQLException {
+        List accountsList = new ArrayList();
+
+        Connection connection = Management.getDBConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM accounts WHERE clients_clientID=?");
+            preparedStatement.setInt(1, clientID);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Account account = new Account();
+                account.setAccountID(resultSet.getInt("accountID"));
+                account.setClientID(resultSet.getInt("clients_clientID"));
+                account.setCurrencyID(resultSet.getInt("currencies_currencyID"));
+                account.setAccTypeID(resultSet.getInt("accountTypes_accTypeID"));
+                account.setBalance(resultSet.getBigDecimal("balance"));
+                accountsList.add(account);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (resultSet != null)
+                resultSet.close();
+
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+
+            if (connection != null) {
+                connection.close();
+                System.out.println("Соединение с БД закрыто");
+            }
+        }
+        return accountsList;
+    }
+
     //получение списка всех счетов
     public List getAllAccounts() throws SQLException {
         List accountsList = new ArrayList();
@@ -137,7 +178,6 @@ public class AccountDAO {
         }
         return accountsList;
     }
-
 
     public void deleteAccount(Account account) throws SQLException {
         Connection connection = Management.getDBConnection();

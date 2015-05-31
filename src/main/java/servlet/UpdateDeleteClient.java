@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class UpdateDeleteClient extends HttpServlet {
@@ -48,15 +50,25 @@ public class UpdateDeleteClient extends HttpServlet {
         request.getRequestDispatcher(forwardPage).forward(request, response);
     }
 
+    public void updateClient(HttpServletRequest request) {
+        client.setFullName(request.getParameter("fullname"));
+        client.setGender(Gender.fromString(request.getParameter("gender")));
+        try {
+            client.setDateOfBirth(new SimpleDateFormat("dd.MM.yyyy").parse(request.getParameter("dateofbirth")));
+            client.setDateOfReg(new SimpleDateFormat("dd.MM.yyyy").parse(request.getParameter("dateofreg")));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        try {
+            new ClientDAO().updateClient(client);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException
     {
-        Client client = new Client();
-        client.setFullName(request.getParameter("fullname"));
-        client.setGender(Gender.fromString(request.getParameter("gender")));
-        client.setDateOfBirth(new Date(request.getParameter("dateofbirth")));  //УЛУЧШИТЬ РАБОТУ С ДАТАМИ!
-        client.setDateOfReg(new Date(request.getParameter("dateofreg")));    //УЛУЧШИТЬ РАБОТУ С ДАТАМИ!!!
-
         //создаем инстанс драйвера jdbc для подключения Tomcat к MySQL
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -68,14 +80,10 @@ public class UpdateDeleteClient extends HttpServlet {
             e.printStackTrace();
         }
 
-        try {
-            new ClientDAO().updateClient(client);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        updateClient(request);
 
         //возвращаемся на страницу со списком клиентов
-        request.getRequestDispatcher("viewclients").forward(request, response);
-
+        response.sendRedirect("viewclients");
+        return;
     }
 }

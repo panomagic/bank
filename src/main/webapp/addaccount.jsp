@@ -23,19 +23,9 @@
       </select>
     </p>
 
-
     <p><b>Тип счета:</b><br>
       <input type="radio" name="acctypeID" value="1"> Debit<br>
       <input type="radio" name="acctypeID" value="2"> Credit<br>
-
-      <%--<select name="choosecurrency">
-        <% List currencies = (List) request.getAttribute("allCurrencies");
-          for (Iterator iterator = currencies.iterator(); iterator.hasNext(); ) {
-            Currency currency = (Currency) iterator.next();
-        %>
-        <option><%= currency.getCurrency() %></option>
-        <% } %>
-      </select>--%>
     </p>
 
     <p><b>Валюта:</b><br>

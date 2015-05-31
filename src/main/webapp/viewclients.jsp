@@ -1,6 +1,7 @@
 <%@ page import="bean.Client" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -21,6 +22,7 @@
                   <th colspan=2><b>Действие</b></th>
               </tr>
               <% List clients = (List) request.getAttribute("allClients");
+                  SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
                   for (Iterator iterator = clients.iterator(); iterator.hasNext(); ) {
                       Client client = (Client) iterator.next();
               %>
@@ -28,8 +30,8 @@
                   <td width="30"><%= client.getClientID() %></td>
                   <td width="150"><%= client.getFullName() %></td>
                   <td width="70"><%= client.getGender().genderAsString() %></td>
-                  <td width="100"><%= client.getDateOfBirth() %></td>
-                  <td width="100"><%= client.getDateOfReg() %></td>
+                  <td width="100"><%= sdf.format(client.getDateOfBirth()) %></td>
+                  <td width="100"><%= sdf.format(client.getDateOfReg()) %></td>
                   <td width="90">
                       <a href="updatedeleteclient?action=update&clientID=<%= client.getClientID() %>">Изменить</a>
                   </td>
@@ -39,7 +41,12 @@
               </tr>
               <% } %>
           </table>
-  <p><a href="addclient">Добавить клиента</a><br>
-  <a href="viewaccounts">Перейти к списку счетов</a></p>
+  <p>
+      <a href="addclient">Добавить клиента</a><br>
+      <a href="viewaccounts">Перейти к списку счетов</a>
+  </p>
+  <p>
+      <a href="addtransaction">Сделать перевод денег</a>
+  </p>
 </body>
 </html>
