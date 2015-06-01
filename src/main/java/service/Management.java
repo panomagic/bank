@@ -43,6 +43,18 @@ public class Management {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        //создаем инстанс драйвера jdbc для подключения Tomcat к MySQL
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
         return connection;
     }
 

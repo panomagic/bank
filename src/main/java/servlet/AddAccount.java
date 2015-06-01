@@ -18,16 +18,6 @@ import java.util.List;
 public class AddAccount extends HttpServlet {
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //создаем инстанс драйвера jdbc для подключения Tomcat к MySQL
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
 
         List clients = new ArrayList();
         try {
@@ -48,17 +38,6 @@ public class AddAccount extends HttpServlet {
         account.setClientID(Integer.parseInt(request.getParameter("chooseclient")));
         account.setCurrencyID(Integer.parseInt(request.getParameter("currencyID")));
         account.setAccTypeID(Integer.parseInt(request.getParameter("acctypeID")));
-
-        //создаем инстанс драйвера jdbc для подключения Tomcat к MySQL
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
 
         try {
             new AccountDAO().addAccount(account);

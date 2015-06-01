@@ -17,16 +17,6 @@ public class AddClient extends HttpServlet {
 
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //создаем инстанс драйвера jdbc для подключения Tomcat к MySQL
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
 
         request.getRequestDispatcher("addclient.jsp").forward(request, response);
     }
@@ -41,17 +31,6 @@ public class AddClient extends HttpServlet {
             client.setDateOfBirth(new SimpleDateFormat("dd.MM.yyyy").parse(request.getParameter("dateofbirth")));
             client.setDateOfReg(new SimpleDateFormat("dd.MM.yyyy").parse(request.getParameter("dateofreg")));
         } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        //создаем инстанс драйвера jdbc для подключения Tomcat к MySQL
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 

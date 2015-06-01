@@ -72,18 +72,7 @@ public class UpdateDeleteAccount extends HttpServlet {
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws IOException, ServletException
-    {
-        //создаем инстанс драйвера jdbc для подключения Tomcat к MySQL
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+            throws IOException, ServletException {
 
         updateAccount(request);
 

@@ -28,11 +28,11 @@
 
     <p><b>Тип счета:</b><br>
       <% if(account.getAccTypeID() == 1) { %>
-      <input type="radio" name="acctypeID" value="1" checked> Debit<br>
-      <input type="radio" name="acctypeID" value="2"> Credit<br>
+      <input type="radio" name="acctypeID" value="1" checked> DEBIT<br>
+      <input type="radio" name="acctypeID" value="2"> CREDIT<br>
       <% } else { %>
-        <input type="radio" name="acctypeID" value="1"> Debit<br>
-        <input type="radio" name="acctypeID" value="2" checked> Credit<br>
+        <input type="radio" name="acctypeID" value="1"> DEBIT<br>
+        <input type="radio" name="acctypeID" value="2" checked> CREDIT<br>
       <% } %>
     </p>
 
