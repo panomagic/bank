@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <%@ page import="bean.Client" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.List" %>
@@ -13,12 +15,17 @@
   <form name="addaccount" method="POST">
     <p><b>Выберите клиента:</b><br>
       <select name="chooseclient">
-        <% List clients = (List) request.getAttribute("allClients");
+        <c:forEach var="client" items="${allClients}">
+          <option value="${client.clientID}">${client.fullName}</option>
+        </c:forEach>
+
+        <%--<% List clients = (List) request.getAttribute("allClients");
           for (Iterator iterator = clients.iterator(); iterator.hasNext(); ) {
             Client client = (Client) iterator.next();
         %>
         <option value="<%= client.getClientID() %>"><%= client.getFullName() %></option>
-        <% } %>
+        <% } %>--%>
+
       </select>
     </p>
 

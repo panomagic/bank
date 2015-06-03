@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <%@ page import="bean.Account" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="java.util.List" %>
@@ -15,14 +17,28 @@
     <% Account account = (Account) request.getAttribute("account"); %>
     <p><b>Выберите клиента:</b><br>
       <select name="chooseclient">
-        <% List clients = (List) request.getAttribute("allClients");
+        <c:forEach var="client" items="${allClients}">
+          <option value="${client.clientID}"
+            <c:choose>
+              <c:when test="${client.clientID == account.clientID}">
+                selected="selected">
+              </c:when>
+              <c:otherwise>
+                >
+              </c:otherwise>
+            </c:choose>
+            ${client.fullName}
+          </option>
+        </c:forEach>
+
+        <%--<% List clients = (List) request.getAttribute("allClients");
           for (Iterator iterator = clients.iterator(); iterator.hasNext(); ) {
             Client client = (Client) iterator.next();
         %>
         <option value="<%= client.getClientID() %>"
               <% if(client.getClientID() == account.getClientID()) { %> selected="selected" <% } %>>
               <%= client.getFullName() %></option>
-        <% } %>
+        <% } %>--%>
       </select>
     </p>
 
