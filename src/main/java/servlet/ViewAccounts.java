@@ -1,6 +1,8 @@
 package servlet;
 
 import dao.AccountDAO;
+import dao.ClientDAO;
+import dao.CurrencyDAO;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -23,8 +25,23 @@ public class ViewAccounts extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         request.setAttribute("allAccounts", accounts);
+
+        List clients = new ArrayList();
+        try {
+            clients = new ClientDAO().getAllClients();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        request.setAttribute("allClients", clients);
+
+        List currencies = new ArrayList();
+        try {
+            currencies = new CurrencyDAO().getAllCurrencies();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        request.setAttribute("allCurrencies", currencies);
 
         request.getRequestDispatcher("viewaccounts.jsp").forward(request, response);
     }

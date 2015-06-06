@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CurrencyDAO {
     public Currency getCurrencyByID(int currencyID) throws SQLException {
@@ -40,5 +42,41 @@ public class CurrencyDAO {
             }
         }
         return currency;
+    }
+
+    public List getAllCurrencies() throws SQLException {
+        List currenciesList = new ArrayList();
+
+        Connection connection = Management.getDBConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM currencies");
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Currency currency = new Currency();
+                currency.setCurrencyID(resultSet.getInt("currencyID"));
+                currency.setCurrency(resultSet.getString("currency"));
+                currenciesList.add(currency);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (resultSet != null)
+                resultSet.close();
+
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+
+            if (connection != null) {
+                connection.close();
+                System.out.println("Соединение с БД закрыто");
+            }
+        }
+        return currenciesList;
     }
 }

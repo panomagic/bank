@@ -1,8 +1,5 @@
-<%@ page import="java.util.Iterator" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.sql.SQLException" %>
-<%@ page import="dao.*" %>
-<%@ page import="bean.*" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE HTML>
 <html>
@@ -15,54 +12,63 @@
   <form name="addtransaction" method="POST">
     <p><b>Выберите счет отправителя:</b><br>
       <select name="choosepayeraccount">
-        <% List accounts = (List) request.getAttribute("allAccounts");
-          for (Iterator iterator = accounts.iterator(); iterator.hasNext(); ) {
-            Account account = (Account) iterator.next();
-            Client client = null;
-            Currency currency = null;
-            try {
-              client = new ClientDAO().getClientByAccountID(account.getAccountID());
-              currency = new CurrencyDAO().getCurrencyByID(account.getCurrencyID());
-            } catch (SQLException e) {
-              e.printStackTrace();
-            }
-            String accountType;
-            if(account.getAccTypeID() == 1)
-              accountType = "DEBIT";
-            else accountType = "CREDIT";
-        %>
-        <option value="<%= account.getAccountID() %>">
-            <%= client.getFullName() + " | " + accountType + " | " +  account.getBalance() + " "
-                    + currency.getCurrency() %></option>
-        <% } %>
+        <c:forEach var="account" items="${allAccounts}">
+          <c:choose>
+            <c:when test="${account.accTypeID == 1}">
+              <c:set var="accType" value="DEBIT"/>
+            </c:when>
+            <c:when test="${account.accTypeID == 2}">
+              <c:set var="accType" value="CREDIT"/>
+            </c:when>
+          </c:choose>
+          <c:forEach var="client" items="${allClients}">
+            <c:choose>
+              <c:when test="${account.clientID == client.clientID}">
+                <c:forEach var="currency" items="${allCurrencies}">
+                  <c:choose>
+                    <c:when test="${account.currencyID == currency.currencyID}">
+                      <option value="${account.accountID}">
+                        ${client.fullName} | ${accType} | ${account.balance} ${currency.currency}
+                      </option>
+                    </c:when>
+                  </c:choose>
+                </c:forEach>
+              </c:when>
+            </c:choose>
+          </c:forEach>
+        </c:forEach>
       </select>
     </p>
 
     <p><b>Выберите счет получателя:</b><br>
       <select name="chooserecipientaccount">
-        <% List accounts2 = (List) request.getAttribute("allAccounts");
-          for (Iterator iterator = accounts2.iterator(); iterator.hasNext(); ) {
-            Account account = (Account) iterator.next();
-            Client client = null;
-            Currency currency = null;
-            try {
-              client = new ClientDAO().getClientByAccountID(account.getAccountID());
-              currency = new CurrencyDAO().getCurrencyByID(account.getCurrencyID());
-            } catch (SQLException e) {
-              e.printStackTrace();
-            }
-            String accountType;
-            if(account.getAccTypeID() == 1)
-              accountType = "DEBIT";
-            else accountType = "CREDIT";
-        %>
-          <option value="<%= account.getAccountID() %>">
-            <%= client.getFullName() + " | " + accountType + " | " + account.getBalance() + " "
-                    + currency.getCurrency() %></option>
-            <% } %>
+        <c:forEach var="account" items="${allAccounts}">
+          <c:choose>
+            <c:when test="${account.accTypeID == 1}">
+              <c:set var="accType" value="DEBIT"/>
+            </c:when>
+            <c:when test="${account.accTypeID == 2}">
+              <c:set var="accType" value="CREDIT"/>
+            </c:when>
+          </c:choose>
+          <c:forEach var="client" items="${allClients}">
+            <c:choose>
+              <c:when test="${account.clientID == client.clientID}">
+                <c:forEach var="currency" items="${allCurrencies}">
+                  <c:choose>
+                    <c:when test="${account.currencyID == currency.currencyID}">
+                      <option value="${account.accountID}">
+                          ${client.fullName} | ${accType} | ${account.balance} ${currency.currency}
+                      </option>
+                    </c:when>
+                  </c:choose>
+                </c:forEach>
+              </c:when>
+            </c:choose>
+          </c:forEach>
+        </c:forEach>
       </select>
     </p>
-
 
     <p><b>Введите сумму:</b><br>
       <input type="number" size="9" name="sum" min="0.01" value="0.00" step="0.01">
@@ -75,6 +81,5 @@
     <a href="viewaccounts">Вернуться к списку счетов</a><br>
     <a href="viewclients">Вернуться к списку клиентов</a>
   </p>
-
 </body>
 </html>

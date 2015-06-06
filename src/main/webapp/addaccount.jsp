@@ -1,8 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
-<%@ page import="bean.Client" %>
-<%@ page import="java.util.Iterator" %>
-<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE HTML>
 <html>
@@ -18,14 +15,6 @@
         <c:forEach var="client" items="${allClients}">
           <option value="${client.clientID}">${client.fullName}</option>
         </c:forEach>
-
-        <%--<% List clients = (List) request.getAttribute("allClients");
-          for (Iterator iterator = clients.iterator(); iterator.hasNext(); ) {
-            Client client = (Client) iterator.next();
-        %>
-        <option value="<%= client.getClientID() %>"><%= client.getFullName() %></option>
-        <% } %>--%>
-
       </select>
     </p>
 

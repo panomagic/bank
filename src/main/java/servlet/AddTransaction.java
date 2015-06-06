@@ -27,8 +27,24 @@ public class AddTransaction extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         request.setAttribute("allAccounts", accounts);
+
+        List clients = new ArrayList();
+        try {
+            clients = new ClientDAO().getAllClients();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        request.setAttribute("allClients", clients);
+
+        List currencies = new ArrayList();
+        try {
+            currencies = new CurrencyDAO().getAllCurrencies();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        request.setAttribute("allCurrencies", currencies);
+
         request.getRequestDispatcher("addtransaction.jsp").forward(request, response);
     }
     public void doPost(HttpServletRequest request, HttpServletResponse response)
