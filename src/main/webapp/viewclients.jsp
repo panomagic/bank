@@ -1,11 +1,11 @@
-<%@ page import="bean.Client" %>
-<%@ page import="java.util.Iterator" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.text.SimpleDateFormat" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <meta charset="utf-8">
     <title>Клиенты</title>
 </head>
 <body>
@@ -21,25 +21,21 @@
               <th><b>Дата регистрации</b></th>
               <th colspan=2><b>Действие</b></th>
           </tr>
-          <% List clients = (List) request.getAttribute("allClients");
-              SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-              for (Iterator iterator = clients.iterator(); iterator.hasNext(); ) {
-                  Client client = (Client) iterator.next();
-          %>
-          <tr>
-              <td width="30" align="center"><%= client.getClientID() %></td>
-              <td width="150"><%= client.getFullName() %></td>
-              <td width="70" align="center"><%= client.getGender().genderAsString() %></td>
-              <td width="100" align="center"><%= sdf.format(client.getDateOfBirth()) %></td>
-              <td width="100" align="center"><%= sdf.format(client.getDateOfReg()) %></td>
-              <td width="90" align="center">
-                  <a href="updatedeleteclient?action=update&clientID=<%= client.getClientID() %>">Изменить</a>
-              </td>
-              <td width="90" align="center">
-                  <a href="updatedeleteclient?action=delete&clientID=<%= client.getClientID() %>">Удалить</a>
-              </td>
-          </tr>
-          <% } %>
+          <c:forEach var="client" items="${allClients}">
+              <tr>
+                  <td width="30" align="center">${client.clientID}</td>
+                  <td width="150">${client.fullName}</td>
+                  <td width="70" align="center">${fn:toLowerCase(client.gender)}</td>
+                  <td width="100" align="center"><fmt:formatDate value="${client.dateOfBirth}" pattern="dd.MM.yyyy" /></td>
+                  <td width="100" align="center"><fmt:formatDate value="${client.dateOfReg}" pattern="dd.MM.yyyy" /></td>
+                  <td width="90" align="center">
+                      <a href="updatedeleteclient?action=update&clientID=${client.clientID}">Изменить</a>
+                  </td>
+                  <td width="90" align="center">
+                      <a href="updatedeleteclient?action=delete&clientID=${client.clientID}">Удалить</a>
+                  </td>
+              </tr>
+          </c:forEach>
       </table>
   <p>
       <a href="addclient">Добавить клиента</a><br>
