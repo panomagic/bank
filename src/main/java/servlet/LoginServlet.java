@@ -24,9 +24,12 @@ public class LoginServlet extends HttpServlet {
         user.setUserName(request.getParameter("userName"));
         user.setPassword(request.getParameter("password"));
 
-        //if(user.equals())
+        if(user.isAdmin(user))
+            request.getRequestDispatcher("admin.jsp").forward(request, response);
+        else if(user.isClient(user))
+            request.getRequestDispatcher("client.jsp").forward(request, response);
+        else
+            request.getRequestDispatcher("authfailed.jsp").forward(request, response);
 
-        //вызываем страницу с подтверждением успешного входа
-        request.getRequestDispatcher("addclientresult.jsp").forward(request, response);
     }
 }

@@ -29,6 +29,13 @@ public class Users {
     }
 
     Users admin = new Users("admin", "111");
-    Users user = new Users("user", "222");
+    Users client = new Users("client", "222");
 
+    public boolean isAdmin(Users user) {
+        return (admin.getUserName().equals(user.getUserName()) && admin.getPassword().equals(user.getPassword()));
+    }
+
+    public boolean isClient(Users user) {
+        return (client.getUserName().equals(user.getUserName()) && client.getPassword().equals(user.getPassword()));
+    }
 }
