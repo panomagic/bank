@@ -3,10 +3,10 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Введите логин и пароль</title>
+  <title>Ошибка</title>
 </head>
 <body>
-  <h2>Введите логин и пароль</h2>
+  <p><b>Ошибка входа! Введите логин и пароль</b></p>
   <form action="login" method="POST">
     <p><b>Имя пользователя:</b><br>
       <input type="text" name="userName" size="35">

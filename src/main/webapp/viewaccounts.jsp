@@ -65,5 +65,8 @@
   <p>
     <a href="addtransaction">Сделать перевод денег</a>
   </p>
+  <p>
+    <a href="logout">Выйти из системы</a>
+  </p>
   </body>
 </html>

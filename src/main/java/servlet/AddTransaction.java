@@ -95,7 +95,10 @@ public class AddTransaction extends HttpServlet {
             e.printStackTrace();
         }
 
-        response.sendRedirect("viewaccounts");
-        return;
+        User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
+        if (loggedUser != null && Role.ADMINISTRATOR == loggedUser.getRole())
+            response.sendRedirect("viewaccounts");
+        else if (loggedUser != null && Role.CLIENT == loggedUser.getRole())
+            response.sendRedirect("viewaccountbyid");
     }
 }

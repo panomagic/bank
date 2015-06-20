@@ -28,6 +28,16 @@ public class Management {
 
     public static Connection getDBConnection() {
         Connection connection = null;
+        //создаем инстанс драйвера jdbc для подключения Tomcat к MySQL
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
         try {
             Driver driver = new FabricMySQLDriver();
@@ -39,19 +49,10 @@ public class Management {
         try {
             connection = DriverManager.getConnection(getURL(), getUSERNAME(), getPASSWORD());
             if(!connection.isClosed())  //опционально
+            {
                 System.out.println("Соединение с БД установлено");
+            }
         } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        //создаем инстанс драйвера jdbc для подключения Tomcat к MySQL
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
@@ -113,7 +114,7 @@ public class Management {
         }
 */
 
-        //тестим изменение счета
+        /*//тестим изменение счета
         bean.Account account = new bean.Account();
         account.setAccountID(14);
         account.setClientID(19);
@@ -124,7 +125,7 @@ public class Management {
             accountDAO.updateAccount(account);
         } catch (SQLException e) {
             e.printStackTrace();
-        }
+        }*/
 
 /*тестим получение счета
         bean.Account account = null;
@@ -152,5 +153,16 @@ public class Management {
             e.printStackTrace();
         }
         */
+    //тестим получение пользователя
+        bean.User user = null;
+        try {
+            user = new UserDAO().getUserByUserName("admin");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println(user.getUserName());
+        System.out.println(user.getPassword());
+        System.out.println(user.getRole().roleAsChar().equals("a"));
+
     }
 }

@@ -6,6 +6,6 @@
     <title>Веб-приложение Банк</title>
 </head>
 <body>
-    <jsp:forward page="/viewclients" />
+    <jsp:forward page="/login" />
 </body>
 </html>

@@ -41,6 +41,7 @@
       <exported-key name="clients_accounts" table="accounts" schema="" catalog="bank" columns="clients_clientID"/>
       <exported-key name="clients_transactions" table="transactions" schema="" catalog="bank" columns="clients_payerID"/>
       <exported-key name="clients_transactions2" table="transactions" schema="" catalog="bank" columns="clients_recipientID"/>
+      <exported-key name="clients_clientID" table="users" schema="" catalog="bank" columns="clients_clientID"/>
       <index name="clientID_UNIQUE" unique="true" columns="clientID"/>
     </table>
     <table name="currencies" schema="" catalog="bank" type="TABLE">
@@ -81,6 +82,17 @@
       <primary-key name="PRIMARY" columns="transTypeID"/>
       <exported-key name="transactionTypes_transactions" table="transactions" schema="" catalog="bank" columns="transactionTypes_transTypeID"/>
       <index name="transTypeID_UNIQUE" unique="true" columns="transTypeID"/>
+    </table>
+    <table name="users" schema="" catalog="bank" type="TABLE">
+      <column name="userID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="userName" sqlType="VARCHAR" precision="50" scale="0" nullable="false" jdbcType="12"/>
+      <column name="password" sqlType="VARCHAR" precision="30" scale="0" nullable="false" jdbcType="12"/>
+      <column name="role" sqlType="CHAR" precision="1" scale="0" nullable="false" jdbcType="1" def="J2Mn"/>
+      <column name="clients_clientID" sqlType="INT" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="userID"/>
+      <foreign-key name="clients_clientID" columns="clients_clientID" ref-table="clients" ref-schema="" ref-catalog="bank" ref-columns="clientID" update-rule="3" delete-rule="3" deferrability="2"/>
+      <index name="userID_UNIQUE" unique="true" columns="userID"/>
+      <index name="userName_UNIQUE" unique="true" columns="userName"/>
     </table>
   </data-source>
 </component>
