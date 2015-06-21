@@ -21,13 +21,31 @@ public class AddTransaction extends HttpServlet {
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        List accounts = new ArrayList();
-        try {
-            accounts = new AccountDAO().getAllAccounts();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        List payerAccounts = new ArrayList();   //счета плат-ков - в зав. от роли (свои для клиента и все для админа)
+        User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
+        if (Role.ADMINISTRATOR == loggedUser.getRole()) {
+            try {
+                payerAccounts = new AccountDAO().getAllAccounts();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-        request.setAttribute("allAccounts", accounts);
+        else if (Role.CLIENT == loggedUser.getRole()) {
+            try {
+                payerAccounts = new AccountDAO().getAccountsByClientID(loggedUser.getClientID());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        request.setAttribute("payerAccounts", payerAccounts);
+
+        List recipientAccounts = new ArrayList(); //счета получателей - полный список
+            try {
+                recipientAccounts = new AccountDAO().getAllAccounts();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        request.setAttribute("recipientAccounts", recipientAccounts);
 
         List clients = new ArrayList();
         try {
@@ -44,6 +62,8 @@ public class AddTransaction extends HttpServlet {
             e.printStackTrace();
         }
         request.setAttribute("allCurrencies", currencies);
+
+        request.setAttribute("userrole", loggedUser.getRole());
 
         request.getRequestDispatcher("addtransaction.jsp").forward(request, response);
     }

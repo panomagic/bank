@@ -28,10 +28,10 @@ public class AccessFilter implements Filter {
         freeAccessUrls.add("/logout");
         freeAccessUrls.add("/accessdenied.jsp");
 
-        clientAccessUrls.add("/viewaccounts");
         clientAccessUrls.add("/viewaccountbyid");
         clientAccessUrls.add("/client.jsp");
         clientAccessUrls.add("/addtransaction");
+        clientAccessUrls.add("/transcurrencymismatch.jsp");
     }
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

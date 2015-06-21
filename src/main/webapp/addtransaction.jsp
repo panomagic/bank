@@ -12,7 +12,7 @@
   <form name="addtransaction" method="POST">
     <p><b>Выберите счет отправителя:</b><br>
       <select name="choosepayeraccount">
-        <c:forEach var="account" items="${allAccounts}">
+        <c:forEach var="account" items="${payerAccounts}">
           <c:choose>
             <c:when test="${account.accTypeID == 1}">
               <c:set var="accType" value="DEBIT"/>
@@ -42,7 +42,7 @@
 
     <p><b>Выберите счет получателя:</b><br>
       <select name="chooserecipientaccount">
-        <c:forEach var="account" items="${allAccounts}">
+        <c:forEach var="account" items="${recipientAccounts}">
           <c:choose>
             <c:when test="${account.accTypeID == 1}">
               <c:set var="accType" value="DEBIT"/>
@@ -78,8 +78,16 @@
       <input type="reset" value="Очистить"></p>
   </form>
   <p>
-    <a href="viewaccounts">Вернуться к списку счетов</a><br>
-    <a href="viewclients">Вернуться к списку клиентов</a>
+    <c:set var="userrole" value="${userrole}"/>
+    <c:choose>
+      <c:when test="${userrole == 'ADMINISTRATOR'}">
+        <a href="viewaccounts">Вернуться к списку счетов</a><br>
+        <a href="viewclients">Вернуться к списку клиентов</a>
+      </c:when>
+      <c:when test="${userrole == 'CLIENT'}">
+        <a href="viewaccountbyid">Вернуться к списку счетов</a><br>
+      </c:when>
+    </c:choose>
   </p>
 </body>
 </html>
