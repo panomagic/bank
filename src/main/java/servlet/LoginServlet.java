@@ -33,19 +33,12 @@ public class LoginServlet extends HttpServlet {
 
         if (user != null) { //процедура аутентификации по совпадению пароля
             if(user.getPassword() != null && user.getPassword().equals(request.getParameter("password"))) {
+                user.setPassword("");   //стираем пароль, чтобы не хранить его в сессии
+                request.getSession().setAttribute("LOGGED_USER", user);    //сохраняем user-бин в сессии
                  if(user.getRole() == Role.ADMINISTRATOR) {
-                     User userBean = new User();
-                     userBean.setUserName(request.getParameter("userName"));
-                     userBean.setRole(user.getRole());
-                     request.getSession().setAttribute("LOGGED_USER", userBean);    //сохраняем бин в сессии
                      response.sendRedirect("admin.jsp");
                  }
                  else if(user.getRole() == Role.CLIENT) {
-                     User userBean = new User();
-                     userBean.setUserName(request.getParameter("userName"));
-                     userBean.setClientID(user.getClientID());
-                     userBean.setRole(user.getRole());
-                     request.getSession().setAttribute("LOGGED_USER", userBean);
                      response.sendRedirect("/viewaccountbyid");
                  }
              }

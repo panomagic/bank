@@ -1,7 +1,5 @@
 package bean;
 
-import java.util.Locale;
-
 public enum Role { ADMINISTRATOR("a"), CLIENT("c");
     private String displayRole;
     Role(String displayRole) {
@@ -10,10 +8,6 @@ public enum Role { ADMINISTRATOR("a"), CLIENT("c");
 
     public String roleAsChar() {      //метод для работы с БД
         return this.displayRole;
-    }
-
-    public String roleAsString() {
-        return name().toLowerCase(Locale.ENGLISH);
     }
 
     public static Role fromString(String displayRole) {
