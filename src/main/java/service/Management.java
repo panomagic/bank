@@ -8,7 +8,9 @@ import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Management {
 
@@ -153,8 +155,22 @@ public class Management {
             e.printStackTrace();
         }
         */
+
+    //тестим историю транзакций
+        List transactions = new ArrayList();
+        try {
+            transactions = new TransactionDAO().getAllTransactions();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(transactions);
+        for (int i = 0; i < transactions.size(); i++) {
+            System.out.println(transactions.get(i).toString());
+        }
+
     //тестим получение пользователя
-        bean.User user = null;
+ /*       bean.User user = null;
         try {
             user = new UserDAO().getUserByUserName("admin");
         } catch (SQLException e) {
@@ -162,7 +178,7 @@ public class Management {
         }
         System.out.println(user.getUserName());
         System.out.println(user.getPassword());
-        System.out.println(user.getRole().roleAsChar().equals("a"));
+        System.out.println(user.getRole().roleAsChar().equals("a"));*/
 
     }
 }

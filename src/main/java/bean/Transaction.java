@@ -1,6 +1,7 @@
 package bean;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class Transaction {
 
@@ -14,6 +15,7 @@ public class Transaction {
     private int recipientID;
     private int recipientAccID;
     private int transTypeID;
+    private Date transDateTime;
     private BigDecimal sum;
 
     public int getTransID() {
@@ -70,6 +72,14 @@ public class Transaction {
 
     public void setTransTypeID(int transTypeID) {
         this.transTypeID = transTypeID;
+    }
+
+    public Date getTransDateTime() {
+        return transDateTime;
+    }
+
+    public void setTransDateTime(Date transDateTime) {
+        this.transDateTime = transDateTime;
     }
 
     public BigDecimal getSum() {

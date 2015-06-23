@@ -9,6 +9,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TransactionDAO {
     public void addTransaction(Transaction transaction) throws SQLException {
@@ -113,5 +115,270 @@ public class TransactionDAO {
                 System.out.println("Соединение с БД закрыто");
             }
         }
+    }
+
+    public List getAllTransactions() throws SQLException {
+        List transactionsList = new ArrayList();
+
+        Connection connection = Management.getDBConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM transactions");
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Transaction transaction = new Transaction();
+                transaction.setTransID(resultSet.getInt("transID"));
+                transaction.setCurrencyID(resultSet.getInt("currencies_currencyID"));
+                transaction.setPayerID(resultSet.getInt("clients_payerID"));
+                transaction.setPayerAccID(resultSet.getInt("accounts_payerAccID"));
+                transaction.setRecipientID(resultSet.getInt("clients_recipientID"));
+                transaction.setRecipientAccID(resultSet.getInt("accounts_recipientAccID"));
+                transaction.setTransTypeID(resultSet.getInt("transactionTypes_transTypeID"));
+                transaction.setTransDateTime(resultSet.getTimestamp("trans_datetime"));
+                transaction.setSum(resultSet.getBigDecimal("sum"));
+                transactionsList.add(transaction);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (resultSet != null)
+                resultSet.close();
+
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+
+            if (connection != null) {
+                connection.close();
+                System.out.println("Соединение с БД закрыто");
+            }
+        }
+        return transactionsList;
+    }
+
+    public List getTransactionsByPayerID(int payerID) throws SQLException {
+        List transastionsList = new ArrayList();
+
+        Connection connection = Management.getDBConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM transactions WHERE clients_payerID=?");
+            preparedStatement.setInt(1, payerID);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Transaction transaction = new Transaction();
+                transaction.setTransID(resultSet.getInt("transID"));
+                transaction.setCurrencyID(resultSet.getInt("currencies_currencyID"));
+                transaction.setPayerID(resultSet.getInt("clients_payerID"));
+                transaction.setPayerAccID(resultSet.getInt("accounts_payerAccID"));
+                transaction.setRecipientID(resultSet.getInt("clients_recipientID"));
+                transaction.setRecipientAccID(resultSet.getInt("accounts_recipientAccID"));
+                transaction.setTransTypeID(resultSet.getInt("transactionTypes_transTypeID"));
+                transaction.setTransDateTime(resultSet.getTimestamp("trans_datetime"));
+                transaction.setSum(resultSet.getBigDecimal("sum"));
+                transastionsList.add(transaction);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (resultSet != null)
+                resultSet.close();
+
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+
+            if (connection != null) {
+                connection.close();
+                System.out.println("Соединение с БД закрыто");
+            }
+        }
+        return transastionsList;
+    }
+
+    public List getTransactionsByRecipientID(int recipientID) throws SQLException {
+        List transastionsList = new ArrayList();
+
+        Connection connection = Management.getDBConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM transactions WHERE clients_recipientID=?");
+            preparedStatement.setInt(1, recipientID);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Transaction transaction = new Transaction();
+                transaction.setTransID(resultSet.getInt("transID"));
+                transaction.setCurrencyID(resultSet.getInt("currencies_currencyID"));
+                transaction.setPayerID(resultSet.getInt("clients_payerID"));
+                transaction.setPayerAccID(resultSet.getInt("accounts_payerAccID"));
+                transaction.setRecipientID(resultSet.getInt("clients_recipientID"));
+                transaction.setRecipientAccID(resultSet.getInt("accounts_recipientAccID"));
+                transaction.setTransTypeID(resultSet.getInt("transactionTypes_transTypeID"));
+                transaction.setTransDateTime(resultSet.getTimestamp("trans_datetime"));
+                transaction.setSum(resultSet.getBigDecimal("sum"));
+                transastionsList.add(transaction);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (resultSet != null)
+                resultSet.close();
+
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+
+            if (connection != null) {
+                connection.close();
+                System.out.println("Соединение с БД закрыто");
+            }
+        }
+        return transastionsList;
+    }
+
+    public List getTransactionsByClientID(int clientID) throws SQLException {    //клиент или плательщик, или получатель
+        List transastionsList = new ArrayList();
+
+        Connection connection = Management.getDBConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM transactions WHERE clients_payerID=? OR clients_recipientID=?");
+            preparedStatement.setInt(1, clientID);
+            preparedStatement.setInt(2, clientID);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Transaction transaction = new Transaction();
+                transaction.setTransID(resultSet.getInt("transID"));
+                transaction.setCurrencyID(resultSet.getInt("currencies_currencyID"));
+                transaction.setPayerID(resultSet.getInt("clients_payerID"));
+                transaction.setPayerAccID(resultSet.getInt("accounts_payerAccID"));
+                transaction.setRecipientID(resultSet.getInt("clients_recipientID"));
+                transaction.setRecipientAccID(resultSet.getInt("accounts_recipientAccID"));
+                transaction.setTransTypeID(resultSet.getInt("transactionTypes_transTypeID"));
+                transaction.setTransDateTime(resultSet.getTimestamp("trans_datetime"));
+                transaction.setSum(resultSet.getBigDecimal("sum"));
+                transastionsList.add(transaction);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (resultSet != null)
+                resultSet.close();
+
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+
+            if (connection != null) {
+                connection.close();
+                System.out.println("Соединение с БД закрыто");
+            }
+        }
+        return transastionsList;
+    }
+
+
+    public List getTransactionsByPayerAccID(int payerAccID) throws SQLException {
+        List transastionsList = new ArrayList();
+
+        Connection connection = Management.getDBConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM transactions WHERE accounts_payerAccID=?");
+            preparedStatement.setInt(1, payerAccID);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Transaction transaction = new Transaction();
+                transaction.setTransID(resultSet.getInt("transID"));
+                transaction.setCurrencyID(resultSet.getInt("currencies_currencyID"));
+                transaction.setPayerID(resultSet.getInt("clients_payerID"));
+                transaction.setPayerAccID(resultSet.getInt("accounts_payerAccID"));
+                transaction.setRecipientID(resultSet.getInt("clients_recipientID"));
+                transaction.setRecipientAccID(resultSet.getInt("accounts_recipientAccID"));
+                transaction.setTransTypeID(resultSet.getInt("transactionTypes_transTypeID"));
+                transaction.setTransDateTime(resultSet.getTimestamp("trans_datetime"));
+                transaction.setSum(resultSet.getBigDecimal("sum"));
+                transastionsList.add(transaction);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (resultSet != null)
+                resultSet.close();
+
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+
+            if (connection != null) {
+                connection.close();
+                System.out.println("Соединение с БД закрыто");
+            }
+        }
+        return transastionsList;
+    }
+
+    public List getTransactionsByRecipientAccID(int recipientAccID) throws SQLException {
+        List transastionsList = new ArrayList();
+
+        Connection connection = Management.getDBConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = connection.prepareStatement("SELECT * FROM transactions WHERE accounts_recipientAccID=?");
+            preparedStatement.setInt(1, recipientAccID);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Transaction transaction = new Transaction();
+                transaction.setTransID(resultSet.getInt("transID"));
+                transaction.setCurrencyID(resultSet.getInt("currencies_currencyID"));
+                transaction.setPayerID(resultSet.getInt("clients_payerID"));
+                transaction.setPayerAccID(resultSet.getInt("accounts_payerAccID"));
+                transaction.setRecipientID(resultSet.getInt("clients_recipientID"));
+                transaction.setRecipientAccID(resultSet.getInt("accounts_recipientAccID"));
+                transaction.setTransTypeID(resultSet.getInt("transactionTypes_transTypeID"));
+                transaction.setTransDateTime(resultSet.getTimestamp("trans_datetime"));
+                transaction.setSum(resultSet.getBigDecimal("sum"));
+                transastionsList.add(transaction);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if (resultSet != null)
+                resultSet.close();
+
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+
+            if (connection != null) {
+                connection.close();
+                System.out.println("Соединение с БД закрыто");
+            }
+        }
+        return transastionsList;
     }
 }

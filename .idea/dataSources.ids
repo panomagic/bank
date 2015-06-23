@@ -60,6 +60,7 @@
       <column name="clients_recipientID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="accounts_recipientAccID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="transactionTypes_transTypeID" sqlType="INT" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="trans_datetime" sqlType="TIMESTAMP" precision="19" scale="0" nullable="false" jdbcType="93" def="Q1VSUkVOVF9USU1FU1RBTVA=" version="true"/>
       <column name="sum" sqlType="DECIMAL" precision="13" scale="2" nullable="false" jdbcType="3" def="MC4wMA=="/>
       <primary-key name="PRIMARY" columns="transID"/>
       <foreign-key name="accounts_transactions" columns="accounts_payerAccID" ref-table="accounts" ref-schema="" ref-catalog="bank" ref-columns="accountID" update-rule="0" delete-rule="0" deferrability="2"/>

@@ -59,6 +59,10 @@
   <a href="addtransaction">Сделать перевод денег</a>
 </p>
 <p>
+  <a href="transactionshistorybyclient">Просмотреть историю транзакций</a>
+</p>
+
+<p>
   <a href="logout">Выйти из системы</a>
 </p>
 </body>

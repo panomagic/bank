@@ -8,6 +8,7 @@
 <body>
   <p><b>Вы успешно вошли в систему как администратор</b></p>
   <a href="viewclients">Перейти к списку клиентов</a><br>
-  <a href="viewaccounts">Перейти к списку счетов</a>
+  <a href="viewaccounts">Перейти к списку счетов</a><br>
+  <a href="transactionshistory">Просмотреть историю транзакций</a>
 </body>
 </html>

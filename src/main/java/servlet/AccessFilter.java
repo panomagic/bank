@@ -32,6 +32,7 @@ public class AccessFilter implements Filter {
         clientAccessUrls.add("/client.jsp");
         clientAccessUrls.add("/addtransaction");
         clientAccessUrls.add("/transcurrencymismatch.jsp");
+        clientAccessUrls.add("/transactionshistorybyclient");
     }
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
