@@ -14,8 +14,10 @@
   <tr>
     <th><b>ID транзакции</b></th>
     <th><b>Плательщик</b></th>
+    <th><b>Номер счета плательщика</b></th>
     <th><b>Тип счета плательщика</b></th>
     <th><b>Получатель</b></th>
+    <th><b>Номер счета плательщика</b></th>
     <th><b>Тип счета получателя</b></th>
     <th><b>Валюта</b></th>
     <th><b>Дата и время транзакции</b></th>
@@ -34,6 +36,9 @@
             </c:when>
           </c:choose>
         </c:forEach>
+      </td>
+      <td width="30" align="center">
+          ${transaction.payerAccID}
       </td>
       <td width="100" align="center">
         <c:forEach var="payerAccount" items="${allAccounts}">
@@ -59,6 +64,9 @@
             </c:when>
           </c:choose>
         </c:forEach>
+      </td>
+      <td width="30" align="center">
+          ${transaction.recipientAccID}
       </td>
       <td width="100" align="center">
         <c:forEach var="recipientAccount" items="${allAccounts}">
