@@ -165,6 +165,7 @@ public class Management {
         }
 
         System.out.println(transactions);
+
         for (int i = 0; i < transactions.size(); i++) {
             System.out.println(transactions.get(i).toString());
         }

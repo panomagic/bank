@@ -12,13 +12,6 @@
         <name>clientInfo</name>
         <tag-class>servlet.ClientInfo</tag-class>
         <body-content>empty</body-content>
-        <attribute>
-            <name>number</name>
-            <required>true</required>
-        </attribute>
     </tag>
-
-
     <!-- Invoke 'Generate' action to add tags or functions -->
-
 </taglib>

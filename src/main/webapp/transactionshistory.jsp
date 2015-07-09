@@ -102,8 +102,18 @@
     </tr>
   </c:forEach>
 </table>
-<p><a href="addaccount">Добавить счет</a><br>
-  <a href="viewclients">Вернуться к списку клиентов</a>
+<p>
+  <a href="addaccount">Добавить счет</a>
+</p>
+<p>
+  <c:choose>
+    <c:when test="${sessionScope.LOGGED_USER.role == 'ADMINISTRATOR'}">
+      <a href="viewclients">Перейти к списку клиентов</a>
+    </c:when>
+    <c:when test="${sessionScope.LOGGED_USER.role == 'CLIENT'}">
+      <a href="viewaccountbyid">Вернуться к списку счетов</a>
+    </c:when>
+  </c:choose>
 </p>
 <p>
   <a href="addtransaction">Сделать перевод денег</a>

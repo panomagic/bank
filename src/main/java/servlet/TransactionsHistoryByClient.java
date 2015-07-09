@@ -56,6 +56,8 @@ public class TransactionsHistoryByClient extends HttpServlet {
         }
         request.setAttribute("allCurrencies", currencies);
 
+        //request.setAttribute("userRole", loggedUser.getRole());
+
         request.getRequestDispatcher("transactionshistory.jsp").forward(request, response);
     }
 }
