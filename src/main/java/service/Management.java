@@ -3,6 +3,8 @@ package service;
 import bean.*;
 import dao.*;
 import com.mysql.fabric.jdbc.FabricMySQLDriver;
+import org.apache.log4j.Logger;
+
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.Driver;
@@ -17,6 +19,8 @@ public class Management {
     private static final String URL = "jdbc:mysql://localhost:3306/bank";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "970195";
+
+    private static final Logger logger = Logger.getLogger(Management.class);
 
     private static String getURL() {
         return URL;
@@ -34,28 +38,28 @@ public class Management {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
         } catch (InstantiationException e) {
-            e.printStackTrace();
+            logger.error("Tomcat не удалось подключиться к БД", e); //e.printStackTrace();
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            logger.error("Tomcat не удалось подключиться к БД", e); //e.printStackTrace();
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            logger.error("Tomcat не удалось подключиться к БД", e); //e.printStackTrace();
         }
 
         try {
             Driver driver = new FabricMySQLDriver();
             DriverManager.registerDriver(driver);   //регистрируем драйвер
         } catch (Exception e) {
-            System.err.println("Не удалось загрузить класс драйвера");
+            logger.error("Не удалось загрузить класс драйвера", e); //System.err.println("Не удалось загрузить класс драйвера");
         }
 
         try {
             connection = DriverManager.getConnection(getURL(), getUSERNAME(), getPASSWORD());
             if(!connection.isClosed())  //опционально
             {
-                System.out.println("Соединение с БД установлено");
+                logger.info("Соединение с БД установлено"); //System.out.println("Соединение с БД установлено");
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка при соединении с БД MySQL", e); //e.printStackTrace();
         }
 
         return connection;

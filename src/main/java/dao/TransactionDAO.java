@@ -1,6 +1,7 @@
 package dao;
 
 import bean.*;
+import org.apache.log4j.Logger;
 import service.*;
 
 import java.math.BigDecimal;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TransactionDAO {
+    private static final Logger logger = Logger.getLogger(TransactionDAO.class);
+
     public void addTransaction(Transaction transaction) throws SQLException {
         Connection connection = Management.getDBConnection();
 
@@ -66,14 +69,16 @@ public class TransactionDAO {
 
             connection.commit();                //завершаем транзакцию, одновременно проводя перевод и изменяя баланс на счетах
 
+            logger.info("Новый перевод средств со счета c id " + payerAcc.getAccountID() +
+                    " на счет с id " + recipientAcc.getAccountID());
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
             if (connection != null) {
                 try {
                     System.err.print("Ошибка при проведении! Транзакция отменена");
                     connection.rollback();
                 } catch (SQLException excep) {
-                    excep.printStackTrace();
+                    logger.warn("Ошибка БД MySQL", excep); //excep.printStackTrace();
                 }
             }
         }
@@ -112,7 +117,7 @@ public class TransactionDAO {
 
             if (connection != null) {
                 connection.close();
-                System.out.println("Соединение с БД закрыто");
+                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
             }
         }
     }
@@ -142,7 +147,7 @@ public class TransactionDAO {
                 transactionsList.add(transaction);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
         finally {
             if (resultSet != null)
@@ -154,7 +159,7 @@ public class TransactionDAO {
 
             if (connection != null) {
                 connection.close();
-                System.out.println("Соединение с БД закрыто");
+                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
             }
         }
         return transactionsList;
@@ -186,7 +191,7 @@ public class TransactionDAO {
                 transastionsList.add(transaction);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
         finally {
             if (resultSet != null)
@@ -198,7 +203,7 @@ public class TransactionDAO {
 
             if (connection != null) {
                 connection.close();
-                System.out.println("Соединение с БД закрыто");
+                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
             }
         }
         return transastionsList;
@@ -230,7 +235,7 @@ public class TransactionDAO {
                 transastionsList.add(transaction);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
         finally {
             if (resultSet != null)
@@ -242,7 +247,7 @@ public class TransactionDAO {
 
             if (connection != null) {
                 connection.close();
-                System.out.println("Соединение с БД закрыто");
+                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
             }
         }
         return transastionsList;
@@ -275,7 +280,7 @@ public class TransactionDAO {
                 transastionsList.add(transaction);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
         finally {
             if (resultSet != null)
@@ -287,7 +292,7 @@ public class TransactionDAO {
 
             if (connection != null) {
                 connection.close();
-                System.out.println("Соединение с БД закрыто");
+                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
             }
         }
         return transastionsList;
@@ -320,7 +325,7 @@ public class TransactionDAO {
                 transastionsList.add(transaction);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
         finally {
             if (resultSet != null)
@@ -332,7 +337,7 @@ public class TransactionDAO {
 
             if (connection != null) {
                 connection.close();
-                System.out.println("Соединение с БД закрыто");
+                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
             }
         }
         return transastionsList;
@@ -364,7 +369,7 @@ public class TransactionDAO {
                 transastionsList.add(transaction);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
         finally {
             if (resultSet != null)
@@ -376,7 +381,7 @@ public class TransactionDAO {
 
             if (connection != null) {
                 connection.close();
-                System.out.println("Соединение с БД закрыто");
+                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
             }
         }
         return transastionsList;

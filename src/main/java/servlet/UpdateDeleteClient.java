@@ -3,6 +3,7 @@ package servlet;
 import bean.Client;
 import bean.Gender;
 import dao.ClientDAO;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +15,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class UpdateDeleteClient extends HttpServlet {
-        Client client;
+    private static final Logger logger = Logger.getLogger(UpdateDeleteClient.class);
+
+    Client client;
 
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -25,7 +28,7 @@ public class UpdateDeleteClient extends HttpServlet {
             try {
                 client = new ClientDAO().getClientByID(Integer.parseInt(request.getParameter("clientID")));
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
             }
 
             request.setAttribute("client", client);
@@ -33,7 +36,7 @@ public class UpdateDeleteClient extends HttpServlet {
             try {
                 new ClientDAO().updateClient(client);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
             }
         } else if(request.getParameter("action").equals("delete")) {
             forwardPage = "deleteclient.jsp";
@@ -42,7 +45,7 @@ public class UpdateDeleteClient extends HttpServlet {
             try {
                 new ClientDAO().deleteClient(client);
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
             }
         }
 
@@ -56,12 +59,12 @@ public class UpdateDeleteClient extends HttpServlet {
             client.setDateOfBirth(new SimpleDateFormat("dd.MM.yyyy").parse(request.getParameter("dateofbirth")));
             client.setDateOfReg(new SimpleDateFormat("dd.MM.yyyy").parse(request.getParameter("dateofreg")));
         } catch (ParseException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка парсинга даты", e); //e.printStackTrace();
         }
         try {
             new ClientDAO().updateClient(client);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
     }
 

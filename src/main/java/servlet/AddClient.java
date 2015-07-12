@@ -3,6 +3,7 @@ package servlet;
 import bean.Client;
 import bean.Gender;
 import dao.ClientDAO;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +15,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class AddClient extends HttpServlet {
-
+    private static final Logger logger = Logger.getLogger(AddClient.class);
+    
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -31,13 +33,13 @@ public class AddClient extends HttpServlet {
             client.setDateOfBirth(new SimpleDateFormat("dd.MM.yyyy").parse(request.getParameter("dateofbirth")));
             client.setDateOfReg(new SimpleDateFormat("dd.MM.yyyy").parse(request.getParameter("dateofreg")));
         } catch (ParseException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка парсинга даты", e); //e.printStackTrace();
         }
 
         try {
             new ClientDAO().addClient(client);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
 
         //вызываем страницу с подтверждением успешного добавления клиента

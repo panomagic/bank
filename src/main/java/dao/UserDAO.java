@@ -2,6 +2,7 @@ package dao;
 
 import bean.Role;
 import bean.User;
+import org.apache.log4j.Logger;
 import service.Management;
 
 import java.sql.Connection;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAO {
+    private static final Logger logger = Logger.getLogger(UserDAO.class);
 
     public List getAllUsers() throws SQLException {
         List allUsers = new ArrayList();
@@ -34,7 +36,7 @@ public class UserDAO {
                 allUsers.add(user);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
         finally {
             if (resultSet != null)
@@ -46,7 +48,7 @@ public class UserDAO {
 
             if (connection != null) {
                 connection.close();
-                System.out.println("Соединение с БД закрыто");
+                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
             }
         }
         return allUsers;
@@ -71,7 +73,7 @@ public class UserDAO {
                 user.setClientID(resultSet.getInt("clients_clientID"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
         finally {
             if (resultSet != null)
@@ -83,7 +85,7 @@ public class UserDAO {
 
             if (connection != null) {
                 connection.close();
-                System.out.println("Соединение с БД закрыто");
+                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
             }
         }
         return user;

@@ -4,6 +4,7 @@ import dao.AccountDAO;
 import dao.ClientDAO;
 import dao.CurrencyDAO;
 import dao.TransactionDAO;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +18,8 @@ import java.util.List;
 
 @WebServlet(name="transactionshistory", urlPatterns={"/transactionshistory"})
 public class TransactionsHistory extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(TransactionsHistory.class);
+
     @Override
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -24,7 +27,7 @@ public class TransactionsHistory extends HttpServlet {
         try {
             transactions = new TransactionDAO().getAllTransactions();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
         request.setAttribute("allTransactions", transactions);
 
@@ -32,7 +35,7 @@ public class TransactionsHistory extends HttpServlet {
         try {
             accounts = new AccountDAO().getAllAccounts();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
         request.setAttribute("allAccounts", accounts);
 
@@ -40,7 +43,7 @@ public class TransactionsHistory extends HttpServlet {
         try {
             clients = new ClientDAO().getAllClients();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
         request.setAttribute("allClients", clients);
 
@@ -48,7 +51,7 @@ public class TransactionsHistory extends HttpServlet {
         try {
             currencies = new CurrencyDAO().getAllCurrencies();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
         request.setAttribute("allCurrencies", currencies);
 

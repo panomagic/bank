@@ -1,6 +1,7 @@
 package dao;
 
 import bean.Currency;
+import org.apache.log4j.Logger;
 import service.Management;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CurrencyDAO {
+    private static final Logger logger = Logger.getLogger(CurrencyDAO.class);
+
     public Currency getCurrencyByID(int currencyID) throws SQLException {
         Connection connection = Management.getDBConnection();
         PreparedStatement preparedStatement = null;
@@ -26,7 +29,7 @@ public class CurrencyDAO {
                 currency.setCurrency(resultSet.getString("currency"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
         finally {
             if (resultSet != null)
@@ -38,7 +41,7 @@ public class CurrencyDAO {
 
             if (connection != null) {
                 connection.close();
-                System.out.println("Соединение с БД закрыто");
+                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
             }
         }
         return currency;
@@ -62,7 +65,7 @@ public class CurrencyDAO {
                 currenciesList.add(currency);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
         finally {
             if (resultSet != null)
@@ -74,7 +77,7 @@ public class CurrencyDAO {
 
             if (connection != null) {
                 connection.close();
-                System.out.println("Соединение с БД закрыто");
+                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
             }
         }
         return currenciesList;

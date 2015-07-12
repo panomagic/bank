@@ -5,6 +5,7 @@ import dao.AccountDAO;
 import dao.ClientDAO;
 import dao.CurrencyDAO;
 import dao.TransactionDAO;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,6 +19,8 @@ import java.util.List;
 
 @WebServlet(name="transactionshistorybyclient", urlPatterns={"/transactionshistorybyclient"})
 public class TransactionsHistoryByClient extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(TransactionsHistoryByClient.class);
+
     @Override
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -28,7 +31,7 @@ public class TransactionsHistoryByClient extends HttpServlet {
         try {
             transactions = new TransactionDAO().getTransactionsByClientID(loggedUser.getClientID());
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
         request.setAttribute("allTransactions", transactions);
 
@@ -36,7 +39,7 @@ public class TransactionsHistoryByClient extends HttpServlet {
         try {
             accounts = new AccountDAO().getAllAccounts();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
         request.setAttribute("allAccounts", accounts);
 
@@ -44,7 +47,7 @@ public class TransactionsHistoryByClient extends HttpServlet {
         try {
             clients = new ClientDAO().getAllClients();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
         request.setAttribute("allClients", clients);
 
@@ -52,11 +55,9 @@ public class TransactionsHistoryByClient extends HttpServlet {
         try {
             currencies = new CurrencyDAO().getAllCurrencies();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
         request.setAttribute("allCurrencies", currencies);
-
-        //request.setAttribute("userRole", loggedUser.getRole());
 
         request.getRequestDispatcher("transactionshistory.jsp").forward(request, response);
     }

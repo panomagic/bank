@@ -1,6 +1,7 @@
 package servlet;
 
 import dao.ClientDAO;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ViewClients extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(ViewClients.class);
 
     @Override
     public void doGet (HttpServletRequest request, HttpServletResponse response)
@@ -21,7 +23,7 @@ public class ViewClients extends HttpServlet {
         try {
             clients = new ClientDAO().getAllClients();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
 
         request.setAttribute("allClients", clients);

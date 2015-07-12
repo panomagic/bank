@@ -3,6 +3,7 @@ package servlet;
 import bean.Account;
 import dao.AccountDAO;
 import dao.ClientDAO;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +17,8 @@ import java.util.List;
 
 @WebServlet(name="addaccount", urlPatterns={"/addaccount"})
 public class AddAccount extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(AddAccount.class);
+
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
@@ -23,7 +26,7 @@ public class AddAccount extends HttpServlet {
         try {
             clients = new ClientDAO().getAllClients();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
 
         request.setAttribute("allClients", clients);
@@ -42,7 +45,7 @@ public class AddAccount extends HttpServlet {
         try {
             new AccountDAO().addAccount(account);
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
 
         //вызываем страницу с подтверждением успешного добавления клиента

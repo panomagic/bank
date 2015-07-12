@@ -6,6 +6,7 @@ import bean.User;
 import dao.AccountDAO;
 import dao.ClientDAO;
 import dao.CurrencyDAO;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClientInfo extends TagSupport {
+    private static final Logger logger = Logger.getLogger(ClientInfo.class);
+
     public int doStartTag() throws JspException {
         JspWriter out = pageContext.getOut();
 
@@ -26,21 +29,21 @@ public class ClientInfo extends TagSupport {
         try {
             accounts = new AccountDAO().getAccountsByClientID(loggedUser.getClientID());
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
 
         List<Client> clients = new ArrayList<Client>();
         try {
             clients = new ClientDAO().getAllClients();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
 
         List<Currency> currencies = new ArrayList<Currency>();
         try {
             currencies = new CurrencyDAO().getAllCurrencies();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
         }
 
         try {
@@ -84,7 +87,7 @@ public class ClientInfo extends TagSupport {
             }
             out.write("</table>");
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.warn("Ошибка вывода JSP tags", e); //e.printStackTrace();
         }
 
         return SKIP_BODY;
