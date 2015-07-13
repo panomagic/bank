@@ -12,8 +12,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewClients extends HttpServlet {
-    private static final Logger logger = Logger.getLogger(ViewClients.class);
+public class ViewClientsServlet extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(ViewClientsServlet.class);
 
     @Override
     public void doGet (HttpServletRequest request, HttpServletResponse response)
@@ -23,7 +23,7 @@ public class ViewClients extends HttpServlet {
         try {
             clients = new ClientDAO().getAllClients();
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
 
         request.setAttribute("allClients", clients);

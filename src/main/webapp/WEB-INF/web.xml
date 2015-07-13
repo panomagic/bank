@@ -32,22 +32,22 @@
 
     <servlet>
         <servlet-name>viewclients</servlet-name>
-        <servlet-class>servlet.ViewClients</servlet-class>
+        <servlet-class>servlet.ViewClientsServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>viewaccounts</servlet-name>
-        <servlet-class>servlet.ViewAccounts</servlet-class>
+        <servlet-class>servlet.ViewAccountsServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>addclient</servlet-name>
-        <servlet-class>servlet.AddClient</servlet-class>
+        <servlet-class>servlet.AddClientServlet</servlet-class>
     </servlet>
 
     <servlet>
         <servlet-name>updatedeleteclient</servlet-name>
-        <servlet-class>servlet.UpdateDeleteClient</servlet-class>
+        <servlet-class>servlet.UpdateDeleteClientServlet</servlet-class>
     </servlet>
 
 

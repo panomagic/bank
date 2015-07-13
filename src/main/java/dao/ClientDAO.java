@@ -23,9 +23,9 @@ public class ClientDAO {
 
             preparedStatement.execute();
 
-            logger.info("Добавлен новый клиент " + client.getFullName());
+            logger.info("New client " + client.getFullName() + " was added");
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
         finally {
             if (preparedStatement != null)
@@ -33,7 +33,7 @@ public class ClientDAO {
 
             if (connection != null) {
                 connection.close();
-                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
+                logger.info("DB connection is closed");
             }
         }
     }
@@ -51,9 +51,9 @@ public class ClientDAO {
 
             preparedStatement.execute();
 
-            logger.info("Изменен клиент с id " + client.getClientID());
+            logger.info("Client with id " + client.getClientID() + " was updated");
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
         finally {
             if (preparedStatement != null)
@@ -61,7 +61,7 @@ public class ClientDAO {
 
             if (connection != null) {
                 connection.close();
-                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
+                logger.info("DB connection is closed");
             }
         }
     }
@@ -75,9 +75,9 @@ public class ClientDAO {
 
             preparedStatement.execute();
 
-            logger.info("Удален клиент с id " + client.getClientID());
+            logger.info("Client with id " + client.getClientID() + " was deleted");
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
         finally {
             if (preparedStatement != null)
@@ -85,7 +85,7 @@ public class ClientDAO {
 
             if (connection != null) {
                 connection.close();
-                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
+                logger.info("DB connection is closed");
             }
         }
     }
@@ -111,7 +111,7 @@ public class ClientDAO {
                 clientsList.add(client);
             }
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
         finally {
             if (resultSet != null)
@@ -123,7 +123,7 @@ public class ClientDAO {
 
             if (connection != null) {
                 connection.close();
-                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
+                logger.info("DB connection is closed");
             }
         }
         return clientsList;
@@ -148,7 +148,7 @@ public class ClientDAO {
                 client.setDateOfReg(resultSet.getDate("dateOfReg"));
             }
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
         finally {
             if (resultSet != null)
@@ -160,7 +160,7 @@ public class ClientDAO {
 
             if (connection != null) {
                 connection.close();
-                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
+                logger.info("DB connection is closed");
             }
         }
         return client;
@@ -183,7 +183,7 @@ public class ClientDAO {
                 account.setClientID(resultSet.getInt("clients_clientID"));
             }
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
         finally {
             if (resultSet != null)
@@ -195,7 +195,7 @@ public class ClientDAO {
 
             if (connection != null) {
                 connection.close();
-                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
+                logger.info("DB connection is closed");
             }
         }
 

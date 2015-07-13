@@ -38,28 +38,28 @@ public class Management {
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
         } catch (InstantiationException e) {
-            logger.error("Tomcat не удалось подключиться к БД", e); //e.printStackTrace();
+            logger.error("Tomcat is unable to connect to DB", e);
         } catch (IllegalAccessException e) {
-            logger.error("Tomcat не удалось подключиться к БД", e); //e.printStackTrace();
+            logger.error("Tomcat is unable to connect to DB", e);
         } catch (ClassNotFoundException e) {
-            logger.error("Tomcat не удалось подключиться к БД", e); //e.printStackTrace();
+            logger.error("Tomcat is unable to connect to DB", e);
         }
 
         try {
             Driver driver = new FabricMySQLDriver();
             DriverManager.registerDriver(driver);   //регистрируем драйвер
         } catch (Exception e) {
-            logger.error("Не удалось загрузить класс драйвера", e); //System.err.println("Не удалось загрузить класс драйвера");
+            logger.error("Cannot load MySQL driver class", e);
         }
 
         try {
             connection = DriverManager.getConnection(getURL(), getUSERNAME(), getPASSWORD());
             if(!connection.isClosed())  //опционально
             {
-                logger.info("Соединение с БД установлено"); //System.out.println("Соединение с БД установлено");
+                logger.info("DB connection is established");
             }
         } catch (SQLException e) {
-            logger.warn("Ошибка при соединении с БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
 
         return connection;

@@ -29,7 +29,7 @@ public class CurrencyDAO {
                 currency.setCurrency(resultSet.getString("currency"));
             }
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
         finally {
             if (resultSet != null)
@@ -41,7 +41,7 @@ public class CurrencyDAO {
 
             if (connection != null) {
                 connection.close();
-                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
+                logger.info("DB connection is closed");
             }
         }
         return currency;
@@ -65,7 +65,7 @@ public class CurrencyDAO {
                 currenciesList.add(currency);
             }
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
         finally {
             if (resultSet != null)
@@ -77,7 +77,7 @@ public class CurrencyDAO {
 
             if (connection != null) {
                 connection.close();
-                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
+                logger.info("DB connection is closed");
             }
         }
         return currenciesList;

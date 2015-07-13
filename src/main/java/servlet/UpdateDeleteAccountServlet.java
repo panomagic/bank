@@ -16,8 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name="updatedeleteaccount", urlPatterns={"/updatedeleteaccount"})
-public class UpdateDeleteAccount extends HttpServlet {
-    private static final Logger logger = Logger.getLogger(UpdateDeleteAccount.class);
+public class UpdateDeleteAccountServlet extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(UpdateDeleteAccountServlet.class);
 
     Account account;
     AccountDAO accountDAO = new AccountDAO();
@@ -29,7 +29,7 @@ public class UpdateDeleteAccount extends HttpServlet {
         try {
             clients = new ClientDAO().getAllClients();
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
 
         request.setAttribute("allClients", clients);
@@ -39,14 +39,14 @@ public class UpdateDeleteAccount extends HttpServlet {
             try {
                 account = accountDAO.getAccountByID(Integer.parseInt(request.getParameter("accountID")));
             } catch (SQLException e) {
-                logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+                logger.error("MySQL DB error", e);
             }
             request.setAttribute("account", account);
 
             try {
                 accountDAO.updateAccount(account);
             } catch (SQLException e) {
-                logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+                logger.error("MySQL DB error", e);
             }
         } else if(request.getParameter("action").equals("delete")) {
             forwardPage = "deleteaccount.jsp";
@@ -55,7 +55,7 @@ public class UpdateDeleteAccount extends HttpServlet {
             try {
                 new AccountDAO().deleteAccount(account);
             } catch (SQLException e) {
-                logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+                logger.error("MySQL DB error", e);
             }
         }
 
@@ -70,7 +70,7 @@ public class UpdateDeleteAccount extends HttpServlet {
         try {
             accountDAO.updateAccount(account);
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
     }
 

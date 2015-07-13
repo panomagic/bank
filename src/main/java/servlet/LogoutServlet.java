@@ -20,7 +20,7 @@ public class LogoutServlet extends HttpServlet {
         User loggedUser = (User) session.getAttribute("LOGGED_USER");
         session.invalidate();
         request.getRequestDispatcher("logout.jsp").forward(request, response);
-        logger.info("Выполнен выход пользователя " + loggedUser.getUserName() +
-                " с ролью " + loggedUser.getRole());
+        logger.info("Logout was performed for user " + loggedUser.getUserName() +
+                " as " + loggedUser.getRole());
     }
 }

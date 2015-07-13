@@ -14,8 +14,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class AddClient extends HttpServlet {
-    private static final Logger logger = Logger.getLogger(AddClient.class);
+public class AddClientServlet extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(AddClientServlet.class);
     
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -33,13 +33,13 @@ public class AddClient extends HttpServlet {
             client.setDateOfBirth(new SimpleDateFormat("dd.MM.yyyy").parse(request.getParameter("dateofbirth")));
             client.setDateOfReg(new SimpleDateFormat("dd.MM.yyyy").parse(request.getParameter("dateofreg")));
         } catch (ParseException e) {
-            logger.warn("Ошибка парсинга даты", e); //e.printStackTrace();
+            logger.warn("Date parsing error", e);
         }
 
         try {
             new ClientDAO().addClient(client);
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
 
         //вызываем страницу с подтверждением успешного добавления клиента

@@ -36,7 +36,7 @@ public class UserDAO {
                 allUsers.add(user);
             }
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
         finally {
             if (resultSet != null)
@@ -48,7 +48,7 @@ public class UserDAO {
 
             if (connection != null) {
                 connection.close();
-                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
+                logger.info("DB connection is closed");
             }
         }
         return allUsers;
@@ -73,7 +73,7 @@ public class UserDAO {
                 user.setClientID(resultSet.getInt("clients_clientID"));
             }
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
         finally {
             if (resultSet != null)
@@ -85,7 +85,7 @@ public class UserDAO {
 
             if (connection != null) {
                 connection.close();
-                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
+                logger.info("DB connection is closed");
             }
         }
         return user;

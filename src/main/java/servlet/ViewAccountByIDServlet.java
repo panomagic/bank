@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @WebServlet(name="viewaccountbyid", urlPatterns={"/viewaccountbyid"})
-public class ViewAccountByID extends HttpServlet {
+public class ViewAccountByIDServlet extends HttpServlet {
 
     @Override
     public void doGet (HttpServletRequest request, HttpServletResponse response)

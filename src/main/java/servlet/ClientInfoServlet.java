@@ -17,8 +17,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientInfo extends TagSupport {
-    private static final Logger logger = Logger.getLogger(ClientInfo.class);
+public class ClientInfoServlet extends TagSupport {
+    private static final Logger logger = Logger.getLogger(ClientInfoServlet.class);
 
     public int doStartTag() throws JspException {
         JspWriter out = pageContext.getOut();
@@ -29,21 +29,21 @@ public class ClientInfo extends TagSupport {
         try {
             accounts = new AccountDAO().getAccountsByClientID(loggedUser.getClientID());
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
 
         List<Client> clients = new ArrayList<Client>();
         try {
             clients = new ClientDAO().getAllClients();
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
 
         List<Currency> currencies = new ArrayList<Currency>();
         try {
             currencies = new CurrencyDAO().getAllCurrencies();
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
 
         try {
@@ -87,7 +87,7 @@ public class ClientInfo extends TagSupport {
             }
             out.write("</table>");
         } catch (IOException e) {
-            logger.warn("Ошибка вывода JSP tags", e); //e.printStackTrace();
+            logger.warn("IO error while processing of JSP tags", e);
         }
 
         return SKIP_BODY;

@@ -17,8 +17,8 @@ import java.util.List;
 
 @WebServlet(name="addtransaction", urlPatterns={"/addtransaction"})
 
-public class AddTransaction extends HttpServlet {
-    private static final Logger logger = Logger.getLogger(AddTransaction.class);
+public class AddTransactionServlet extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(AddTransactionServlet.class);
 
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -29,14 +29,14 @@ public class AddTransaction extends HttpServlet {
             try {
                 payerAccounts = new AccountDAO().getAllAccounts();
             } catch (SQLException e) {
-                logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+                logger.error("MySQL DB error", e);
             }
         }
         else if (Role.CLIENT == loggedUser.getRole()) {
             try {
                 payerAccounts = new AccountDAO().getAccountsByClientID(loggedUser.getClientID());
             } catch (SQLException e) {
-                logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+                logger.error("MySQL DB error", e);
             }
         }
         request.setAttribute("payerAccounts", payerAccounts);
@@ -45,7 +45,7 @@ public class AddTransaction extends HttpServlet {
             try {
                 recipientAccounts = new AccountDAO().getAllAccounts();
             } catch (SQLException e) {
-                logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+                logger.error("MySQL DB error", e);
             }
         request.setAttribute("recipientAccounts", recipientAccounts);
 
@@ -53,7 +53,7 @@ public class AddTransaction extends HttpServlet {
         try {
             clients = new ClientDAO().getAllClients();
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
         request.setAttribute("allClients", clients);
 
@@ -61,7 +61,7 @@ public class AddTransaction extends HttpServlet {
         try {
             currencies = new CurrencyDAO().getAllCurrencies();
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
         request.setAttribute("allCurrencies", currencies);
 
@@ -77,7 +77,7 @@ public class AddTransaction extends HttpServlet {
             payerAccount = new AccountDAO().
                     getAccountByID(Integer.parseInt(request.getParameter("choosepayeraccount")));
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
 
         Account recipientAccount = null;
@@ -85,7 +85,7 @@ public class AddTransaction extends HttpServlet {
             recipientAccount = new AccountDAO().
                     getAccountByID(Integer.parseInt(request.getParameter("chooserecipientaccount")));
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
 
         //проверка соответствия валюты счета получателя и отправителя
@@ -114,7 +114,7 @@ public class AddTransaction extends HttpServlet {
         try {
             transactionDAO.addTransaction(transaction);
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
 
         User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");

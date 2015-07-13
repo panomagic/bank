@@ -10,7 +10,7 @@
     <uri>mytags</uri>
     <tag>
         <name>clientInfo</name>
-        <tag-class>servlet.ClientInfo</tag-class>
+        <tag-class>servlet.ClientInfoServlet</tag-class>
         <body-content>empty</body-content>
     </tag>
     <!-- Invoke 'Generate' action to add tags or functions -->

@@ -14,8 +14,8 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class UpdateDeleteClient extends HttpServlet {
-    private static final Logger logger = Logger.getLogger(UpdateDeleteClient.class);
+public class UpdateDeleteClientServlet extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(UpdateDeleteClientServlet.class);
 
     Client client;
 
@@ -28,7 +28,7 @@ public class UpdateDeleteClient extends HttpServlet {
             try {
                 client = new ClientDAO().getClientByID(Integer.parseInt(request.getParameter("clientID")));
             } catch (SQLException e) {
-                logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+                logger.error("MySQL DB error", e);
             }
 
             request.setAttribute("client", client);
@@ -36,7 +36,7 @@ public class UpdateDeleteClient extends HttpServlet {
             try {
                 new ClientDAO().updateClient(client);
             } catch (SQLException e) {
-                logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+                logger.error("MySQL DB error", e);
             }
         } else if(request.getParameter("action").equals("delete")) {
             forwardPage = "deleteclient.jsp";
@@ -45,7 +45,7 @@ public class UpdateDeleteClient extends HttpServlet {
             try {
                 new ClientDAO().deleteClient(client);
             } catch (SQLException e) {
-                logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+                logger.error("MySQL DB error", e);
             }
         }
 
@@ -59,12 +59,12 @@ public class UpdateDeleteClient extends HttpServlet {
             client.setDateOfBirth(new SimpleDateFormat("dd.MM.yyyy").parse(request.getParameter("dateofbirth")));
             client.setDateOfReg(new SimpleDateFormat("dd.MM.yyyy").parse(request.getParameter("dateofreg")));
         } catch (ParseException e) {
-            logger.warn("Ошибка парсинга даты", e); //e.printStackTrace();
+            logger.warn("Date parsing error", e);
         }
         try {
             new ClientDAO().updateClient(client);
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
     }
 

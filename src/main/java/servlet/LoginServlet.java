@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
         try {               //получаем пользователя из БД с именем, как у введенного в форме
             user = new UserDAO().getUserByUserName(request.getParameter("userName"));
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
 
         if (user != null) { //процедура аутентификации по совпадению пароля
@@ -39,16 +39,16 @@ public class LoginServlet extends HttpServlet {
                 request.getSession().setAttribute("LOGGED_USER", user);    //сохраняем user-бин в сессии
                 if(user.getRole() == Role.ADMINISTRATOR) {
                     response.sendRedirect("admin.jsp");
-                    logger.info("Выполнен вход в роли администратора");
+                    logger.info("Login as ADMINISTRATOR was performed");
                 }
                 else if(user.getRole() == Role.CLIENT) {
                     response.sendRedirect("/viewaccountbyid");
-                    logger.info("Выполнен вход в роли клиента для пользователя " + user.getUserName());
+                    logger.info("Login as CLIENT was performed by user " + user.getUserName());
                 }
             }
             else {
                 response.sendRedirect("loginfailed.jsp");
-                logger.info("Вход не выполнен для пользователя " + request.getParameter("userName"));
+                logger.info("Login was not performed for user " + request.getParameter("userName"));
             }
         }
     }

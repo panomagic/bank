@@ -25,9 +25,9 @@ public class AccountDAO {
 
             preparedStatement.execute();
 
-            logger.info("Добавлен новый счет клиента с id " + account.getClientID());
+            logger.info("New account was added for client with id " + account.getClientID());
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
         finally {
             if (preparedStatement != null)
@@ -35,7 +35,7 @@ public class AccountDAO {
 
             if (connection != null) {
                 connection.close();
-                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
+                logger.info("DB connection is closed");
             }
         }
     }
@@ -52,9 +52,9 @@ public class AccountDAO {
 
             preparedStatement.execute();
 
-            logger.info("Изменен счет с id " + account.getAccountID());
+            logger.info("Account with id " + account.getAccountID() + " was updated");
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
         finally {
             if (preparedStatement != null)
@@ -62,7 +62,7 @@ public class AccountDAO {
 
             if (connection != null) {
                 connection.close();
-                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
+                logger.info("DB connection is closed");
             }
         }
     }
@@ -86,7 +86,7 @@ public class AccountDAO {
                 account.setBalance(resultSet.getBigDecimal("balance"));
             }
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
         finally {
             if (resultSet != null)
@@ -98,7 +98,7 @@ public class AccountDAO {
 
             if (connection != null) {
                 connection.close();
-                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
+                logger.info("DB connection is closed");
             }
         }
         return account;
@@ -128,7 +128,7 @@ public class AccountDAO {
                 accountsList.add(account);
             }
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
         finally {
             if (resultSet != null)
@@ -140,7 +140,7 @@ public class AccountDAO {
 
             if (connection != null) {
                 connection.close();
-                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
+                logger.info("DB connection is closed");
             }
         }
         return accountsList;
@@ -168,7 +168,7 @@ public class AccountDAO {
                 accountsList.add(account);
             }
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
         finally {
             if (resultSet != null)
@@ -180,7 +180,7 @@ public class AccountDAO {
 
             if (connection != null) {
                 connection.close();
-                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
+                logger.info("DB connection is closed");
             }
         }
         return accountsList;
@@ -197,9 +197,9 @@ public class AccountDAO {
 
             preparedStatement.execute();
 
-            logger.info("Удален счет с id " + account.getAccountID());
+            logger.info("Account with id " + account.getAccountID() + " was deleted");
         } catch (SQLException e) {
-            logger.warn("Ошибка БД MySQL", e); //e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
         finally {
             if (preparedStatement != null)
@@ -207,7 +207,7 @@ public class AccountDAO {
 
             if (connection != null) {
                 connection.close();
-                logger.info("Соединение с БД закрыто"); //System.out.println("Соединение с БД закрыто");
+                logger.info("DB connection is closed");
             }
         }
     }
