@@ -1,7 +1,0 @@
-daos\TransactionFailedException.class
-daos\UserDAO.class
-daos\TransactionDAO.class
-daos\Management.class
-daos\CurrencyDAO.class
-daos\AccountDAO.class
-daos\ClientDAO.class
