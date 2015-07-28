@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="bank-multimodule:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="bank2.war">
+      <element id="artifact" artifact-name="bank-multimodule:war exploded" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="dao" />
+          <element id="module-output" name="model" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

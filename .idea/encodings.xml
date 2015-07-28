@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/src/main/java/bean/Account.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/bean/AccountType.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/bean/Client.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/bean/Currency.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/bean/Transaction.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/bean/TransactionType.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/java/service/Management.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/src/main/webapp/index.jsp" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

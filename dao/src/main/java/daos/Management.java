@@ -1,0 +1,185 @@
+package daos;
+
+import com.mysql.fabric.jdbc.FabricMySQLDriver;
+import org.apache.log4j.Logger;
+
+import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class Management {
+
+    private static final String URL = "jdbc:mysql://localhost:3306/bank";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "970195";
+
+    private static final Logger logger = Logger.getLogger(Management.class);
+
+    private static String getURL() {
+        return URL;
+    }
+    private static String getUSERNAME() {
+        return USERNAME;
+    }
+    private static String getPASSWORD() {
+        return PASSWORD;
+    }
+
+    public static Connection getDBConnection() {
+        Connection connection = null;
+        //создаем инстанс драйвера jdbc для подключения Tomcat к MySQL
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+        } catch (InstantiationException e) {
+            logger.error("Tomcat is unable to connect to DB", e);
+        } catch (IllegalAccessException e) {
+            logger.error("Tomcat is unable to connect to DB", e);
+        } catch (ClassNotFoundException e) {
+            logger.error("Tomcat is unable to connect to DB", e);
+        }
+
+        try {
+            Driver driver = new FabricMySQLDriver();
+            DriverManager.registerDriver(driver);   //регистрируем драйвер
+        } catch (Exception e) {
+            logger.error("Cannot load MySQL driver class", e);
+        }
+
+        try {
+            connection = DriverManager.getConnection(getURL(), getUSERNAME(), getPASSWORD());
+            if(!connection.isClosed())  //опционально
+            {
+                logger.info("DB connection is established");
+            }
+        } catch (SQLException e) {
+            logger.error("MySQL DB error", e);
+        }
+
+        return connection;
+    }
+
+    public static void main(String[] args) {
+
+        /*//Тестим ввод нового клиента:
+        bean.beans.Client client = new bean.beans.Client();
+        client.setFullName("Nikolaev Nikolai"); //получили из формы сервлета
+        client.setGender(beans.Gender.MALE);
+
+        client.setDateOfBirth(new Date("01/08/1992"));  //MM-dd-yyyy заменить с использованием Calendar
+        client.setDateOfReg(new Date("01/07/2013"));    //MM-dd-yyyy
+
+        dao.daos.ClientDAO clientDAO = new dao.daos.ClientDAO();
+        try {
+            clientDAO.addClient(client);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // System.out.println(client.getGender().genderAsString());
+*/
+
+        /*тестим удаление клиента
+        bean.beans.Client client = new bean.beans.Client();
+        client.setClientID(8); //получили из формы сервлета ФИО, СОЗДАТЬ метод по определению clientID из фамилии и даты рождения
+        dao.daos.ClientDAO clientDAO = new dao.daos.ClientDAO();
+        try {
+            clientDAO.deleteClient(client);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+*/
+
+    /*тестим добавление счета
+        beans.Account account = new beans.Account();
+        account.setClientID(16);
+        account.setAccTypeID(1);
+        account.setCurrencyID(3);
+
+        daos.AccountDAO accountDAO = new daos.AccountDAO();
+        try {
+            accountDAO.addAccount(account);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+*/
+    /*тестим удаление счета
+        bean.beans.Account account = new bean.beans.Account();
+        account.setAccountID(9);
+        dao.daos.AccountDAO accountDAO = new dao.daos.AccountDAO();
+        try {
+            accountDAO.deleteAccount(account);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+*/
+
+        /*//тестим изменение счета
+        bean.beans.Account account = new bean.beans.Account();
+        account.setAccountID(14);
+        account.setClientID(19);
+        account.setAccTypeID(1);
+        account.setCurrencyID(3);
+        dao.daos.AccountDAO accountDAO = new dao.daos.AccountDAO();
+        try {
+            accountDAO.updateAccount(account);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }*/
+
+/*тестим получение счета
+        bean.beans.Account account = null;
+        try {
+            account = new dao.daos.AccountDAO().getAccountByID(10);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println(account.getClientID() + ", на счету " + account.getBalance());
+        */
+
+    /*тестим добавление транзакции (перевод)
+        beans.Transaction transaction = new beans.Transaction();
+        transaction.setCurrencyID(1);
+        transaction.setPayerID(7);
+        transaction.setPayerAccID(11);
+        transaction.setRecipientID(7);
+        transaction.setRecipientAccID(8);
+        transaction.setTransTypeID(3);
+        transaction.setSum(new BigDecimal(2.50));
+        daos.TransactionDAO transactionDAO = new daos.TransactionDAO();
+        try {
+            transactionDAO.addTransaction(transaction);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        */
+
+    /*тестим историю транзакций
+        List transactions = new ArrayList();
+        try {
+            transactions = new daos.TransactionDAO().getAllTransactions();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(transactions);
+
+        for (int i = 0; i < transactions.size(); i++) {
+            System.out.println(transactions.get(i).toString());
+        }
+
+        */
+
+    //тестим получение пользователя
+ /*       bean.beans.User user = null;
+        try {
+            user = new daos.UserDAO().getUserByUserName("admin");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println(user.getUserName());
+        System.out.println(user.getPassword());
+        System.out.println(user.getRole().roleAsChar().equals("a"));*/
+
+    }
+}

@@ -22,11 +22,20 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="bank2" />
+        <module name="controller" />
+        <module name="dao" />
+        <module name="filters" />
+        <module name="model" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="bank2" target="1.5" />
+      <module name="bank-multimodule" target="1.5" />
+      <module name="bank-parent" target="1.5" />
+      <module name="bank-root" target="1.5" />
+      <module name="controller" target="1.5" />
+      <module name="dao" target="1.5" />
+      <module name="filters" target="1.5" />
+      <module name="model" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
