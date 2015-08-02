@@ -2,26 +2,30 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<fmt:setLocale value="${sessionScope.language}" />
+<fmt:setBundle basename="TransactionshistoryBundle" />
+
 <html>
 <head>
-  <title>История транзакций</title>
+  <title><fmt:message key="pagetitle" /></title>
 </head>
 <body>
 <h2>
-  История транзакций
+  <title><fmt:message key="transhistoryheader" /></title>
 </h2>
 <table border="1">
   <tr>
-    <th><b>ID транзакции</b></th>
-    <th><b>Плательщик</b></th>
-    <th><b>Номер счета плательщика</b></th>
-    <th><b>Тип счета плательщика</b></th>
-    <th><b>Получатель</b></th>
-    <th><b>Номер счета плательщика</b></th>
-    <th><b>Тип счета получателя</b></th>
-    <th><b>Валюта</b></th>
-    <th><b>Дата и время транзакции</b></th>
-    <th><b>Сумма</b></th>
+    <th><b><fmt:message key="transtableid" /></b></th>
+    <th><b><fmt:message key="transtablepayer" /></b></th>
+    <th><b><fmt:message key="transtablepayeracc" /></b></th>
+    <th><b><fmt:message key="transtablepayeracctype" /></b></th>
+    <th><b><fmt:message key="transtablerecipient" /></b></th>
+    <th><b><fmt:message key="transtablerecipientacc" /></b></th>
+    <th><b><fmt:message key="transtablerecipientacctype" /></b></th>
+    <th><b><fmt:message key="transtablecurrency" /></b></th>
+    <th><b><fmt:message key="transtabledatetime" /></b></th>
+    <th><b><fmt:message key="transtableamount" /></b></th>
   </tr>
   <c:forEach var="transaction" items="${allTransactions}">
     <tr>
@@ -105,23 +109,23 @@
 <c:choose>
   <c:when test="${sessionScope.LOGGED_USER.role == 'ADMINISTRATOR'}">
     <p>
-      <a href="addaccount">Добавить счет</a>
+      <a href="addaccount"><fmt:message key="addaccountlink" /></a>
     </p>
     <p>
-      <a href="viewclients">Перейти к списку клиентов</a>
+      <a href="viewclients"><fmt:message key="gotoclientslistlink" /></a>
     </p>
   </c:when>
   <c:when test="${sessionScope.LOGGED_USER.role == 'CLIENT'}">
     <p>
-      <a href="viewaccountbyid">Вернуться к списку счетов</a>
+      <a href="viewaccountbyid"><fmt:message key="gotoaccountslistlink" /></a>
     </p>
   </c:when>
 </c:choose>
 <p>
-  <a href="addtransaction">Сделать перевод денег</a>
+  <a href="addtransaction"><fmt:message key="addtransactionlink" /></a>
 </p>
 <p>
-  <a href="logout">Выйти из системы</a>
+  <a href="logout"><fmt:message key="logoutlink" /></a>
 </p>
 </body>
 </html>

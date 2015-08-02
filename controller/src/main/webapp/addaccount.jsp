@@ -1,16 +1,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<fmt:setLocale value="${sessionScope.language}" />
+<fmt:setBundle basename="AddaccountBundle" />
+
 <!DOCTYPE HTML>
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Ввод нового счета</title>
+  <title><fmt:message key="pagetitle" /></title>
 </head>
 <body>
-<h2>Добавление нового счета</h2>
+<h2><fmt:message key="addnewaccount" /></h2>
   <form name="addaccount" method="POST">
-    <p><b>Выберите клиента:</b><br>
+    <p><b><fmt:message key="chooseclient" /></b><br>
       <select name="chooseclient">
         <c:forEach var="client" items="${allClients}">
           <option value="${client.clientID}">${client.fullName}</option>
@@ -18,20 +23,20 @@
       </select>
     </p>
 
-    <p><b>Тип счета:</b><br>
+    <p><b><fmt:message key="acctype" /></b><br>
       <input type="radio" name="acctypeID" value="1"> DEBIT<br>
       <input type="radio" name="acctypeID" value="2"> CREDIT<br>
     </p>
 
-    <p><b>Валюта:</b><br>
+    <p><b><fmt:message key="currency" /></b><br>
       <input type="radio" name="currencyID" value="1"> UAH<br>
       <input type="radio" name="currencyID" value="2"> USD<br>
       <input type="radio" name="currencyID" value="3"> EUR<br>
     </p>
 
-    <p><input type="submit" value="Сохранить">
-      <input type="reset" value="Очистить"></p>
+    <p><input type="submit" value="<fmt:message key="savebutton" />">
+      <input type="reset" value="<fmt:message key="clearbutton" />"></p>
   </form>
-  <p><a href="viewaccounts">Назад к списку счетов</a></p>
+  <p><a href="viewaccounts"><fmt:message key="backtoaccountslink" /></a></p>
 </body>
 </html>

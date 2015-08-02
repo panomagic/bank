@@ -1,22 +1,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.language}" />
+<fmt:setBundle basename="ViewaccountsBundle" />
+
 <html>
 <head>
-  <title>Счета</title>
+  <title><fmt:message key="pagetitle" /></title>
 </head>
   <body>
     <h2>
-      Таблица счетов, открытых клиентами банка
+      <fmt:message key="acctable" />
     </h2>
   <table border="1">
     <tr>
-      <th><b>ID счета</b></th>
-      <th><b>Владелец</b></th>
-      <th><b>Тип счета</b></th>
-      <th><b>Валюта</b></th>
-      <th><b>Баланс счета</b></th>
-      <th colspan=2><b>Действие</b></th>
+      <th><b><fmt:message key="accidcolumn" /></b></th>
+      <th><b><fmt:message key="ownercolumn" /></b></th>
+      <th><b><fmt:message key="acctypecolumn" /></b></th>
+      <th><b><fmt:message key="currencycolumn" /></b></th>
+      <th><b><fmt:message key="balancecolumn" /></b></th>
+      <th colspan=2><b><fmt:message key="actioncolumn" /></b></th>
     </tr>
     <c:forEach var="account" items="${allAccounts}">
       <tr>
@@ -59,17 +64,17 @@
       </tr>
     </c:forEach>
   </table>
-  <p><a href="addaccount">Добавить счет</a><br>
-     <a href="viewclients">Вернуться к списку клиентов</a>
+  <p><a href="addaccount"><fmt:message key="addaccountlink" /></a><br>
+     <a href="viewclients"><fmt:message key="gotoclientslistlink" /></a>
   </p>
   <p>
-    <a href="addtransaction">Сделать перевод денег</a>
+    <a href="addtransaction"><fmt:message key="addtransactionlink" /></a>
   </p>
   <p>
-    <a href="transactionshistory">Просмотреть историю транзакций</a>
+    <a href="transactionshistory"><fmt:message key="transhistorylink" /></a>
   </p>
   <p>
-    <a href="logout">Выйти из системы</a>
+    <a href="logout"><fmt:message key="logoutlink" /></a>
   </p>
   </body>
 </html>

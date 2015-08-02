@@ -5,23 +5,26 @@
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<fmt:setLocale value="${sessionScope.language}" />
+<fmt:setBundle basename="ViewclientsBundle" />
+
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Клиенты</title>
+    <title><fmt:message key="pagetitle" /></title>
 </head>
 <body>
   <h2>
-      Таблица клиентов банка
+      <fmt:message key="clientstable" />
   </h2>
       <table border="1">
           <tr>
-              <th><b>ID</b></th>
-              <th><b>Полное имя</b></th>
-              <th><b>Пол</b></th>
-              <th><b>Дата рождения</b></th>
-              <th><b>Дата регистрации</b></th>
-              <th colspan=2><b>Действие</b></th>
+              <th><b><fmt:message key="clientidcolumn" /></b></th>
+              <th><b><fmt:message key="fullnamecolumn" /></b></th>
+              <th><b><fmt:message key="gendercolumn" /></b></th>
+              <th><b><fmt:message key="dateofbirthcolumn" /></b></th>
+              <th><b><fmt:message key="dateofregcolumn" /></b></th>
+              <th colspan=2><b><fmt:message key="actioncolumn" /></b></th>
           </tr>
           <c:forEach var="client" items="${allClients}">
               <tr>
@@ -40,14 +43,14 @@
           </c:forEach>
       </table>
   <p>
-      <a href="addclient">Добавить клиента</a><br>
-      <a href="viewaccounts">Перейти к списку счетов</a>
+      <a href="addclient"><fmt:message key="addclientlink" /></a><br>
+      <a href="viewaccounts"><fmt:message key="gotoacclistlink" /></a>
   </p>
   <p>
-      <a href="addtransaction">Сделать перевод денег</a>
+      <a href="addtransaction"><fmt:message key="addtransactionlink" /></a>
   </p>
   <p>
-      <a href="logout">Выйти из системы</a>
+      <a href="logout"><fmt:message key="logoutlink" /></a>
   </p>
 </body>
 </html>

@@ -1,11 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page isELIgnored="false" %>
+
+<fmt:setLocale value="${sessionScope.language}" />
+<fmt:setBundle basename="AddaccountresultBundle" />
+
 <html>
 <head>
-  <title>Добавление счета завершено</title>
+  <title><fmt:message key="pagetitle" /></title>
 </head>
 <body>
-  <b>Счет успешно добавлен!</b><br>
-  <a href="viewaccounts">Перейти к списку счетов</a><br>
-  <a href="viewclients">Перейти к списку клиентов</a>
+  <b><fmt:message key="accountsuccess" /></b><br>
+  <a href="viewaccounts"><fmt:message key="gotoaccountslistlink" /></a><br>
+  <a href="viewclients"><fmt:message key="gotoclientslistlink" /></a>
 </body>
 </html>

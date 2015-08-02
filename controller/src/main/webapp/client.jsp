@@ -1,30 +1,31 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <%@ taglib prefix="m" uri="mytags" %>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<fmt:setLocale value="${sessionScope.language}" />
+<fmt:setBundle basename="ClientBundle" />
+
 <html>
 <head>
-  <title>Ваши счета</title>
+  <title><fmt:message key="pagetitle" /></title>
 </head>
 <body>
 <h2>
-  Вы вошли в систему как клиент
+  <fmt:message key="clientloginsuccessfull" />
 </h2>
 <h2>
-  Список ваших счетов
+  <fmt:message key="youracclist" />
 </h2>
   <m:clientInfo></m:clientInfo>
 <p>
-  <a href="addtransaction">Сделать перевод денег</a>
+  <a href="addtransaction"><fmt:message key="addtransaction" /></a>
 </p>
 <p>
-  <a href="transactionshistorybyclient">Просмотреть историю транзакций</a>
+  <a href="transactionshistorybyclient"><fmt:message key="transhistorybyclientlink" /></a>
 </p>
 <p>
-  <a href="logout">Выйти из системы</a>
+  <a href="logout"><fmt:message key="logoutlink" /></a>
 </p>
 </body>
 </html>

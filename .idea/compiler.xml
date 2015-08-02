@@ -30,11 +30,8 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="bank-multimodule" target="1.5" />
-      <module name="bank-parent" target="1.5" />
-      <module name="bank-root" target="1.5" />
       <module name="controller" target="1.5" />
       <module name="dao" target="1.5" />
-      <module name="filters" target="1.5" />
       <module name="model" target="1.5" />
     </bytecodeTargetLevel>
   </component>

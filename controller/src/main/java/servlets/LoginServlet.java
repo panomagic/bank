@@ -48,8 +48,11 @@ public class LoginServlet extends HttpServlet {
             }
             else {
                 response.sendRedirect("loginfailed.jsp");
+                request.getSession().setAttribute("language", request.getParameter("chosenlanguage"));    //saving interface language in session
                 logger.info("Login was not performed for user " + request.getParameter("userName"));
             }
         }
+
+        request.getSession().setAttribute("language", request.getParameter("chosenlanguage"));    //saving interface language in session
     }
 }

@@ -39,5 +39,36 @@
     </dependencies>
     <build>
         <finalName>controller</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>native2ascii-maven-plugin</artifactId>
+                <version>1.0-alpha-1</version>
+                <executions>
+                    <execution>
+                        <id>native2ascii-utf8-properties</id>
+                        <goals>
+                            <goal>native2ascii</goal>
+                        </goals>
+                        <configuration>
+                            <src>src/main/resources</src>
+                            <includes>*.properties</includes>
+                            <encoding>windows-1251</encoding>
+                            <dest>target/classes</dest>
+                        </configuration>
+                    </execution>
+                </executions>
+                <!-- For Java 7+ compilation: -->
+                <dependencies>
+                    <dependency>
+                        <groupId>com.sun</groupId>
+                        <artifactId>tools</artifactId>
+                        <version>1.5.0</version>
+                        <scope>system</scope>
+                        <systemPath>${java.home}/../lib/tools.jar</systemPath>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
     </build>
 </project>

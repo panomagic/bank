@@ -1,24 +1,35 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page isELIgnored="false" %>
+
+<fmt:setLocale value="${sessionScope.language}" />
+<fmt:setBundle basename="LogoutBundle" />
 
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Выход из системы</title>
+  <title><fmt:message key="pagetitle" /></title>
 </head>
-<body>
-  <h2>Вы вышли из системы</h2>
-  <p><b>Чтобы войти снова, введите логин и пароль:</b></p>
-<form action="login" method="POST">
-  <p><b>Имя пользователя:</b><br>
-    <input type="text" name="userName" size="35">
-  </p>
-  <p><b>Пароль:</b><br>
-    <input type="text" name="password" size="35">
-  </p>
-  <p>
-    <input type="submit" value="Вход">
-    <input type="reset" value="Очистить">
-  </p>
-</form>
-</body>
+  <body>
+    <h2><fmt:message key="youloggedout" /></h2>
+    <p><b><fmt:message key="loginagain" /></b></p>
+    <form action="login" method="POST">
+      <p><b><fmt:message key="username" /></b><br>
+        <input type="text" name="userName" size="35">
+      </p>
+      <p><b><fmt:message key="password" /></b><br>
+        <input type="text" name="password" size="35">
+      </p>
+      <p><b><fmt:message key="chooselanguage" /></b><br>
+        <select name="chosenlanguage">
+          <option value="en">English</option>
+          <option value="ru">Русский</option>
+        </select>
+      </p>
+      <p>
+        <input type="submit" value="<fmt:message key="loginbutton" />">
+        <input type="reset" value="<fmt:message key="clearbutton" />">
+      </p>
+    </form>
+  </body>
 </html>

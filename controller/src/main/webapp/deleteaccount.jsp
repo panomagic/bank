@@ -1,12 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page isELIgnored="false" %>
+
+<fmt:setLocale value="${sessionScope.language}" />
+<fmt:setBundle basename="DeleteaccountBundle" />
+
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Удаление счета</title>
+    <title><fmt:message key="pagetitle" /></title>
   </head>
   <body>
-    <p>Счет был успешно удален</p>
-    <a href="viewaccounts">Вернуться к списку счетов</a><br>
-    <a href="viewclients">Перейти к списку клиентов</a>
+    <p><b><fmt:message key="accdelsuccessfull" /></b></p>
+    <a href="viewaccounts"><fmt:message key="gotoaccountslistlink" /></a><br>
+    <a href="viewclients"><fmt:message key="gotoclientslistlink" /></a>
   </body>
 </html>

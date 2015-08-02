@@ -1,16 +1,21 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<fmt:setLocale value="${sessionScope.language}" />
+<fmt:setBundle basename="UpdateaccountBundle" />
+
 <!DOCTYPE HTML>
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Изменение счета</title>
+  <title><fmt:message key="pagetitle" /></title>
 </head>
 <body>
-  <h2>Изменение счета</h2>
+  <h2><fmt:message key="accupdate" /></h2>
   <form name="updateaccount" action="updatedeleteaccount" method="POST">
-    <p><b>Выберите клиента:</b><br>
+    <p><b><fmt:message key="chooseclient" /></b><br>
       <select name="chooseclient">
         <c:forEach var="client" items="${allClients}">
           <option value="${client.clientID}"
@@ -28,7 +33,7 @@
       </select>
     </p>
 
-    <p><b>Тип счета:</b><br>
+    <p><b><fmt:message key="acctype" /></b><br>
       <c:choose>
         <c:when test="${account.accTypeID == 1}">
           <input type="radio" name="acctypeID" value="1" checked> DEBIT<br>
@@ -41,7 +46,7 @@
       </c:choose>
     </p>
 
-    <p><b>Валюта:</b><br>
+    <p><b><fmt:message key="currency" /></b><br>
       <c:choose>
         <c:when test="${account.currencyID == 1}">
           <input type="radio" name="currencyID" value="1" checked> UAH<br>
@@ -61,9 +66,9 @@
       </c:choose>
     </p>
 
-    <p><input type="submit" value="Сохранить изменения">
-      <input type="reset" value="Отменить ввод"></p>
+    <p><input type="submit" value="<fmt:message key="savebutton" />">
+      <input type="reset" value="<fmt:message key="cancelbutton" />"></p>
   </form>
-  <p><a href="viewaccounts">Назад к списку счетов</a></p>
+  <p><a href="viewaccounts"><fmt:message key="gotoaccountslistbutton" /></a></p>
 </body>
 </html>

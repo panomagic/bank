@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class ClientInfoServlet extends TagSupport {
     private static final Logger logger = Logger.getLogger(ClientInfoServlet.class);
@@ -47,14 +49,17 @@ public class ClientInfoServlet extends TagSupport {
             logger.error("MySQL DB error", e);
         }
 
+        Locale currentLocale = new Locale((String) request.getSession().getAttribute("language"));
+        ResourceBundle columnNames = ResourceBundle.getBundle("ClientinfocolumnsBundle", currentLocale);
+
         try {
             out.write("<table border='1'>");
             out.write("<tr>");
-            out.write("<th><b>ID счета</b></th>");
-            out.write("<th><b>Владелец</b></th>");
-            out.write("<th><b>Тип счета</b></th>");
-            out.write("<th><b>Валюта</b></th>");
-            out.write("<th><b>Баланс счета</b></th>");
+            out.write("<th><b>" + columnNames.getString("accid") + "</b></th>");
+            out.write("<th><b>" + columnNames.getString("accowner") + "</b></th>");
+            out.write("<th><b>" + columnNames.getString("acctype") + "</b></th>");
+            out.write("<th><b>" + columnNames.getString("currency") + "</b></th>");
+            out.write("<th><b>" + columnNames.getString("accbalance") + "</b></th>");
 
             for (int i = 0; i < accounts.size(); i++) {
                 out.write("<tr>");
