@@ -79,7 +79,7 @@ public class UpdateDeleteAccountServlet extends HttpServlet {
 
         updateAccount(request);
 
-        //возвращаемся на страницу со списком счетов
+        //return to accounts list page
         response.sendRedirect("viewaccounts");
         return;
     }
