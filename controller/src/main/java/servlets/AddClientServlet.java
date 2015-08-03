@@ -42,7 +42,7 @@ public class AddClientServlet extends HttpServlet {
             logger.error("MySQL DB error", e);
         }
 
-        //вызываем страницу с подтверждением успешного добавления клиента
+        //goto page with the confirmation about successfully added client
         request.getRequestDispatcher("addclientresult.jsp").forward(request, response);
     }
 }
