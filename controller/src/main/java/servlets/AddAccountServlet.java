@@ -47,7 +47,7 @@ public class AddAccountServlet extends HttpServlet {
             logger.error("MySQL DB error", e);
         }
 
-        //goto page with confirmation about successfully added client
+        //goto page with confirmation about successfully added account
         request.getRequestDispatcher("addaccountresult.jsp").forward(request, response);
     }
 }
