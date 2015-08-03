@@ -64,7 +64,7 @@ public class AccessFilter implements Filter {
             }
         }
 
-        if (loggedUser == null) {   //при неуспешной авторизации перенаправляем пользователя на loginfailed
+        if (loggedUser == null) {   //if auth failed redirect user to loginfailed page
             httpResponse.sendRedirect("loginfailed.jsp");
         }
 
