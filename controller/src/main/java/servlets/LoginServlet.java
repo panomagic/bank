@@ -27,16 +27,16 @@ public class LoginServlet extends HttpServlet {
             throws IOException, ServletException {
 
         User user = null;
-        try {               //получаем пользователя из БД с именем, как у введенного в форме
+        try {               //retriving DB user with the same name as entered in the form
             user = new UserDAO().getUserByUserName(request.getParameter("userName"));
         } catch (SQLException e) {
             logger.error("MySQL DB error", e);
         }
 
-        if (user != null) { //процедура аутентификации по совпадению пароля
+        if (user != null) { //authentication procedure by password mathching
             if(user.getPassword() != null && user.getPassword().equals(request.getParameter("password"))) {
-                user.setPassword("");   //стираем пароль, чтобы не хранить его в сессии
-                request.getSession().setAttribute("LOGGED_USER", user);    //сохраняем user-бин в сессии
+                user.setPassword("");   //clearing the password in order to don't save it in the session
+                request.getSession().setAttribute("LOGGED_USER", user);    //saving user-bean in the session
                 if(user.getRole() == Role.ADMINISTRATOR) {
                     response.sendRedirect("admin.jsp");
                     logger.info("Login as ADMINISTRATOR was performed");
