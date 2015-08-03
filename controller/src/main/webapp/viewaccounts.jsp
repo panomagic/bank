@@ -4,11 +4,11 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <fmt:setLocale value="${sessionScope.language}" />
-<fmt:setBundle basename="ViewaccountsBundle" />
+<fmt:setBundle basename="BankBundle" />
 
 <html>
 <head>
-  <title><fmt:message key="pagetitle" /></title>
+  <title><fmt:message key="viewaccountspagetitle" /></title>
 </head>
   <body>
     <h2>
@@ -18,9 +18,9 @@
     <tr>
       <th><b><fmt:message key="accidcolumn" /></b></th>
       <th><b><fmt:message key="ownercolumn" /></b></th>
-      <th><b><fmt:message key="acctypecolumn" /></b></th>
-      <th><b><fmt:message key="currencycolumn" /></b></th>
-      <th><b><fmt:message key="balancecolumn" /></b></th>
+      <th><b><fmt:message key="acctype" /></b></th>
+      <th><b><fmt:message key="currency" /></b></th>
+      <th><b><fmt:message key="balance" /></b></th>
       <th colspan=2><b><fmt:message key="actioncolumn" /></b></th>
     </tr>
     <c:forEach var="account" items="${allAccounts}">
@@ -56,10 +56,10 @@
         </td>
         <td width="100" align="right">${account.balance}</td>
         <td width="90" align="center">
-          <a href="updatedeleteaccount?action=update&accountID=${account.accountID}">Изменить</a>
+          <a href="updatedeleteaccount?action=update&accountID=${account.accountID}"><fmt:message key="actionupdate" /></a>
         </td>
         <td width="90" align="center">
-          <a href="updatedeleteaccount?action=delete&accountID=${account.accountID}">Удалить</a>
+          <a href="updatedeleteaccount?action=delete&accountID=${account.accountID}"><fmt:message key="actiondelete" /></a>
         </td>
       </tr>
     </c:forEach>

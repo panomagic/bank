@@ -4,13 +4,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <fmt:setLocale value="${sessionScope.language}" />
-<fmt:setBundle basename="UpdateaccountBundle" />
+<fmt:setBundle basename="BankBundle" />
 
 <!DOCTYPE HTML>
 <html>
 <head>
   <meta charset="utf-8">
-  <title><fmt:message key="pagetitle" /></title>
+  <title><fmt:message key="updateaccountpagetitle" /></title>
 </head>
 <body>
   <h2><fmt:message key="accupdate" /></h2>
@@ -69,6 +69,6 @@
     <p><input type="submit" value="<fmt:message key="savebutton" />">
       <input type="reset" value="<fmt:message key="cancelbutton" />"></p>
   </form>
-  <p><a href="viewaccounts"><fmt:message key="gotoaccountslistbutton" /></a></p>
+  <p><a href="viewaccounts"><fmt:message key="gotoaccountslistlink" /></a></p>
 </body>
 </html>

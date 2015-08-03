@@ -1,12 +1,7 @@
 package servlets;
 
-import daos.AccountDAO;
-import daos.ClientDAO;
-import daos.CurrencyDAO;
-import beans.Account;
-import beans.Client;
-import beans.Currency;
-import beans.User;
+import daos.*;
+import beans.*;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,7 +45,7 @@ public class ClientInfoServlet extends TagSupport {
         }
 
         Locale currentLocale = new Locale((String) request.getSession().getAttribute("language"));
-        ResourceBundle columnNames = ResourceBundle.getBundle("ClientinfocolumnsBundle", currentLocale);
+        ResourceBundle columnNames = ResourceBundle.getBundle("BankBundle", currentLocale);
 
         try {
             out.write("<table border='1'>");
@@ -59,7 +54,7 @@ public class ClientInfoServlet extends TagSupport {
             out.write("<th><b>" + columnNames.getString("accowner") + "</b></th>");
             out.write("<th><b>" + columnNames.getString("acctype") + "</b></th>");
             out.write("<th><b>" + columnNames.getString("currency") + "</b></th>");
-            out.write("<th><b>" + columnNames.getString("accbalance") + "</b></th>");
+            out.write("<th><b>" + columnNames.getString("balance") + "</b></th>");
 
             for (int i = 0; i < accounts.size(); i++) {
                 out.write("<tr>");

@@ -6,12 +6,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <fmt:setLocale value="${sessionScope.language}" />
-<fmt:setBundle basename="ViewclientsBundle" />
+<fmt:setBundle basename="BankBundle" />
 
 <html>
 <head>
     <meta charset="utf-8">
-    <title><fmt:message key="pagetitle" /></title>
+    <title><fmt:message key="viewclientspagetitle" /></title>
 </head>
 <body>
   <h2>
@@ -21,7 +21,7 @@
           <tr>
               <th><b><fmt:message key="clientidcolumn" /></b></th>
               <th><b><fmt:message key="fullnamecolumn" /></b></th>
-              <th><b><fmt:message key="gendercolumn" /></b></th>
+              <th><b><fmt:message key="gender" /></b></th>
               <th><b><fmt:message key="dateofbirthcolumn" /></b></th>
               <th><b><fmt:message key="dateofregcolumn" /></b></th>
               <th colspan=2><b><fmt:message key="actioncolumn" /></b></th>
@@ -34,10 +34,10 @@
                   <td width="100" align="center"><fmt:formatDate value="${client.dateOfBirth}" pattern="dd.MM.yyyy" /></td>
                   <td width="100" align="center"><fmt:formatDate value="${client.dateOfReg}" pattern="dd.MM.yyyy" /></td>
                   <td width="90" align="center">
-                      <a href="updatedeleteclient?action=update&clientID=${client.clientID}">Изменить</a>
+                      <a href="updatedeleteclient?action=update&clientID=${client.clientID}"><fmt:message key="actionupdate" /></a>
                   </td>
                   <td width="90" align="center">
-                      <a href="updatedeleteclient?action=delete&clientID=${client.clientID}">Удалить</a>
+                      <a href="updatedeleteclient?action=delete&clientID=${client.clientID}"><fmt:message key="actiondelete" /></a>
                   </td>
               </tr>
           </c:forEach>

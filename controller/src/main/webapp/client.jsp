@@ -4,11 +4,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <fmt:setLocale value="${sessionScope.language}" />
-<fmt:setBundle basename="ClientBundle" />
+<fmt:setBundle basename="BankBundle" />
 
 <html>
 <head>
-  <title><fmt:message key="pagetitle" /></title>
+  <title><fmt:message key="clientpagetitle" /></title>
 </head>
 <body>
 <h2>

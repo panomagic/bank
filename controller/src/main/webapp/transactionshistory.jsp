@@ -4,11 +4,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <fmt:setLocale value="${sessionScope.language}" />
-<fmt:setBundle basename="TransactionshistoryBundle" />
+<fmt:setBundle basename="BankBundle" />
 
 <html>
 <head>
-  <title><fmt:message key="pagetitle" /></title>
+  <title><fmt:message key="transactionshistorypagetitle" /></title>
 </head>
 <body>
 <h2>
@@ -17,13 +17,13 @@
 <table border="1">
   <tr>
     <th><b><fmt:message key="transtableid" /></b></th>
-    <th><b><fmt:message key="transtablepayer" /></b></th>
+    <th><b><fmt:message key="payer" /></b></th>
     <th><b><fmt:message key="transtablepayeracc" /></b></th>
     <th><b><fmt:message key="transtablepayeracctype" /></b></th>
-    <th><b><fmt:message key="transtablerecipient" /></b></th>
+    <th><b><fmt:message key="recipient" /></b></th>
     <th><b><fmt:message key="transtablerecipientacc" /></b></th>
     <th><b><fmt:message key="transtablerecipientacctype" /></b></th>
-    <th><b><fmt:message key="transtablecurrency" /></b></th>
+    <th><b><fmt:message key="currency" /></b></th>
     <th><b><fmt:message key="transtabledatetime" /></b></th>
     <th><b><fmt:message key="transtableamount" /></b></th>
   </tr>

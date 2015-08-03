@@ -4,13 +4,13 @@
 <%@ page isELIgnored="false" %>
 
 <fmt:setLocale value="${sessionScope.language}" />
-<fmt:setBundle basename="AddclientBundle" />
+<fmt:setBundle basename="BankBundle" />
 
 <!DOCTYPE HTML>
 <html>
 <head>
   <meta charset="utf-8">
-  <title><fmt:message key="pagetitle" /></title>
+  <title><fmt:message key="addclientpagetitle" /></title>
 </head>
 <body>
 <h2><fmt:message key="addnewclient" /></h2>
@@ -18,13 +18,13 @@
   <p><b><fmt:message key="clientfullname" /></b><br>
     <input type="text" name="fullname" placeholder="ФИО" size="50">
   </p>
-  <p><b><fmt:message key="gender" /></b><br>
-    <input type="radio" name="gender" value="m"> <fmt:message key="gendermale" /><br>
-    <input type="radio" name="gender" value="f"> <fmt:message key="genderfemale" /><br>
+  <p><b><fmt:message key="gendersemicolon" /></b><br>
+    <input type="radio" name="gender" value="m"> <fmt:message key="male" /><br>
+    <input type="radio" name="gender" value="f"> <fmt:message key="female" /><br>
   </p>
-  <p><b><fmt:message key="birthdate" /></b><br>
+  <p><b><fmt:message key="dateofbirth" /></b><br>
     <input type="date" name="dateofbirth"></p>
-  <p><b><fmt:message key="regdate" /></b><br>
+  <p><b><fmt:message key="dateofreg" /></b><br>
     <input type="date" name="dateofreg"></p>
   <p><input type="submit" value="<fmt:message key="savebutton" />">
     <input type="reset" value="<fmt:message key="clearbutton" />"></p>

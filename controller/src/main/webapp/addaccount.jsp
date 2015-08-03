@@ -4,13 +4,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <fmt:setLocale value="${sessionScope.language}" />
-<fmt:setBundle basename="AddaccountBundle" />
+<fmt:setBundle basename="BankBundle" />
 
 <!DOCTYPE HTML>
 <html>
 <head>
   <meta charset="utf-8">
-  <title><fmt:message key="pagetitle" /></title>
+  <title><fmt:message key="addaccountpagetitle" /></title>
 </head>
 <body>
 <h2><fmt:message key="addnewaccount" /></h2>
@@ -23,12 +23,12 @@
       </select>
     </p>
 
-    <p><b><fmt:message key="acctype" /></b><br>
+    <p><b><fmt:message key="acctypesemicolon" /></b><br>
       <input type="radio" name="acctypeID" value="1"> DEBIT<br>
       <input type="radio" name="acctypeID" value="2"> CREDIT<br>
     </p>
 
-    <p><b><fmt:message key="currency" /></b><br>
+    <p><b><fmt:message key="currencysemicolon" /></b><br>
       <input type="radio" name="currencyID" value="1"> UAH<br>
       <input type="radio" name="currencyID" value="2"> USD<br>
       <input type="radio" name="currencyID" value="3"> EUR<br>

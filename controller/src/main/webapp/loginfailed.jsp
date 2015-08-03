@@ -3,12 +3,12 @@
 <%@ page isELIgnored="false" %>
 
 <fmt:setLocale value="${sessionScope.language}" />
-<fmt:setBundle basename="LoginfailedBundle" />
+<fmt:setBundle basename="BankBundle" />
 
 <html>
 <head>
   <meta charset="utf-8">
-  <title><fmt:message key="pagetitle" /></title>
+  <title><fmt:message key="loginfailedpagetitle" /></title>
 </head>
 <body>
   <p><b><fmt:message key="loginerror" /></b></p>

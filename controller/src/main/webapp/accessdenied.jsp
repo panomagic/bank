@@ -4,12 +4,12 @@
 <%@ page isELIgnored="false" %>
 
 <fmt:setLocale value="${sessionScope.language}" />
-<fmt:setBundle basename="AccessdeniedBundle" />
+<fmt:setBundle basename="BankBundle" />
 
 <html>
 <head>
   <meta charset="utf-8">
-  <title><fmt:message key="pagetitle" /></title>
+  <title><fmt:message key="accessdeniedpagetitle" /></title>
 </head>
 <body>
   <h2><fmt:message key="onlyadminallowed" /></h2>

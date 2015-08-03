@@ -4,13 +4,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <fmt:setLocale value="${sessionScope.language}" />
-<fmt:setBundle basename="UpdateclientBundle" />
+<fmt:setBundle basename="BankBundle" />
 
 <!DOCTYPE HTML>
 <html>
 <head>
   <meta charset="utf-8">
-  <title><fmt:message key="pagetitle" /></title>
+  <title><fmt:message key="updateclientpagetitle" /></title>
 </head>
 <body>
   <h2><fmt:message key="clientupdate" /></h2>
@@ -21,12 +21,12 @@
   <p><b><fmt:message key="gender" /></b><br>
     <c:choose>
       <c:when test="${client.gender == 'MALE'}">
-        <input type="radio" name="gender" value="m" checked> <fmt:message key="gendermale" /><br>
-        <input type="radio" name="gender" value="f"> <fmt:message key="genderfemale" /><br>
+        <input type="radio" name="gender" value="m" checked> <fmt:message key="male" /><br>
+        <input type="radio" name="gender" value="f"> <fmt:message key="female" /><br>
       </c:when>
       <c:otherwise>
-        <input type="radio" name="gender" value="m"> <fmt:message key="gendermale" /><br>
-        <input type="radio" name="gender" value="f" checked> <fmt:message key="genderfemale" /><br>
+        <input type="radio" name="gender" value="m"> <fmt:message key="male" /><br>
+        <input type="radio" name="gender" value="f" checked> <fmt:message key="female" /><br>
       </c:otherwise>
     </c:choose>
   </p>
@@ -39,6 +39,6 @@
   <p><input type="submit" value="<fmt:message key="savebutton" />">
     <input type="reset" value="<fmt:message key="cancelbutton" />"></p>
 </form>
-<p><a href="viewclients"><fmt:message key="gotoclientslistbutton" /></a></p>
+<p><a href="viewclients"><fmt:message key="gotoclientslistlink" /></a></p>
 </body>
 </html>

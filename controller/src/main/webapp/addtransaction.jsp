@@ -4,13 +4,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <fmt:setLocale value="${sessionScope.language}" />
-<fmt:setBundle basename="AddtransactionBundle" />
+<fmt:setBundle basename="BankBundle" />
 
 <!DOCTYPE HTML>
 <html>
 <head>
   <meta charset="utf-8">
-    <title><fmt:message key="pagetitle" /></title>
+    <title><fmt:message key="addtransactionpagetitle" /></title>
 </head>
 <body>
   <h2><fmt:message key="addnewtransaction" /></h2>

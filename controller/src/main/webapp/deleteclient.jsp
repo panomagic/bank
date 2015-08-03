@@ -3,13 +3,13 @@
 <%@ page isELIgnored="false" %>
 
 <fmt:setLocale value="${sessionScope.language}" />
-<fmt:setBundle basename="DeleteclientBundle" />
+<fmt:setBundle basename="BankBundle" />
 
 <!DOCTYPE HTML>
 <html>
 <head>
   <meta charset="utf-8">
-  <title><fmt:message key="pagetitle" /></title>
+  <title><fmt:message key="deleteclientpagetitle" /></title>
 </head>
   <body>
     <p><fmt:message key="clientdelsuccessfull" /></p>

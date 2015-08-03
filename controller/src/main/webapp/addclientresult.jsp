@@ -4,11 +4,11 @@
 <%@ page isELIgnored="false" %>
 
 <fmt:setLocale value="${sessionScope.language}" />
-<fmt:setBundle basename="AddclientresultBundle" />
+<fmt:setBundle basename="BankBundle" />
 
 <html>
 <head>
-    <title><fmt:message key="pagetitle" /></title>
+    <title><fmt:message key="addclientresultpagetitle" /></title>
 </head>
 <body>
   <b><fmt:message key="clientsuccess" /></b><br>
