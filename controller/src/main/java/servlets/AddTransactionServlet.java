@@ -29,7 +29,7 @@ public class AddTransactionServlet extends HttpServlet {
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        List payerAccounts = new ArrayList();   //счета плат-ков - в зав. от роли (свои для клиента и все для админа)
+        List payerAccounts = new ArrayList();   //showing payer accounts separately for user roles: all accounts for admin and only his own for client
         User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
         if (Role.ADMINISTRATOR == loggedUser.getRole()) {
             try {
@@ -47,7 +47,7 @@ public class AddTransactionServlet extends HttpServlet {
         }
         request.setAttribute("payerAccounts", payerAccounts);
 
-        List recipientAccounts = new ArrayList(); //счета получателей - полный список
+        List recipientAccounts = new ArrayList(); //all recipient accounts list
             try {
                 recipientAccounts = new AccountDAO().getAllAccounts();
             } catch (SQLException e) {
@@ -94,7 +94,7 @@ public class AddTransactionServlet extends HttpServlet {
             logger.error("MySQL DB error", e);
         }
 
-        //проверка соответствия валюты счета получателя и отправителя
+        //checking currency matching in payer's and recipient's accounts
         if(payerAccount.getCurrencyID() != recipientAccount.getCurrencyID())
         {
             response.sendRedirect("transcurrencymismatch.jsp");
@@ -111,7 +111,7 @@ public class AddTransactionServlet extends HttpServlet {
         transaction.setSum(new BigDecimal(Double.parseDouble(request.getParameter("sum"))));
         TransactionDAO transactionDAO = new TransactionDAO();
 
-        //проверка для дебитного счета плательщика (сумма транзакции не больше баланса):
+        //checking for debit payer's account: transfer amount must be less or equal to balance
         if (payerAccount.getAccTypeID() == 1 && transaction.getSum().compareTo(payerAccount.getBalance()) == 1) {
             response.sendRedirect("transoverdraft.jsp");
             return;
