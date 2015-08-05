@@ -14,10 +14,27 @@
 <h2>
   <fmt:message key="clientloginsuccessfull" />
 </h2>
-<h2>
+<h3>
   <fmt:message key="youracclist" />
-</h2>
-  <m:clientInfo></m:clientInfo>
+</h3>
+<table border='1'>
+  <tr>
+    <th><b><fmt:message key="accid" /></b></th>
+    <th><b><fmt:message key="accowner" /></b></th>
+    <th><b><fmt:message key="acctype" /></b></th>
+    <th><b><fmt:message key="currency" /></b></th>
+    <th><b><fmt:message key="balance" /></b></th>
+  </tr>
+  <m:forEach items="${records}" var="row">
+    <tr>
+      <m:forEach items="${row}" var="col">
+        <td>
+            ${col}
+        </td>
+      </m:forEach>
+    </tr>
+  </m:forEach>
+</table>
 <p>
   <a href="addtransaction"><fmt:message key="addtransaction" /></a>
 </p>

@@ -13,6 +13,6 @@
 </head>
 <body>
   <h2><fmt:message key="onlyadminallowed" /></h2>
-  <a href="viewaccountbyid"><fmt:message key="viewaccountbyidlink" /></a>
+  <a href="clientinfo"><fmt:message key="clientinfolink" /></a>
 </body>
 </html>

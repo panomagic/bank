@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
                     logger.info("Login as ADMINISTRATOR was performed");
                 }
                 else if(user.getRole() == Role.CLIENT) {
-                    response.sendRedirect("/viewaccountbyid");
+                    response.sendRedirect("/clientinfo");
                     logger.info("Login as CLIENT was performed by user " + user.getUserName());
                 }
             }

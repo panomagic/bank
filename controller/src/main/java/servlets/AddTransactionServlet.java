@@ -127,6 +127,6 @@ public class AddTransactionServlet extends HttpServlet {
         if (loggedUser != null && Role.ADMINISTRATOR == loggedUser.getRole())
             response.sendRedirect("viewaccounts");
         else if (loggedUser != null && Role.CLIENT == loggedUser.getRole())
-            response.sendRedirect("viewaccountbyid");
+            response.sendRedirect("clientinfo");
     }
 }

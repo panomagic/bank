@@ -1,27 +1,25 @@
 package servlets;
 
+import beans.Currency;
 import daos.*;
 import beans.*;
 import org.apache.log4j.Logger;
 
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.jsp.JspException;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.tagext.TagSupport;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
-public class ClientInfoServlet extends TagSupport {
+@WebServlet("/clientinfo")
+public class ClientInfoServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(ClientInfoServlet.class);
+        public void doGet(HttpServletRequest request, HttpServletResponse response)
+                throws ServletException, IOException {
 
-    public int doStartTag() throws JspException {
-        JspWriter out = pageContext.getOut();
-
-        HttpServletRequest request = (HttpServletRequest) pageContext.getRequest();
         User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
         List<Account> accounts = new ArrayList<Account>();
         try {
@@ -44,53 +42,34 @@ public class ClientInfoServlet extends TagSupport {
             logger.error("MySQL DB error", e);
         }
 
-        Locale currentLocale = new Locale((String) request.getSession().getAttribute("language"));
-        ResourceBundle columnNames = ResourceBundle.getBundle("BankBundle", currentLocale);
-
-        try {
-            out.write("<table border='1'>");
-            out.write("<tr>");
-            out.write("<th><b>" + columnNames.getString("accid") + "</b></th>");
-            out.write("<th><b>" + columnNames.getString("accowner") + "</b></th>");
-            out.write("<th><b>" + columnNames.getString("acctype") + "</b></th>");
-            out.write("<th><b>" + columnNames.getString("currency") + "</b></th>");
-            out.write("<th><b>" + columnNames.getString("balance") + "</b></th>");
-
-            for (int i = 0; i < accounts.size(); i++) {
-                out.write("<tr>");
-
-                out.write("<td width=\"30\" align=\"center\">" + accounts.get(i).getAccountID() + "</td>");
-
-                out.write("<td width=\"150\">");
-                for (int j = 0; j < clients.size(); j++) {
-                    if (accounts.get(i).getClientID() == clients.get(j).getClientID())
-                        out.write(clients.get(j).getFullName());
-                }
-                out.write("</td>");
-
-                out.write("<td width=\"100\" align=\"center\">");
-                if (accounts.get(i).getAccTypeID() == 1)
-                    out.write("DEBIT");
-                else if (accounts.get(i).getAccTypeID() == 2)
-                    out.write("CREDIT");
-                out.write("</td>");
-
-                out.write("<td width=\"70\" align=\"center\">");
-                for (int j = 0; j < currencies.size(); j++) {
-                    if (accounts.get(i).getCurrencyID() == currencies.get(j).getCurrencyID())
-                        out.write(currencies.get(j).getCurrency());
-                }
-                out.write("</td>");
-
-                out.write("<td width=\"100\" align=\"right\">" + accounts.get(i).getBalance() + "</td>");
-
-                out.write("</tr>");
+        Object[][] records = new Object[accounts.size()][];
+        String clientName = null;
+        String accType = null;
+        String currency = null;
+        for (int i = 0; i < accounts.size(); i++) {
+            for (int j = 0; j < clients.size(); j++) {
+                if (accounts.get(i).getClientID() == clients.get(j).getClientID())
+                    clientName = clients.get(j).getFullName();
             }
-            out.write("</table>");
-        } catch (IOException e) {
-            logger.warn("IO error while processing of JSP tags", e);
-        }
 
-        return SKIP_BODY;
+            if (accounts.get(i).getAccTypeID() == 1)
+                accType = "DEBIT";
+            else if (accounts.get(i).getAccTypeID() == 2)
+                accType = "CREDIT";
+
+            for (int j = 0; j < currencies.size(); j++) {
+                if (accounts.get(i).getCurrencyID() == currencies.get(j).getCurrencyID())
+                    currency = currencies.get(j).getCurrency();
+            }
+            records[i] = new Object[]{
+                    accounts.get(i).getAccountID(),
+                    clientName,
+                    accType,
+                    currency,
+                    accounts.get(i).getBalance()
+            };
+        }
+        request.setAttribute("records", records);
+        request.getRequestDispatcher("client.jsp").forward(request, response);
     }
 }

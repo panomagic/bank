@@ -9,9 +9,23 @@
     <short-name>info</short-name>
     <uri>mytags</uri>
     <tag>
-        <name>clientInfo</name>
-        <tag-class>servlets.ClientInfoServlet</tag-class>
-        <body-content>empty</body-content>
+        <name>forEach</name>
+        <tag-class>servlets.ForEachTag</tag-class>
+        <body-content>scriptless</body-content>
+        <attribute>
+            <description>
+                The array of elements
+            </description>
+            <name>items</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <description>
+                The name of the local variable that each entry will be assigned to
+            </description>
+            <name>var</name>
+            <required>true</required>
+        </attribute>
     </tag>
-    <!-- Invoke 'Generate' action to add tags or functions -->
 </taglib>

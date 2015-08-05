@@ -28,7 +28,7 @@ public class AccessFilter implements Filter {
         freeAccessUrls.add("/logout");
         freeAccessUrls.add("/accessdenied.jsp");
 
-        clientAccessUrls.add("/viewaccountbyid");
+        clientAccessUrls.add("/clientinfo");
         clientAccessUrls.add("/client.jsp");
         clientAccessUrls.add("/addtransaction");
         clientAccessUrls.add("/transcurrencymismatch.jsp");

@@ -117,7 +117,7 @@
   </c:when>
   <c:when test="${sessionScope.LOGGED_USER.role == 'CLIENT'}">
     <p>
-      <a href="viewaccountbyid"><fmt:message key="gotoaccountslistlink" /></a>
+      <a href="clientinfo"><fmt:message key="clientinfolink" /></a>
     </p>
   </c:when>
 </c:choose>

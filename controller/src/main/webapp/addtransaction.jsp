@@ -93,7 +93,7 @@
         <a href="viewclients"><fmt:message key="gotoclientslistlink" /></a>
       </c:when>
       <c:when test="${userrole == 'CLIENT'}">
-        <a href="viewaccounts"><fmt:message key="gotoaccountslistlink" /></a><br>
+        <a href="clientinfo"><fmt:message key="gotoaccountslistlink" /></a><br>
       </c:when>
     </c:choose>
   </p>
