@@ -18,9 +18,9 @@
     <p><b><fmt:message key="chooseclient" /></b><br>
       <select name="chooseclient">
         <c:forEach var="client" items="${allClients}">
-          <option value="${client.clientID}"
+          <option value="${client.id}"
             <c:choose>
-              <c:when test="${client.clientID == account.clientID}">
+              <c:when test="${client.id == account.clientID}">
                 selected="selected">
               </c:when>
               <c:otherwise>

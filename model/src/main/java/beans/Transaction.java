@@ -3,12 +3,12 @@ package beans;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Transaction {
+public class Transaction implements Identified<Integer> {
 
     public Transaction() {
     }
 
-    private int transID;
+    private Integer id;
     private int currencyID;
     private int payerID;
     private int payerAccID;
@@ -18,12 +18,12 @@ public class Transaction {
     private Date transDateTime;
     private BigDecimal sum;
 
-    public int getTransID() {
-        return transID;
+    public Integer getid() {
+        return id;
     }
 
-    public void setTransID(int transID) {
-        this.transID = transID;
+    public void setid(int id) {
+        this.id = id;
     }
 
     public int getCurrencyID() {

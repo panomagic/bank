@@ -1,13 +1,9 @@
 package servlets;
 
-import daos.AccountDAO;
-import daos.ClientDAO;
-import daos.CurrencyDAO;
-import daos.TransactionDAO;
-import beans.Account;
-import beans.Role;
-import beans.Transaction;
-import beans.User;
+import beans.*;
+import daos.*;
+import mysql.MySQLDAOFactory;
+import mysql.MySQLTransactionDAO;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -17,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,44 +26,62 @@ public class AddTransactionServlet extends HttpServlet {
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        List payerAccounts = new ArrayList();   //showing payer accounts separately for user roles: all accounts for admin and only his own for client
+        List<Account> payerAccounts = new ArrayList<>();   //showing payer accounts separately for user roles: all accounts for admin and only his own for client
         User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
+
+        MySQLDAOFactory factory = new MySQLDAOFactory();
+        Connection connection = null;
+        GenericDAO daoAccount = null;
+        try {
+            connection = factory.getContext();
+            daoAccount = factory.getDAO(connection, Account.class);
+        } catch (PersistException e) {
+            logger.error("MySQL DB error", e);
+        }
+
         if (Role.ADMINISTRATOR == loggedUser.getRole()) {
             try {
-                payerAccounts = new AccountDAO().getAllAccounts();
-            } catch (SQLException e) {
+                payerAccounts = daoAccount.getAll();
+            } catch (PersistException e) {
                 logger.error("MySQL DB error", e);
             }
         }
         else if (Role.CLIENT == loggedUser.getRole()) {
             try {
-                payerAccounts = new AccountDAO().getAccountsByClientID(loggedUser.getClientID());
-            } catch (SQLException e) {
+                List<Account> allAccounts;
+                allAccounts = daoAccount.getAll();
+                for (int i = 0; i < allAccounts.size(); i++) {
+                    if (allAccounts.get(i).getClientID() == loggedUser.getClientID())
+                        payerAccounts.add(allAccounts.get(i));
+                }
+            } catch (PersistException e) {
                 logger.error("MySQL DB error", e);
             }
         }
         request.setAttribute("payerAccounts", payerAccounts);
 
-        List recipientAccounts = new ArrayList(); //all recipient accounts list
-            try {
-                recipientAccounts = new AccountDAO().getAllAccounts();
-            } catch (SQLException e) {
-                logger.error("MySQL DB error", e);
-            }
+        List<Account> recipientAccounts = new ArrayList<>(); //all recipient accounts list
+        try {
+            recipientAccounts = daoAccount.getAll();
+        } catch (PersistException e) {
+            logger.error("MySQL DB error", e);
+        }
         request.setAttribute("recipientAccounts", recipientAccounts);
 
-        List clients = new ArrayList();
+        List<Client> clients = new ArrayList<>();
         try {
-            clients = new ClientDAO().getAllClients();
-        } catch (SQLException e) {
+            GenericDAO daoClient = factory.getDAO(connection, Client.class);
+            clients = daoClient.getAll();
+        } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
         request.setAttribute("allClients", clients);
 
-        List currencies = new ArrayList();
+        List<Currency> currencies = new ArrayList<>();
         try {
-            currencies = new CurrencyDAO().getAllCurrencies();
-        } catch (SQLException e) {
+            GenericDAO daoCurrency = factory.getDAO(connection, Currency.class);
+            currencies = daoCurrency.getAll();
+        } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
         request.setAttribute("allCurrencies", currencies);
@@ -78,19 +93,24 @@ public class AddTransactionServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         Transaction transaction = new Transaction();
+
+        MySQLDAOFactory factory = new MySQLDAOFactory();
+        Connection connection = null;
+        GenericDAO daoAccount = null;
+
         Account payerAccount = null;
         try {
-            payerAccount = new AccountDAO().
-                    getAccountByID(Integer.parseInt(request.getParameter("choosepayeraccount")));
-        } catch (SQLException e) {
+            connection = factory.getContext();
+            daoAccount = factory.getDAO(connection, Account.class);
+            payerAccount = (Account) daoAccount.getByPK(Integer.parseInt(request.getParameter("choosepayeraccount")));
+        } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
 
         Account recipientAccount = null;
         try {
-            recipientAccount = new AccountDAO().
-                    getAccountByID(Integer.parseInt(request.getParameter("chooserecipientaccount")));
-        } catch (SQLException e) {
+            recipientAccount = (Account) daoAccount.getByPK(Integer.parseInt(request.getParameter("chooserecipientaccount")));
+        } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
 
@@ -98,27 +118,31 @@ public class AddTransactionServlet extends HttpServlet {
         if(payerAccount.getCurrencyID() != recipientAccount.getCurrencyID())
         {
             response.sendRedirect("transcurrencymismatch.jsp");
+            logger.info("Money transfer attempt from account with id " + payerAccount.getid() + " to account with с id "
+                    + recipientAccount.getid() + " was REJECTED due to currency mismatch");
             return;
         }
 
         transaction.setCurrencyID(payerAccount.getCurrencyID());
         transaction.setPayerID(payerAccount.getClientID());
-        transaction.setPayerAccID(payerAccount.getAccountID());
+        transaction.setPayerAccID(payerAccount.getid());
 
         transaction.setRecipientID(recipientAccount.getClientID());
-        transaction.setRecipientAccID(recipientAccount.getAccountID());
+        transaction.setRecipientAccID(recipientAccount.getid());
         transaction.setTransTypeID(3);
         transaction.setSum(new BigDecimal(Double.parseDouble(request.getParameter("sum"))));
-        TransactionDAO transactionDAO = new TransactionDAO();
+        MySQLTransactionDAO mySQLTransactionDAO = new MySQLTransactionDAO(connection);
 
         //checking for debit payer's account: transfer amount must be less or equal to balance
         if (payerAccount.getAccTypeID() == 1 && transaction.getSum().compareTo(payerAccount.getBalance()) == 1) {
             response.sendRedirect("transoverdraft.jsp");
+            logger.info("Money transfer attempt from account with id " + payerAccount.getid() + " to account with с id "
+                     + recipientAccount.getid() + " was REJECTED: not enough money on payer's account");
             return;
         }
 
         try {
-            transactionDAO.addTransaction(transaction);
+            mySQLTransactionDAO.addTransaction(transaction);
         } catch (SQLException e) {
             logger.error("MySQL DB error", e);
         }

@@ -18,7 +18,7 @@
     <p><b><fmt:message key="chooseclient" /></b><br>
       <select name="chooseclient">
         <c:forEach var="client" items="${allClients}">
-          <option value="${client.clientID}">${client.fullName}</option>
+          <option value="${client.id}">${client.fullName}</option>
         </c:forEach>
       </select>
     </p>

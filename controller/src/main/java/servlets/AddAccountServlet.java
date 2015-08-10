@@ -2,6 +2,7 @@ package servlets;
 
 import daos.*;
 import beans.*;
+import mysql.*;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +25,11 @@ public class AddAccountServlet extends HttpServlet {
 
         List clients = new ArrayList();
         try {
-            clients = new ClientDAO().getAllClients();
-        } catch (SQLException e) {
+            MySQLDAOFactory factory = new MySQLDAOFactory();
+            Connection connection = factory.getContext();
+            GenericDAO dao = factory.getDAO(connection, Client.class);
+            clients = dao.getAll();
+        } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
 
@@ -42,8 +47,12 @@ public class AddAccountServlet extends HttpServlet {
         account.setAccTypeID(Integer.parseInt(request.getParameter("acctypeID")));
 
         try {
-            new AccountDAO().addAccount(account);
-        } catch (SQLException e) {
+            MySQLDAOFactory factory = new MySQLDAOFactory();
+            Connection connection = factory.getContext();
+            GenericDAO dao = factory.getDAO(connection, Account.class);
+            dao.persist(account);
+            logger.info("New account was added for client with id " + account.getClientID());
+        } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
 

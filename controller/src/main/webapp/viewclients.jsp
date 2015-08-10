@@ -28,16 +28,16 @@
           </tr>
           <c:forEach var="client" items="${allClients}">
               <tr>
-                  <td width="30" align="center">${client.clientID}</td>
+                  <td width="30" align="center">${client.id}</td>
                   <td width="150">${client.fullName}</td>
                   <td width="70" align="center">${fn:toLowerCase(client.gender)}</td>
                   <td width="100" align="center"><fmt:formatDate value="${client.dateOfBirth}" pattern="dd.MM.yyyy" /></td>
                   <td width="100" align="center"><fmt:formatDate value="${client.dateOfReg}" pattern="dd.MM.yyyy" /></td>
                   <td width="90" align="center">
-                      <a href="updatedeleteclient?action=update&clientID=${client.clientID}"><fmt:message key="actionupdate" /></a>
+                      <a href="updatedeleteclient?action=update&id=${client.id}"><fmt:message key="actionupdate" /></a>
                   </td>
                   <td width="90" align="center">
-                      <a href="updatedeleteclient?action=delete&clientID=${client.clientID}"><fmt:message key="actiondelete" /></a>
+                      <a href="updatedeleteclient?action=delete&id=${client.id}"><fmt:message key="actiondelete" /></a>
                   </td>
               </tr>
           </c:forEach>

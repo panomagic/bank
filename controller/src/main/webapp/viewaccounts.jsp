@@ -25,11 +25,11 @@
     </tr>
     <c:forEach var="account" items="${allAccounts}">
       <tr>
-        <td width="30" align="center">${account.accountID}</td>
+        <td width="30" align="center">${account.id}</td>
         <td width="150">
           <c:forEach var="client" items="${allClients}">
             <c:choose>
-              <c:when test="${account.clientID == client.clientID}">
+              <c:when test="${account.clientID == client.id}">
                 ${client.fullName}
               </c:when>
             </c:choose>
@@ -48,7 +48,7 @@
         <td width="70" align="center">
           <c:forEach var="currency" items="${allCurrencies}">
             <c:choose>
-              <c:when test="${account.currencyID == currency.currencyID}">
+              <c:when test="${account.currencyID == currency.id}">
                 ${currency.currency}
               </c:when>
             </c:choose>
@@ -56,10 +56,10 @@
         </td>
         <td width="100" align="right">${account.balance}</td>
         <td width="90" align="center">
-          <a href="updatedeleteaccount?action=update&accountID=${account.accountID}"><fmt:message key="actionupdate" /></a>
+          <a href="updatedeleteaccount?action=update&id=${account.id}"><fmt:message key="actionupdate" /></a>
         </td>
         <td width="90" align="center">
-          <a href="updatedeleteaccount?action=delete&accountID=${account.accountID}"><fmt:message key="actiondelete" /></a>
+          <a href="updatedeleteaccount?action=delete&id=${account.id}"><fmt:message key="actiondelete" /></a>
         </td>
       </tr>
     </c:forEach>

@@ -1,18 +1,18 @@
 package beans;
 
-public class Currency {
+public class Currency implements Identified<Integer> {
     public Currency() {
     }
 
-    private int currencyID;
+    private Integer id;
     private String currency;
 
-    public int getCurrencyID() {
-        return currencyID;
+    public Integer getid() {
+        return id;
     }
 
-    public void setCurrencyID(int currencyID) {
-        this.currencyID = currencyID;
+    public void setid(int id) {
+        this.id = id;
     }
 
     public String getCurrency() {

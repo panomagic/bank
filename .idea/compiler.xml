@@ -22,17 +22,35 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
-        <module name="controller" />
-        <module name="dao" />
         <module name="filters" />
+      </profile>
+      <profile default="false" name="Annotation profile for controller" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="controller" />
+      </profile>
+      <profile default="false" name="Annotation profile for dao" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="dao" />
+      </profile>
+      <profile default="false" name="Annotation profile for model" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
         <module name="model" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="bank-multimodule" target="1.5" />
-      <module name="controller" target="1.5" />
-      <module name="dao" target="1.5" />
-      <module name="model" target="1.5" />
+    <bytecodeTargetLevel target="1.8">
+      <module name="bank-multimodule" target="1.8" />
+      <module name="controller" target="1.8" />
+      <module name="dao" target="1.8" />
+      <module name="model" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

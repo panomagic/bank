@@ -4,12 +4,12 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Client {
+public class Client implements Identified<Integer> {
 
     public Client() {
     }
 
-    private int clientID;
+    private Integer id;
     private String fullName;
     private Gender gender;
     private Date dateOfBirth;
@@ -18,12 +18,12 @@ public class Client {
     private Set clientsAccounts = new HashSet();    //возм., убрать
 
 
-    public int getClientID() {
-        return clientID;
+    public Integer getid() {
+        return id;
     }
 
-    public void setClientID(int clientID) {
-        this.clientID = clientID;
+    public void setid(int id) {
+        this.id = id;
     }
 
     public String getFullName() {

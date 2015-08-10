@@ -28,11 +28,11 @@
           </c:choose>
           <c:forEach var="client" items="${allClients}">
             <c:choose>
-              <c:when test="${account.clientID == client.clientID}">
+              <c:when test="${account.clientID == client.id}">
                 <c:forEach var="currency" items="${allCurrencies}">
                   <c:choose>
-                    <c:when test="${account.currencyID == currency.currencyID}">
-                      <option value="${account.accountID}">
+                    <c:when test="${account.currencyID == currency.id}">
+                      <option value="${account.id}">
                         ${client.fullName} | ${accType} | ${account.balance} ${currency.currency}
                       </option>
                     </c:when>
@@ -58,11 +58,11 @@
           </c:choose>
           <c:forEach var="client" items="${allClients}">
             <c:choose>
-              <c:when test="${account.clientID == client.clientID}">
+              <c:when test="${account.clientID == client.id}">
                 <c:forEach var="currency" items="${allCurrencies}">
                   <c:choose>
-                    <c:when test="${account.currencyID == currency.currencyID}">
-                      <option value="${account.accountID}">
+                    <c:when test="${account.currencyID == currency.id}">
+                      <option value="${account.id}">
                           ${client.fullName} | ${accType} | ${account.balance} ${currency.currency}
                       </option>
                     </c:when>

@@ -3,6 +3,7 @@ package servlets;
 import beans.Currency;
 import daos.*;
 import beans.*;
+import mysql.MySQLDAOFactory;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
 
@@ -21,24 +23,38 @@ public class ClientInfoServlet extends HttpServlet {
                 throws ServletException, IOException {
 
         User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
-        List<Account> accounts = new ArrayList<Account>();
+        List<Account> accounts = new ArrayList<Account>();        //only accounts of user's client
+        List<Account> allAccounts = new ArrayList<Account>();           //all accounts list
         try {
-            accounts = new AccountDAO().getAccountsByClientID(loggedUser.getClientID());
-        } catch (SQLException e) {
+            MySQLDAOFactory factory = new MySQLDAOFactory();
+            Connection connection = factory.getContext();
+            GenericDAO dao = factory.getDAO(connection, Account.class);
+            allAccounts = dao.getAll();
+            for (int i = 0; i < allAccounts.size(); i++) {
+                if (allAccounts.get(i).getClientID() == loggedUser.getClientID())
+                    accounts.add(allAccounts.get(i));
+            }
+        } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
 
         List<Client> clients = new ArrayList<Client>();
         try {
-            clients = new ClientDAO().getAllClients();
-        } catch (SQLException e) {
+            MySQLDAOFactory factory = new MySQLDAOFactory();
+            Connection connection = factory.getContext();
+            GenericDAO dao = factory.getDAO(connection, Client.class);
+            clients = dao.getAll();
+        } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
 
         List<Currency> currencies = new ArrayList<Currency>();
         try {
-            currencies = new CurrencyDAO().getAllCurrencies();
-        } catch (SQLException e) {
+            MySQLDAOFactory factory = new MySQLDAOFactory();
+            Connection connection = factory.getContext();
+            GenericDAO dao = factory.getDAO(connection, Currency.class);
+            currencies = dao.getAll();
+        } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
 
@@ -48,7 +64,7 @@ public class ClientInfoServlet extends HttpServlet {
         String currency = null;
         for (int i = 0; i < accounts.size(); i++) {
             for (int j = 0; j < clients.size(); j++) {
-                if (accounts.get(i).getClientID() == clients.get(j).getClientID())
+                if (accounts.get(i).getClientID() == clients.get(j).getid())
                     clientName = clients.get(j).getFullName();
             }
 
@@ -58,11 +74,11 @@ public class ClientInfoServlet extends HttpServlet {
                 accType = "CREDIT";
 
             for (int j = 0; j < currencies.size(); j++) {
-                if (accounts.get(i).getCurrencyID() == currencies.get(j).getCurrencyID())
+                if (accounts.get(i).getCurrencyID() == currencies.get(j).getid())
                     currency = currencies.get(j).getCurrency();
             }
             records[i] = new Object[]{
-                    accounts.get(i).getAccountID(),
+                    accounts.get(i).getid(),
                     clientName,
                     accType,
                     currency,

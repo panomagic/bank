@@ -1,10 +1,8 @@
 package servlets;
 
-import daos.AccountDAO;
-import daos.ClientDAO;
-import daos.CurrencyDAO;
-import daos.TransactionDAO;
-import beans.User;
+import beans.*;
+import daos.*;
+import mysql.MySQLDAOFactory;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -13,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,34 +25,53 @@ public class TransactionsHistoryByClientServlet extends HttpServlet {
 
         User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
 
-        List transactions = new ArrayList();
+        List<Transaction> transactions = new ArrayList<Transaction>();
+        List<Transaction> allTransactions = new ArrayList<Transaction>();
         try {
-            transactions = new TransactionDAO().getTransactionsByClientID(loggedUser.getClientID());
-        } catch (SQLException e) {
+            MySQLDAOFactory factory = new MySQLDAOFactory();
+            Connection connection = factory.getContext();
+            GenericDAO dao = factory.getDAO(connection, Transaction.class);
+            allTransactions = dao.getAll();
+            for (int i = 0; i < allTransactions.size(); i++) {
+                if ((allTransactions.get(i).getPayerID() == loggedUser.getClientID()) ||
+                        (allTransactions.get(i).getRecipientID() == loggedUser.getClientID()))
+                    transactions.add(allTransactions.get(i));
+            }
+        } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
+
         request.setAttribute("allTransactions", transactions);
 
         List accounts = new ArrayList();
         try {
-            accounts = new AccountDAO().getAllAccounts();
-        } catch (SQLException e) {
+            MySQLDAOFactory factory = new MySQLDAOFactory();
+            Connection connection = factory.getContext();
+            GenericDAO dao = factory.getDAO(connection, Account.class);
+            accounts = dao.getAll();
+        } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
         request.setAttribute("allAccounts", accounts);
 
         List clients = new ArrayList();
         try {
-            clients = new ClientDAO().getAllClients();
-        } catch (SQLException e) {
+            MySQLDAOFactory factory = new MySQLDAOFactory();
+            Connection connection = factory.getContext();
+            GenericDAO dao = factory.getDAO(connection, Client.class);
+            clients = dao.getAll();
+        } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
         request.setAttribute("allClients", clients);
 
         List currencies = new ArrayList();
         try {
-            currencies = new CurrencyDAO().getAllCurrencies();
-        } catch (SQLException e) {
+            MySQLDAOFactory factory = new MySQLDAOFactory();
+            Connection connection = factory.getContext();
+            GenericDAO dao = factory.getDAO(connection, Currency.class);
+            currencies = dao.getAll();
+        } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
         request.setAttribute("allCurrencies", currencies);

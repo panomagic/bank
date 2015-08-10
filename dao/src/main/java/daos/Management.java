@@ -1,16 +1,20 @@
 package daos;
 
+import beans.*;
 import com.mysql.fabric.jdbc.FabricMySQLDriver;
+import mysql.MySQLDAOFactory;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Management {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/bank";
+    /*private static final String URL = "jdbc:mysql://localhost:3306/bank";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "970195";
 
@@ -58,9 +62,64 @@ public class Management {
 
         return connection;
     }
+*/
+    public static void main(String[] args) throws PersistException {
 
-    public static void main(String[] args) {
+        /*//Тестим фабрику ДАО - получение счета/всех счетов - ОК
+        MySQLDAOFactory factory = new MySQLDAOFactory();
+        Connection connection = factory.getContext();
+        GenericDAO dao = factory.getDAO(connection, Account.class);
+        List<Account> accountList;
+        accountList = dao.getAll();
+        for (int i = 0; i < accountList.size(); i++) {
+            System.out.println(accountList.get(i).getBalance());
+        }*/
 
+        /*//Тестим фабрику ДАО - получение клиента/всех клиентов - ОК
+        MySQLDAOFactory factory = new MySQLDAOFactory();
+        Connection connection = factory.getContext();
+        GenericDAO dao = factory.getDAO(connection, Client.class);
+        List<Client> clientList1 = dao.getAll();
+        for (int i = 0; i < clientList1.size(); i++) {
+            System.out.println(clientList1.get(i).getid());
+        }
+*/
+
+        /*//Тестим фабрику ДАО - добавление счета - OK
+        MySQLDAOFactory factory = new MySQLDAOFactory();
+        Connection connection = factory.getContext();
+        GenericDAO dao = factory.getDAO(connection, Account.class);
+
+        Account account = new Account();
+        account.setAccTypeID(1);
+        account.setClientID(7);
+        account.setCurrencyID(1);
+
+        dao.persist(account);
+        //dao.create(); - не нужен, вместо него - persist*/
+
+        /*//Тестим фабрику ДАО - изменение счета - OK
+        MySQLDAOFactory factory = new MySQLDAOFactory();
+        Connection connection = factory.getContext();
+        GenericDAO dao = factory.getDAO(connection, Account.class);
+
+        Account account = new Account();
+        account.setid(33);
+        account.setAccTypeID(2);
+        account.setClientID(7);
+        account.setCurrencyID(2);
+
+        dao.update(account);*/
+
+        /*//Тестим фабрику ДАО - удаление счета - OK
+        MySQLDAOFactory factory = new MySQLDAOFactory();
+        Connection connection = factory.getContext();
+        GenericDAO dao = factory.getDAO(connection, Account.class);
+
+        Account account = new Account();
+        account.setid(33);
+        dao.delete(account);
+*/
         /*//Тестим ввод нового клиента:
         bean.beans.Client client = new bean.beans.Client();
         client.setFullName("Nikolaev Nikolai"); //получили из формы сервлета
@@ -81,7 +140,7 @@ public class Management {
 
         /*тестим удаление клиента
         bean.beans.Client client = new bean.beans.Client();
-        client.setClientID(8); //получили из формы сервлета ФИО, СОЗДАТЬ метод по определению clientID из фамилии и даты рождения
+        client.setid(8); //получили из формы сервлета ФИО, СОЗДАТЬ метод по определению clientID из фамилии и даты рождения
         dao.daos.ClientDAO clientDAO = new dao.daos.ClientDAO();
         try {
             clientDAO.deleteClient(client);

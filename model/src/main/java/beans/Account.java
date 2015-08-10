@@ -2,23 +2,23 @@ package beans;
 
 import java.math.BigDecimal;
 
-public class Account {
+public class Account implements Identified<Integer> {
 
     public Account() {
     }
 
-    private int accountID;
+    private Integer id;
     private int clientID;
     private int currencyID;
     private int accTypeID;
     private BigDecimal balance;
 
-    public int getAccountID() {
-        return accountID;
+    public Integer getid() {
+        return id;
     }
 
-    public void setAccountID(int accountID) {
-        this.accountID = accountID;
+    public void setid(int id) {
+        this.id = id;
     }
 
     public int getClientID() {

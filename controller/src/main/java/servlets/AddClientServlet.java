@@ -1,8 +1,10 @@
 package servlets;
 
-import daos.ClientDAO;
 import beans.Client;
 import beans.Gender;
+import daos.GenericDAO;
+import daos.PersistException;
+import mysql.MySQLDAOFactory;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -10,7 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
+import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -37,8 +39,11 @@ public class AddClientServlet extends HttpServlet {
         }
 
         try {
-            new ClientDAO().addClient(client);
-        } catch (SQLException e) {
+            MySQLDAOFactory factory = new MySQLDAOFactory();
+            Connection connection = factory.getContext();
+            GenericDAO dao = factory.getDAO(connection, Client.class);
+            dao.persist(client);
+        } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
 

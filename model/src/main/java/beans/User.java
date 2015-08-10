@@ -1,20 +1,20 @@
 package beans;
 
-public class User {
+public class User implements Identified<Integer> {
     public User() {}
 
-    private int userID;
+    private Integer id;
     private String userName;
     private String password;
     private Role role;
     private int clientID;
 
-    public int getUserID() {
-        return userID;
+    public Integer getid() {
+        return id;
     }
 
-    public void setUserID(int userID) {
-        this.userID = userID;
+    public void setid(Integer id) {
+        this.id = id;
     }
 
     public String getUserName() {

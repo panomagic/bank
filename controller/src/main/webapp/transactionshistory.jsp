@@ -30,12 +30,12 @@
   <c:forEach var="transaction" items="${allTransactions}">
     <tr>
       <td width="30" align="center">
-        ${transaction.transID}
+        ${transaction.id}
       </td>
       <td width="150">
         <c:forEach var="payer" items="${allClients}">
           <c:choose>
-            <c:when test="${transaction.payerID == payer.clientID}">
+            <c:when test="${transaction.payerID == payer.id}">
               ${payer.fullName}
             </c:when>
           </c:choose>
@@ -47,7 +47,7 @@
       <td width="100" align="center">
         <c:forEach var="payerAccount" items="${allAccounts}">
           <c:choose>
-            <c:when test="${transaction.payerAccID == payerAccount.accountID}">
+            <c:when test="${transaction.payerAccID == payerAccount.id}">
               <c:choose>
                 <c:when test="${payerAccount.accTypeID == 1}">
                   DEBIT
@@ -63,7 +63,7 @@
       <td width="150">
         <c:forEach var="recipient" items="${allClients}">
           <c:choose>
-            <c:when test="${transaction.recipientID == recipient.clientID}">
+            <c:when test="${transaction.recipientID == recipient.id}">
               ${recipient.fullName}
             </c:when>
           </c:choose>
@@ -75,7 +75,7 @@
       <td width="100" align="center">
         <c:forEach var="recipientAccount" items="${allAccounts}">
           <c:choose>
-            <c:when test="${transaction.recipientAccID == recipientAccount.accountID}">
+            <c:when test="${transaction.recipientAccID == recipientAccount.id}">
               <c:choose>
                 <c:when test="${recipientAccount.accTypeID == 1}">
                   DEBIT
@@ -91,7 +91,7 @@
       <td width="70" align="center">
         <c:forEach var="currency" items="${allCurrencies}">
           <c:choose>
-            <c:when test="${transaction.currencyID == currency.currencyID}">
+            <c:when test="${transaction.currencyID == currency.id}">
               ${currency.currency}
             </c:when>
           </c:choose>

@@ -1,8 +1,10 @@
 package servlets;
 
-import daos.UserDAO;
 import beans.Role;
 import beans.User;
+import daos.GenericDAO;
+import daos.PersistException;
+import mysql.MySQLDAOFactory;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -11,7 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet(name="login", urlPatterns={"/login"})
 public class LoginServlet extends HttpServlet {
@@ -27,13 +31,20 @@ public class LoginServlet extends HttpServlet {
             throws IOException, ServletException {
 
         User user = null;
-        try {               //retriving DB user with the same name as entered in the form
-            user = new UserDAO().getUserByUserName(request.getParameter("userName"));
-        } catch (SQLException e) {
+        try {               //retrieving DB user with the same name as entered in the form
+            MySQLDAOFactory factory = new MySQLDAOFactory();
+            Connection connection = factory.getContext();
+            GenericDAO dao = factory.getDAO(connection, User.class);
+            List<User> userList = dao.getAll();
+            for (int i = 0; i < userList.size(); i++) {
+                if (userList.get(i).getUserName().equals(request.getParameter("userName")))
+                    user = userList.get(i);
+            }
+        } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
 
-        if (user != null) { //authentication procedure by password mathching
+        if (user != null) { //authentication procedure by password matching
             if(user.getPassword() != null && user.getPassword().equals(request.getParameter("password"))) {
                 user.setPassword("");   //clearing the password in order to don't save it in the session
                 request.getSession().setAttribute("LOGGED_USER", user);    //saving user-bean in the session
