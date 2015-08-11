@@ -1,7 +1,6 @@
 package daos;
 
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.List;
 
 /**

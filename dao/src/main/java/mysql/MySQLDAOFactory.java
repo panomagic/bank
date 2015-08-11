@@ -5,7 +5,6 @@ import daos.DAOFactory;
 import daos.GenericDAO;
 import daos.Management;
 import daos.PersistException;
-import mysql.MySQLAccountDAO;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
