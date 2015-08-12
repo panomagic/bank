@@ -4,7 +4,12 @@ import beans.Role;
 import beans.User;
 import daos.AbstractJDBCDAO;
 import daos.PersistException;
+import org.apache.log4j.Logger;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class MySQLUserDAO extends AbstractJDBCDAO<User, Integer> {
+    private static final Logger logger = Logger.getLogger(MySQLUserDAO.class);
 
     private class PersistUser extends User {
         public void setid(int id) {
@@ -105,6 +111,40 @@ public class MySQLUserDAO extends AbstractJDBCDAO<User, Integer> {
             statement.setInt(1, object.getid());
         } catch (Exception e) {
             throw new PersistException(e);
+        }
+    }
+
+    public void addImage(String imgUploadPath, User object) throws SQLException, IOException {
+        PreparedStatement statement = null;
+        FileInputStream fis = null;
+        MySQLDAOFactory factory;
+        Connection connection = null;
+
+        try {
+            factory = new MySQLDAOFactory();
+            connection = factory.getContext();
+            connection.setAutoCommit(false);
+            File file = new File(imgUploadPath);
+            fis = new FileInputStream(file);
+            statement = connection.prepareStatement("UPDATE users SET image=? WHERE id=?");
+            statement.setBinaryStream(1, fis, (int) file.length());
+            statement.setInt(2, object.getid());
+            statement.executeUpdate();
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (PersistException e) {
+            e.printStackTrace();
+        } finally {
+            connection.setAutoCommit(true);
+            statement.close();
+            fis.close();
+            if (connection != null) {
+                connection.close();
+                logger.info("DB connection is closed");
+            }
         }
     }
 }

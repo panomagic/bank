@@ -1,5 +1,7 @@
 package beans;
 
+import java.sql.Blob;
+
 public class User implements Identified<Integer> {
     public User() {}
 
@@ -8,6 +10,7 @@ public class User implements Identified<Integer> {
     private String password;
     private Role role;
     private int clientID;
+    private Blob image;
 
     public Integer getid() {
         return id;
@@ -47,5 +50,13 @@ public class User implements Identified<Integer> {
 
     public void setClientID(int clientID) {
         this.clientID = clientID;
+    }
+
+    public Blob getImage() {
+        return image;
+    }
+
+    public void setImage(Blob image) {
+        this.image = image;
     }
 }

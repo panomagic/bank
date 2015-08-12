@@ -3,12 +3,11 @@ package daos;
 import beans.*;
 import com.mysql.fabric.jdbc.FabricMySQLDriver;
 import mysql.MySQLDAOFactory;
+import mysql.MySQLUserDAO;
 import org.apache.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.Driver;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.io.*;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,6 +83,60 @@ public class Management {
             System.out.println(clientList1.get(i).getid());
         }
 */
+        //тестим добавление/получение юзерпика
+        MySQLDAOFactory factory = new MySQLDAOFactory();
+        Connection connection = factory.getContext();
+        MySQLUserDAO mySQLUserDAO = new MySQLUserDAO(connection);
+
+        /*GenericDAO daoUser;
+        try {
+            daoUser = factory.getDAO(connection, User.class);
+        } catch (PersistException e) {
+            throw  new  PersistException(e);
+        }
+        User user1 = (User) daoUser.getByPK(1);
+        String imgsrc = "d:\\squirrel.jpg";
+        System.out.println(user1.getUserName());
+        try {
+            mySQLUserDAO.addImage(imgsrc, user1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        */
+
+
+        String sql = "SELECT image FROM users WHERE id=?";
+        PreparedStatement stmt = null;
+        try {
+            stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, 1);
+
+            ResultSet resultSet = null;
+            resultSet = stmt.executeQuery();
+            while (resultSet.next()) {
+                File image = new File("D:\\java.jpg");
+                FileOutputStream fos = new FileOutputStream(image);
+
+                byte[] buffer = new byte[1];
+                InputStream is = resultSet.getBinaryStream(1);
+                while (is.read(buffer) > 0) {
+                    fos.write(buffer);
+                }
+                fos.close();
+                is.close();
+            }
+            connection.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         /*//Тестим фабрику ДАО - добавление счета - OK
         MySQLDAOFactory factory = new MySQLDAOFactory();
