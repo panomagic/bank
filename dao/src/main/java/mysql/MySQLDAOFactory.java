@@ -3,7 +3,6 @@ package mysql;
 import beans.*;
 import daos.DAOFactory;
 import daos.GenericDAO;
-import daos.Management;
 import daos.PersistException;
 import org.apache.log4j.Logger;
 
@@ -21,7 +20,7 @@ public class MySQLDAOFactory implements DAOFactory<Connection> {
     private final String driver = "com.mysql.jdbc.Driver";
     private Map<Class, DAOCreator> creators;
 
-    private static final Logger logger = Logger.getLogger(Management.class);
+    private static final Logger logger = Logger.getLogger(MySQLDAOFactory.class);
 
     public Connection getContext() throws PersistException {
         Connection connection = null;
@@ -30,6 +29,7 @@ public class MySQLDAOFactory implements DAOFactory<Connection> {
         } catch (SQLException e) {
             throw new PersistException(e);
         }
+        logger.info("DB connection is established");
         return connection;
     }
 

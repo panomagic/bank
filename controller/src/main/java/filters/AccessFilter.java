@@ -1,4 +1,4 @@
-package servlets;
+package filters;
 
 import beans.Role;
 import beans.User;

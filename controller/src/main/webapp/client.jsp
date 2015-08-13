@@ -44,5 +44,6 @@
 <p>
   <a href="logout"><fmt:message key="logoutlink" /></a>
 </p>
+<img src="webapp\getimage.jsp" width="100" border="1">
 </body>
 </html>

@@ -76,7 +76,7 @@ public class MySQLTransactionDAO extends AbstractJDBCDAO<Transaction, Integer> {
         return result;
     }
 
-    //use addTransaction method instead due to 
+    //use addTransaction method instead
     @Override
     public void prepareStatementForInsert(PreparedStatement statement, Transaction object) throws PersistException {
     }
@@ -89,61 +89,61 @@ public class MySQLTransactionDAO extends AbstractJDBCDAO<Transaction, Integer> {
     public void prepareStatementForDelete(PreparedStatement statement, Transaction object) throws PersistException {
     }
 
-    public void addTransaction(Transaction transaction) throws SQLException {
+    public void addTransaction(Transaction transaction) throws PersistException, SQLException {
 
-        PreparedStatement preparedStatementTransAct = null;
-        ResultSet resultSetPayer = null;
-        PreparedStatement psGetPayerAcc = null;
-        PreparedStatement psUpdatePayerBalance = null;
-        ResultSet resultSetRec = null;
-        PreparedStatement psGetRecipientAcc = null;
-        PreparedStatement psUpdateRecipientBalance = null;
+        PreparedStatement preparedStatement = null;
 
-        MySQLDAOFactory factory;
-        Connection connection = null;
         Account payerAcc = null;
         Account recipientAcc = null;
 
         try {
-            factory = new MySQLDAOFactory();
-            connection = factory.getContext();
+            MySQLDAOFactory factory = new MySQLDAOFactory();
+            Connection connection = factory.getContext();
             GenericDAO dao = factory.getDAO(connection, Account.class);
             payerAcc = (Account) dao.getByPK(transaction.getPayerAccID());
-            recipientAcc = (Account) dao.getByPK(transaction.getRecipientAccID());
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
 
         try {
-            preparedStatementTransAct = connection.prepareStatement("INSERT INTO transactions (currencies_currencyID, " +
+            MySQLDAOFactory factory = new MySQLDAOFactory();
+            Connection connection = factory.getContext();
+            GenericDAO dao = factory.getDAO(connection, Account.class);
+            recipientAcc = (Account) dao.getByPK(transaction.getRecipientAccID());
+        } catch (PersistException e) {
+            logger.error("MySQL DB error", e);
+        }
+
+
+        MySQLDAOFactory factory = new MySQLDAOFactory();
+        Connection connection = factory.getContext();
+        try {
+            preparedStatement = connection.prepareStatement("INSERT INTO transactions (currencies_currencyID, " +
                     "clients_payerID, accounts_payerAccID, clients_recipientID, accounts_recipientAccID, " +
                     "transactionTypes_transTypeID, sum) VALUES(?,?,?,?,?,?,?)");
-            preparedStatementTransAct.setInt(1, transaction.getCurrencyID());
-            preparedStatementTransAct.setInt(2, transaction.getPayerID());
-            preparedStatementTransAct.setInt(3, transaction.getPayerAccID());
-            preparedStatementTransAct.setInt(4, transaction.getRecipientID());
-            preparedStatementTransAct.setInt(5, transaction.getRecipientAccID());
-            preparedStatementTransAct.setInt(6, transaction.getTransTypeID());
-            preparedStatementTransAct.setBigDecimal(7, transaction.getSum());
-
+            preparedStatement.setInt(1, transaction.getCurrencyID());
+            preparedStatement.setInt(2, transaction.getPayerID());
+            preparedStatement.setInt(3, transaction.getPayerAccID());
+            preparedStatement.setInt(4, transaction.getRecipientID());
+            preparedStatement.setInt(5, transaction.getRecipientAccID());
+            preparedStatement.setInt(6, transaction.getTransTypeID());
+            preparedStatement.setBigDecimal(7, transaction.getSum());
+            connection.setAutoCommit(false);    //auto commit mode off
+            preparedStatement.execute();
 
             //updating payer's balance:
-            psUpdatePayerBalance = connection.prepareStatement("UPDATE accounts SET balance = ? " +
+            preparedStatement = connection.prepareStatement("UPDATE accounts SET balance = ? " +
                     "WHERE id = ?");
-            psUpdatePayerBalance.setBigDecimal(1, payerAcc.getBalance().subtract(transaction.getSum()));
-            psUpdatePayerBalance.setInt(2, transaction.getPayerAccID());
+            preparedStatement.setBigDecimal(1, payerAcc.getBalance().subtract(transaction.getSum()));
+            preparedStatement.setInt(2, transaction.getPayerAccID());
+            preparedStatement.execute();
 
             //updating recipient's balance:
-            psUpdateRecipientBalance = connection.prepareStatement("UPDATE accounts SET balance = ? " +
+            preparedStatement = connection.prepareStatement("UPDATE accounts SET balance = ? " +
                     "WHERE id = ?");
-            psUpdateRecipientBalance.setBigDecimal(1, recipientAcc.getBalance().add(transaction.getSum()));
-            psUpdateRecipientBalance.setInt(2, transaction.getRecipientAccID());
-
-            connection.setAutoCommit(false);    //auto commit mode off
-
-            preparedStatementTransAct.execute();
-            psUpdatePayerBalance.execute();
-            psUpdateRecipientBalance.execute();
+            preparedStatement.setBigDecimal(1, recipientAcc.getBalance().add(transaction.getSum()));
+            preparedStatement.setInt(2, transaction.getRecipientAccID());
+            preparedStatement.execute();
 
             connection.commit();    //finishing transaction by synchronous saving the transfer and changing account balances
 
@@ -160,32 +160,27 @@ public class MySQLTransactionDAO extends AbstractJDBCDAO<Transaction, Integer> {
             }
         }
         finally {
-            if(resultSetPayer != null)
-                resultSetPayer.close();
+            try {
+                connection.setAutoCommit(true);
+            } catch (SQLException e) {
+                logger.warn("Cannot change autoCommit mode");
+            }
 
-            if(resultSetRec != null)
-                resultSetRec.close();
-
-            if(preparedStatementTransAct != null)
-                preparedStatementTransAct.close();
-
-            if(psGetPayerAcc != null)
-                psGetPayerAcc.close();
-
-            if(psUpdatePayerBalance != null)
-                psUpdatePayerBalance.close();
-
-            if(psGetRecipientAcc != null)
-                psGetRecipientAcc.close();
-
-            if(psUpdateRecipientBalance != null)
-                psUpdateRecipientBalance.close();
-
-            connection.setAutoCommit(true);
+            if(preparedStatement != null) {
+                try {
+                    preparedStatement.close();
+                } catch (SQLException e) {
+                    logger.warn("Cannot close prepared statement");
+                }
+            }
 
             if (connection != null) {
-                connection.close();
-                logger.info("DB connection is closed");
+                try {
+                    connection.close();
+                    logger.info("DB connection is closed");
+                } catch (SQLException e) {
+                    logger.warn("Cannot close connection", e);
+                }
             }
         }
     }

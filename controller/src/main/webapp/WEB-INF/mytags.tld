@@ -10,7 +10,7 @@
     <uri>mytags</uri>
     <tag>
         <name>forEach</name>
-        <tag-class>servlets.ForEachTag</tag-class>
+        <tag-class>tags.ForEachTag</tag-class>
         <body-content>scriptless</body-content>
         <attribute>
             <description>

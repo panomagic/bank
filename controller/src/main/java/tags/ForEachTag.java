@@ -1,4 +1,4 @@
-package servlets;
+package tags;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.SimpleTagSupport;

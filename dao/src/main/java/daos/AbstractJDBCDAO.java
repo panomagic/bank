@@ -1,10 +1,12 @@
 package daos;
 
 import beans.Identified;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -15,6 +17,8 @@ import java.util.List;
 public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integer> implements GenericDAO<T, PK> {
 
     private Connection connection;
+    private static final Logger logger = Logger.getLogger(AbstractJDBCDAO.class);
+
 
     /**
      * Returns SQL query for all records from DB table
@@ -70,6 +74,15 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
             list = parseResultSet(rs);
         } catch (Exception e) {
             throw new PersistException(e);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                    logger.info("DB connection is closed");
+                } catch (SQLException e) {
+                    logger.warn("Cannot close connection");
+                }
+            }
         }
 
         if ((list == null) || (list.size() == 0))
@@ -89,6 +102,15 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
         }
         catch (Exception e) {
             throw new PersistException(e);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                    logger.info("DB connection is closed");
+                } catch (SQLException e) {
+                    logger.warn("Cannot close connection");
+                }
+            }
         }
         return list;
     }
@@ -119,6 +141,15 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
             persistInstance = list.iterator().next();
         } catch (Exception e) {
             throw new PersistException(e);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                    logger.info("DB connection is closed");
+                } catch (SQLException e) {
+                    logger.warn("Cannot close connection");
+                }
+            }
         }
         return persistInstance;
     }
@@ -133,6 +164,15 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
                 throw new PersistException("On update modify more than 1 record: " + count);
         } catch (Exception e) {
             throw new PersistException(e);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                    logger.info("DB connection is closed");
+                } catch (SQLException e) {
+                    logger.warn("Cannot close connection");
+                }
+            }
         }
     }
 
@@ -150,6 +190,15 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
                 throw new PersistException("On delete modify more than 1 record: " + count);
         } catch (Exception e) {
             throw new PersistException(e);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                    logger.info("DB connection is closed");
+                } catch (SQLException e) {
+                    logger.warn("Cannot close connection");
+                }
+            }
         }
     }
 

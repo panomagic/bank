@@ -30,10 +30,9 @@ public class AddTransactionServlet extends HttpServlet {
         User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
 
         MySQLDAOFactory factory = new MySQLDAOFactory();
-        Connection connection = null;
         GenericDAO daoAccount = null;
         try {
-            connection = factory.getContext();
+            Connection connection = factory.getContext();
             daoAccount = factory.getDAO(connection, Account.class);
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
@@ -62,6 +61,8 @@ public class AddTransactionServlet extends HttpServlet {
 
         List<Account> recipientAccounts = new ArrayList<>(); //all recipient accounts list
         try {
+            Connection connection = factory.getContext();
+            daoAccount = factory.getDAO(connection, Account.class);
             recipientAccounts = daoAccount.getAll();
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
@@ -70,6 +71,7 @@ public class AddTransactionServlet extends HttpServlet {
 
         List<Client> clients = new ArrayList<>();
         try {
+            Connection connection = factory.getContext();
             GenericDAO daoClient = factory.getDAO(connection, Client.class);
             clients = daoClient.getAll();
         } catch (PersistException e) {
@@ -79,6 +81,7 @@ public class AddTransactionServlet extends HttpServlet {
 
         List<Currency> currencies = new ArrayList<>();
         try {
+            Connection connection = factory.getContext();
             GenericDAO daoCurrency = factory.getDAO(connection, Currency.class);
             currencies = daoCurrency.getAll();
         } catch (PersistException e) {
@@ -95,12 +98,11 @@ public class AddTransactionServlet extends HttpServlet {
         Transaction transaction = new Transaction();
 
         MySQLDAOFactory factory = new MySQLDAOFactory();
-        Connection connection = null;
         GenericDAO daoAccount = null;
 
         Account payerAccount = null;
         try {
-            connection = factory.getContext();
+            Connection connection = factory.getContext();
             daoAccount = factory.getDAO(connection, Account.class);
             payerAccount = (Account) daoAccount.getByPK(Integer.parseInt(request.getParameter("choosepayeraccount")));
         } catch (PersistException e) {
@@ -109,6 +111,8 @@ public class AddTransactionServlet extends HttpServlet {
 
         Account recipientAccount = null;
         try {
+            Connection connection = factory.getContext();
+            daoAccount = factory.getDAO(connection, Account.class);
             recipientAccount = (Account) daoAccount.getByPK(Integer.parseInt(request.getParameter("chooserecipientaccount")));
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
@@ -131,6 +135,13 @@ public class AddTransactionServlet extends HttpServlet {
         transaction.setRecipientAccID(recipientAccount.getid());
         transaction.setTransTypeID(3);
         transaction.setSum(new BigDecimal(Double.parseDouble(request.getParameter("sum"))));
+
+        Connection connection = null;
+        try {
+            connection = factory.getContext();
+        } catch (PersistException e) {
+            e.printStackTrace();
+        }
         MySQLTransactionDAO mySQLTransactionDAO = new MySQLTransactionDAO(connection);
 
         //checking for debit payer's account: transfer amount must be less or equal to balance
@@ -143,7 +154,7 @@ public class AddTransactionServlet extends HttpServlet {
 
         try {
             mySQLTransactionDAO.addTransaction(transaction);
-        } catch (SQLException e) {
+        } catch (PersistException | SQLException e) {
             logger.error("MySQL DB error", e);
         }
 
