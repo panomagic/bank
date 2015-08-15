@@ -4,6 +4,7 @@ import beans.Role;
 import beans.User;
 import daos.AbstractJDBCDAO;
 import daos.PersistException;
+import daos.UserDAO;
 import org.apache.log4j.Logger;
 
 import java.io.File;
@@ -17,8 +18,8 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MySQLUserDAO extends AbstractJDBCDAO<User, Integer> {
-    private static final Logger logger = Logger.getLogger(MySQLUserDAO.class);
+public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements UserDAO {
+    private static final Logger logger = Logger.getLogger(MySQLUserDAOImpl.class);
 
     private class PersistUser extends User {
         public void setid(int id) {
@@ -57,7 +58,7 @@ public class MySQLUserDAO extends AbstractJDBCDAO<User, Integer> {
         return null;
     }
 
-    public MySQLUserDAO(Connection connection) {
+    public MySQLUserDAOImpl(Connection connection) {
         super(connection);
     }
 

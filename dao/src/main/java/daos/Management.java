@@ -1,15 +1,11 @@
 package daos;
 
 import beans.*;
-import com.mysql.fabric.jdbc.FabricMySQLDriver;
 import mysql.MySQLDAOFactory;
-import mysql.MySQLUserDAO;
-import org.apache.log4j.Logger;
+import mysql.MySQLUserDAOImpl;
 
 import java.io.*;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Management {
 
@@ -86,7 +82,7 @@ public class Management {
         //тестим добавление/получение юзерпика
         MySQLDAOFactory factory = new MySQLDAOFactory();
         Connection connection = factory.getContext();
-        MySQLUserDAO mySQLUserDAO = new MySQLUserDAO(connection);
+        MySQLUserDAOImpl mySQLUserDAO = new MySQLUserDAOImpl(connection);
 
         GenericDAO daoUser;
         try {

@@ -3,6 +3,7 @@ package mysql;
 
 import beans.Currency;
 import daos.AbstractJDBCDAO;
+import daos.CurrencyDAO;
 import daos.PersistException;
 
 import java.sql.Connection;
@@ -12,7 +13,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MySQLCurrencyDAO extends AbstractJDBCDAO<Currency, Integer> {
+public class MySQLCurrencyDAOImpl extends AbstractJDBCDAO<Currency, Integer> implements CurrencyDAO {
 
     private class PersistCurrency extends Currency {
         public void setid(int id) {
@@ -49,7 +50,7 @@ public class MySQLCurrencyDAO extends AbstractJDBCDAO<Currency, Integer> {
         return null;
     }
 
-    public MySQLCurrencyDAO(Connection connection) {
+    public MySQLCurrencyDAOImpl(Connection connection) {
         super(connection);
     }
 

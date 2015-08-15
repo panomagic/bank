@@ -3,7 +3,7 @@ package servlets;
 import beans.*;
 import daos.*;
 import mysql.MySQLDAOFactory;
-import mysql.MySQLTransactionDAO;
+import mysql.MySQLTransactionDAOImpl;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -142,7 +142,7 @@ public class AddTransactionServlet extends HttpServlet {
         } catch (PersistException e) {
             e.printStackTrace();
         }
-        MySQLTransactionDAO mySQLTransactionDAO = new MySQLTransactionDAO(connection);
+        MySQLTransactionDAOImpl mySQLTransactionDAO = new MySQLTransactionDAOImpl(connection);
 
         //checking for debit payer's account: transfer amount must be less or equal to balance
         if (payerAccount.getAccTypeID() == 1 && transaction.getSum().compareTo(payerAccount.getBalance()) == 1) {

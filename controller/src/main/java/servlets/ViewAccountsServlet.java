@@ -42,7 +42,6 @@ public class ViewAccountsServlet extends HttpServlet {
             Connection connection = factory.getContext();
             GenericDAO dao = factory.getDAO(connection, Client.class);
             clients = dao.getAll();
-            //clients = new ClientDAO().getAllClients();
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }

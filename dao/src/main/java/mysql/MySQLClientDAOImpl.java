@@ -2,6 +2,7 @@ package mysql;
 
 import beans.*;
 import daos.AbstractJDBCDAO;
+import daos.ClientDAO;
 import daos.PersistException;
 
 import java.sql.Connection;
@@ -12,7 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.sql.Date;
 
-public class MySQLClientDAO extends AbstractJDBCDAO<Client, Integer> {
+public class MySQLClientDAOImpl extends AbstractJDBCDAO<Client, Integer> implements ClientDAO {
     private class PersistClient extends Client {
         public void setid(int id) {
             super.setid(id);
@@ -48,7 +49,7 @@ public class MySQLClientDAO extends AbstractJDBCDAO<Client, Integer> {
         return null;
     }
 
-    public MySQLClientDAO(Connection connection) {
+    public MySQLClientDAOImpl(Connection connection) {
         super(connection);
     }
 

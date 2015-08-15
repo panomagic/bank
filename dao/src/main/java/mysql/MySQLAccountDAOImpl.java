@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MySQLAccountDAO extends AbstractJDBCDAO<Account, Integer> {
+public class MySQLAccountDAOImpl extends AbstractJDBCDAO<Account, Integer> implements AccountDAO {
 
     private class PersistAccount extends Account {
         public void setid(int id) {
@@ -49,7 +49,7 @@ public class MySQLAccountDAO extends AbstractJDBCDAO<Account, Integer> {
         return null;
     }
 
-    public MySQLAccountDAO(Connection connection) {
+    public MySQLAccountDAOImpl(Connection connection) {
         super(connection);
     }
 

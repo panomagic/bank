@@ -9,8 +9,8 @@ import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
-public class MySQLTransactionDAO extends AbstractJDBCDAO<Transaction, Integer> {
-    private static final Logger logger = Logger.getLogger(MySQLTransactionDAO.class);
+public class MySQLTransactionDAOImpl extends AbstractJDBCDAO<Transaction, Integer> implements TransactionDAO {
+    private static final Logger logger = Logger.getLogger(MySQLTransactionDAOImpl.class);
 
     private class PersistTransaction extends Transaction {
         public void setid(int id) {
@@ -49,7 +49,7 @@ public class MySQLTransactionDAO extends AbstractJDBCDAO<Transaction, Integer> {
         return null;
     }
 
-    public MySQLTransactionDAO(Connection connection) {
+    public MySQLTransactionDAOImpl(Connection connection) {
         super(connection);
     }
 

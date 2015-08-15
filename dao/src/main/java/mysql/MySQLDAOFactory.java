@@ -53,35 +53,35 @@ public class MySQLDAOFactory implements DAOFactory<Connection> {
         creators.put(Account.class, new DAOCreator<Connection>() {
             @Override
             public GenericDAO create(Connection connection) {
-                return new MySQLAccountDAO(connection);
+                return new MySQLAccountDAOImpl(connection);
             }
         });
 
         creators.put(Client.class, new DAOCreator<Connection>() {
             @Override
             public GenericDAO create(Connection connection) {
-                return new MySQLClientDAO(connection);
+                return new MySQLClientDAOImpl(connection);
             }
         });
 
         creators.put(Currency.class, new DAOCreator<Connection>() {
             @Override
             public GenericDAO create(Connection connection) {
-                return new MySQLCurrencyDAO(connection);
+                return new MySQLCurrencyDAOImpl(connection);
             }
         });
 
         creators.put(Transaction.class, new DAOCreator<Connection>() {
             @Override
             public GenericDAO create(Connection connection) {
-                return new MySQLTransactionDAO(connection);
+                return new MySQLTransactionDAOImpl(connection);
             }
         });
 
         creators.put(User.class, new DAOCreator<Connection>() {
             @Override
             public GenericDAO create(Connection connection) {
-                return new MySQLUserDAO(connection);
+                return new MySQLUserDAOImpl(connection);
             }
         });
     }
