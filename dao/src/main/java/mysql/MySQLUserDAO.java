@@ -123,14 +123,22 @@ public class MySQLUserDAO extends AbstractJDBCDAO<User, Integer> {
         try {
             factory = new MySQLDAOFactory();
             connection = factory.getContext();
-            connection.setAutoCommit(false);
             File file = new File(imgUploadPath);
             fis = new FileInputStream(file);
-            statement = connection.prepareStatement("UPDATE users SET image=? WHERE id=?");
-            statement.setBinaryStream(1, fis, (int) file.length());
-            statement.setInt(2, object.getid());
-            statement.executeUpdate();
-            connection.commit();
+            if (file.length() > 102400) {
+                System.out.println(file.length());
+                statement = connection.prepareStatement("UPDATE users SET imagepath=? WHERE id=?");
+                statement.setString(1, imgUploadPath);  //менять название файла на id.jpg
+                statement.setInt(2, object.getid());
+                statement.executeUpdate();
+            } else {
+                connection.setAutoCommit(false);
+                statement = connection.prepareStatement("UPDATE users SET image=? WHERE id=?");
+                statement.setBinaryStream(1, fis, (int) file.length());
+                statement.setInt(2, object.getid());
+                statement.executeUpdate();
+                connection.commit();
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (FileNotFoundException e) {

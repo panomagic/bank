@@ -88,15 +88,14 @@ public class Management {
         Connection connection = factory.getContext();
         MySQLUserDAO mySQLUserDAO = new MySQLUserDAO(connection);
 
-        /*GenericDAO daoUser;
+        GenericDAO daoUser;
         try {
             daoUser = factory.getDAO(connection, User.class);
         } catch (PersistException e) {
-            throw  new  PersistException(e);
+            throw new PersistException(e);
         }
-        User user1 = (User) daoUser.getByPK(1);
-        String imgsrc = "d:\\squirrel.jpg";
-        System.out.println(user1.getUserName());
+        User user1 = (User) daoUser.getByPK(2);
+        String imgsrc = "d:\\catbig.jpg";
         try {
             mySQLUserDAO.addImage(imgsrc, user1);
         } catch (SQLException e) {
@@ -104,10 +103,9 @@ public class Management {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        */
 
 
-        String sql = "SELECT image FROM users WHERE id=?";
+       /* String sql = "SELECT image FROM users WHERE id=?";
         PreparedStatement stmt = null;
         try {
             stmt = connection.prepareStatement(sql);
@@ -135,7 +133,7 @@ public class Management {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
 
         /*//Тестим фабрику ДАО - добавление счета - OK
