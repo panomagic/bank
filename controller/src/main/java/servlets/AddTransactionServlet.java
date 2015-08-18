@@ -140,7 +140,7 @@ public class AddTransactionServlet extends HttpServlet {
         try {
             connection = factory.getContext();
         } catch (PersistException e) {
-            e.printStackTrace();
+            logger.error("Error while creating connection");
         }
         MySQLTransactionDAOImpl mySQLTransactionDAO = new MySQLTransactionDAOImpl(connection);
 

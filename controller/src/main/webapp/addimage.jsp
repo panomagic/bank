@@ -12,11 +12,15 @@
   <title><fmt:message key="adminpagetitle" /></title>
 </head>
 <body>
-  <p><b><fmt:message key="adminloginsuccessfull" /></b></p>
-  <p><img src="image" /></p>
-  <a href="upload">Добавить изображение/Add image</a><br>
-  <a href="viewclients"><fmt:message key="gotoclientslistlink" /></a><br>
-  <a href="viewaccounts"><fmt:message key="gotoaccountslistlink" /></a><br>
-  <a href="transactionshistory"><fmt:message key="gototranshistorylink" /></a>
+<p><b><fmt:message key="adminloginsuccessfull" /></b></p>
+<p><img src="image" /></p>
+<form action="upload" method="post" enctype="multipart/form-data">
+  <input type="text" name="description" />
+  <input type="file" name="file" />
+  <input type="submit" value="Загрузить" />
+</form>
+<a href="viewclients"><fmt:message key="gotoclientslistlink" /></a><br>
+<a href="viewaccounts"><fmt:message key="gotoaccountslistlink" /></a><br>
+<a href="transactionshistory"><fmt:message key="gototranshistorylink" /></a>
 </body>
 </html>

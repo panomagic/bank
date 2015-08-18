@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -126,10 +128,13 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
             connection = factory.getContext();
             File file = new File(imgUploadPath);
             fis = new FileInputStream(file);
+
+            String filePath = "\\images\\" + file.getName();
+
             if (file.length() > 102400) {
-                System.out.println(file.length());
+                System.out.println(file.length());  //для проверки, убрать
                 statement = connection.prepareStatement("UPDATE users SET imagepath=? WHERE id=?");
-                statement.setString(1, imgUploadPath);  //менять название файла на id.jpg
+                statement.setString(1, filePath);  //менять название файла на id.jpg
                 statement.setInt(2, object.getid());
                 statement.executeUpdate();
             } else {
