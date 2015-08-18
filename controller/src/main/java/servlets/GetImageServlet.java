@@ -1,6 +1,8 @@
 package servlets;
 
 import beans.User;
+import daos.PersistException;
+import mysql.MySQLDAOFactory;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -20,9 +22,10 @@ public class GetImageServlet extends HttpServlet {
             throws ServletException, IOException {
         Connection connection = null;
         OutputStream os = response.getOutputStream();
+        MySQLDAOFactory factory = new MySQLDAOFactory();
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/bank", "root", "970195");
-        } catch (SQLException e) {
+            connection = factory.getContext();
+        } catch (PersistException e) {
             e.printStackTrace();
         }
         Blob img ;

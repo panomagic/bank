@@ -11,7 +11,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Path;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -117,7 +117,7 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
         }
     }
 
-    public void addImage(String imgUploadPath, User object) throws SQLException, IOException {
+    public void addImageToDB(File uploadedFile, User object) throws SQLException, IOException {
         PreparedStatement statement = null;
         FileInputStream fis = null;
         MySQLDAOFactory factory;
@@ -126,24 +126,27 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
         try {
             factory = new MySQLDAOFactory();
             connection = factory.getContext();
-            File file = new File(imgUploadPath);
-            fis = new FileInputStream(file);
 
-            String filePath = "\\images\\" + file.getName();
+            //File file = new File(imgUploadPath);
+            fis = new FileInputStream(uploadedFile);
 
-            if (file.length() > 102400) {
-                System.out.println(file.length());  //для проверки, убрать
+            //String filePath = "\\images\\" + file.getName();
+
+            if (uploadedFile.length() > 102400) {   //доб. проверку на существование картинки или пути в БД при загрузке новой
+                System.out.println(uploadedFile.length());  //для проверки, убрать
                 statement = connection.prepareStatement("UPDATE users SET imagepath=? WHERE id=?");
-                statement.setString(1, filePath);  //менять название файла на id.jpg
+                statement.setString(1, uploadedFile.getPath());  //менять название файла на filename+id.jpg, или хранить в подкаталоге для избежания конфликта один. файлов разных юзеров
                 statement.setInt(2, object.getid());
                 statement.executeUpdate();
             } else {
                 connection.setAutoCommit(false);
                 statement = connection.prepareStatement("UPDATE users SET image=? WHERE id=?");
-                statement.setBinaryStream(1, fis, (int) file.length());
+                statement.setBinaryStream(1, fis, (int) uploadedFile.length());
                 statement.setInt(2, object.getid());
                 statement.executeUpdate();
                 connection.commit();
+                fis.close();
+                Files.delete(Paths.get(uploadedFile.getPath()));
             }
         } catch (SQLException e) {
             e.printStackTrace();

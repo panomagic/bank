@@ -79,8 +79,8 @@ public class Management {
             System.out.println(clientList1.get(i).getid());
         }
 */
-        //тестим добавление/получение юзерпика
-        MySQLDAOFactory factory = new MySQLDAOFactory();
+        //тестим добавление/получение юзерпика (простейший вариант метода)
+        /*MySQLDAOFactory factory = new MySQLDAOFactory();
         Connection connection = factory.getContext();
         MySQLUserDAOImpl mySQLUserDAO = new MySQLUserDAOImpl(connection);
 
@@ -93,12 +93,12 @@ public class Management {
         User user1 = (User) daoUser.getByPK(2);
         String imgsrc = "d:\\catbig.jpg";
         try {
-            mySQLUserDAO.addImage(imgsrc, user1);
+            mySQLUserDAO.addImageToDB(imgsrc, user1);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
 
        /* String sql = "SELECT image FROM users WHERE id=?";
