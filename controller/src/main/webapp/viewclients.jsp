@@ -17,6 +17,7 @@
   <h2>
       <fmt:message key="clientstable" />
   </h2>
+  <p><img src="image" /></p>
       <table border="1">
           <tr>
               <th><b><fmt:message key="clientidcolumn" /></b></th>

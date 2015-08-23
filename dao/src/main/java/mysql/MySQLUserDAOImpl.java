@@ -3,20 +3,15 @@ package mysql;
 import beans.Role;
 import beans.User;
 import daos.AbstractJDBCDAO;
+import daos.GenericDAO;
 import daos.PersistException;
 import daos.UserDAO;
 import org.apache.log4j.Logger;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -75,6 +70,8 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
                 user.setPassword(rs.getString("password"));
                 user.setRole(Role.fromString(rs.getString("role")));
                 user.setClientID(rs.getInt("clients_clientID"));
+                user.setImage(rs.getBlob("image"));
+                user.setImagepath(rs.getString("imagepath"));
                 result.add(user);
             }
         } catch (Exception e) {
@@ -117,7 +114,7 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
         }
     }
 
-    public void addImageToDB(File uploadedFile, User object) throws SQLException, IOException {
+    public void addImageToDB(File uploadedFile, User user) throws SQLException, IOException {
         PreparedStatement statement = null;
         FileInputStream fis = null;
         MySQLDAOFactory factory;
@@ -127,22 +124,21 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
             factory = new MySQLDAOFactory();
             connection = factory.getContext();
 
-            //File file = new File(imgUploadPath);
             fis = new FileInputStream(uploadedFile);
 
-            //String filePath = "\\images\\" + file.getName();
-
-            if (uploadedFile.length() > 102400) {   //доб. проверку на существование картинки или пути в БД при загрузке новой
+            if (uploadedFile.length() > 102400) {   //if an image is >100 kb saving it to the file system
                 System.out.println(uploadedFile.length());  //для проверки, убрать
-                statement = connection.prepareStatement("UPDATE users SET imagepath=? WHERE id=?");
-                statement.setString(1, uploadedFile.getPath());  //менять название файла на filename+id.jpg, или хранить в подкаталоге для избежания конфликта один. файлов разных юзеров
-                statement.setInt(2, object.getid());
+                statement = connection.prepareStatement("UPDATE users SET image=?, imagepath=? WHERE id=?");
+                statement.setBinaryStream(1, null); //erasing blob image in DB to avoid conflicts
+                statement.setString(2, uploadedFile.getPath());
+                statement.setInt(3, user.getid());
                 statement.executeUpdate();
-            } else {
+            } else {                                //if an image is <100 kb saving it to the DB
                 connection.setAutoCommit(false);
-                statement = connection.prepareStatement("UPDATE users SET image=? WHERE id=?");
+                statement = connection.prepareStatement("UPDATE users SET image=?, imagepath=? WHERE id=?");
                 statement.setBinaryStream(1, fis, (int) uploadedFile.length());
-                statement.setInt(2, object.getid());
+                statement.setString(2, null);       //erasing image path to avoid conflicts
+                statement.setInt(3, user.getid());
                 statement.executeUpdate();
                 connection.commit();
                 fis.close();
@@ -163,5 +159,20 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
                 logger.info("DB connection is closed");
             }
         }
+    }
+
+    public Blob getImageFromDB(User loggedUser) {
+        MySQLDAOFactory factory = new MySQLDAOFactory();
+        GenericDAO daoUser;
+
+        User user = null;
+        try {
+            Connection connection = factory.getContext();
+            daoUser = factory.getDAO(connection, User.class);
+            user = (User) daoUser.getByPK(loggedUser.getid());
+        } catch (PersistException e) {
+            logger.error("MySQL DB error", e);
+        }
+        return user.getImage();
     }
 }

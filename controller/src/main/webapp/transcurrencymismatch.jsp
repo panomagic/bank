@@ -12,6 +12,7 @@
 </head>
   <body>
     <h2><fmt:message key="currmismatcherror" /></h2>
+    <p><img src="image" /></p>
     <p>
       <a href="addtransaction"><fmt:message key="tryagainlink" /></a><br>
     </p>

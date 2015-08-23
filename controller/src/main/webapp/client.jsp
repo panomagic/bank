@@ -14,6 +14,8 @@
 <h2>
   <fmt:message key="clientloginsuccessfull" />
 </h2>
+<p><img src="image" /></p>
+<a href="upload">Добавить изображение/Add image</a><br>
 <h3>
   <fmt:message key="youracclist" />
 </h3>
@@ -44,6 +46,5 @@
 <p>
   <a href="logout"><fmt:message key="logoutlink" /></a>
 </p>
-<img src="image" width="100">
 </body>
 </html>

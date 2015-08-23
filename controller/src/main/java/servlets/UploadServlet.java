@@ -1,11 +1,14 @@
 package servlets;
 
+import beans.Role;
 import beans.User;
+import daos.GenericDAO;
 import daos.PersistException;
 import mysql.MySQLDAOFactory;
 import mysql.MySQLUserDAOImpl;
 import org.apache.log4j.Logger;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -20,15 +23,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 @WebServlet("/upload")
 @MultipartConfig
 public class UploadServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(UploadServlet.class);
 
-    public void doGet (HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher("addimage.jsp").forward(request, response);
     }
@@ -43,14 +49,26 @@ public class UploadServlet extends HttpServlet {
         return null;
     }
 
+    private static Map<Integer, Blob> cache = new HashMap<>(); //creating cache map
+
+
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        //String description = request.getParameter("description"); // Retrieves <input type="text" name="description">
         Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
 
-        String uploadFolder = "D:\\Java\\bank-images";
+        String uploadFolder = "D:\\Java\\bank-images";  //defines path to user images folder
         String fileName = getSubmittedFileName(filePart);
-        String uploadPath = uploadFolder + "\\" + fileName;
+        String extension = null;
+
+        //retrieving file extension
+        int i = fileName.lastIndexOf('.');
+        if (i > 0)
+            extension = fileName.substring(i + 1);
+
+        User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
+
+        //setting path as 'folder/userid.ext'
+        String uploadPath = uploadFolder + "\\" + loggedUser.getid().toString() + "." + extension;
 
         Path path = Paths.get(uploadPath);
         try (InputStream input = filePart.getInputStream()) {
@@ -59,12 +77,8 @@ public class UploadServlet extends HttpServlet {
 
         File uploadedFile = new File(uploadPath);
 
-        User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
-
-
         MySQLDAOFactory factory = new MySQLDAOFactory();
-
-        Connection connection = null;   //ЗАКРЫТЬ
+        Connection connection = null;
         try {
             connection = factory.getContext();
         } catch (PersistException e) {
@@ -72,14 +86,44 @@ public class UploadServlet extends HttpServlet {
         }
         MySQLUserDAOImpl mySQLUserDAO = new MySQLUserDAOImpl(connection);
 
-        try {
-            mySQLUserDAO.addImageToDB(uploadedFile, loggedUser);
-        } catch (SQLException e) {
-            logger.error("MySQL DB error", e);
+        //retrieving cache if it exists
+        ServletContext context = request.getSession().getServletContext();
+        if (context.getAttribute("cache") != null) {
+            cache = (HashMap<Integer, Blob>) context.getAttribute("cache");
         }
 
-        //uploadedFile.length();
-        //Files.delete(Paths.get(uploadPath));
-        response.sendRedirect("admin.jsp");
+        try {
+            mySQLUserDAO.addImageToDB(uploadedFile, loggedUser);
+            User user = mySQLUserDAO.getByPK(loggedUser.getid());   //retrieving new user with updated image
+            request.getSession().setAttribute("LOGGED_USER", user); //saving new user in session instead of older one
+
+            if (user.getImagepath() == null)    //if an image is saved in DB (<100 kb)
+                cache.put(loggedUser.getid(), mySQLUserDAO.getImageFromDB(loggedUser)); //saving image from DB to the cache
+            else {                              //otherwise remove old image from the cache to avoid conflicts
+                cache.remove(loggedUser.getid());
+            }
+            for (Map.Entry<Integer, Blob> e : cache.entrySet()) {
+                System.out.println("Кеш после загрузки картинки: " + e.getKey() + " - " + e.getValue());
+            }
+        } catch (PersistException e) {
+            logger.error("MySQL DB error", e);
+        } catch (SQLException e) {
+            logger.error("MySQL DB error", e);
+        } finally {
+            if (connection != null)
+                try {
+                    connection.close();
+                    logger.info("DB connection is closed");
+                } catch (SQLException e) {
+                    logger.warn("Cannot close connection", e);
+                }
+        }
+
+        context.setAttribute("cache", cache);    //saving cache Map in order to have access to it from other servlets by all users
+
+        if (Role.ADMINISTRATOR == loggedUser.getRole())
+            response.sendRedirect("admin.jsp");
+        else if (Role.CLIENT == loggedUser.getRole())
+            response.sendRedirect("/clientinfo");
     }
 }

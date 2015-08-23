@@ -14,6 +14,7 @@
 <h2>
   <title><fmt:message key="transhistoryheader" /></title>
 </h2>
+<p><img src="image" /></p>
 <table border="1">
   <tr>
     <th><b><fmt:message key="transtableid" /></b></th>

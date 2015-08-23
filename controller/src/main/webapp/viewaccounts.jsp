@@ -14,6 +14,7 @@
     <h2>
       <fmt:message key="acctable" />
     </h2>
+    <p><img src="image" /></p>
   <table border="1">
     <tr>
       <th><b><fmt:message key="accidcolumn" /></b></th>

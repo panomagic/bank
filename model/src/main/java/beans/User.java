@@ -12,6 +12,8 @@ public class User implements Identified<Integer> {
     private int clientID;
     private Blob image;
 
+    private String imagepath;
+
     public Integer getid() {
         return id;
     }
@@ -59,4 +61,13 @@ public class User implements Identified<Integer> {
     public void setImage(Blob image) {
         this.image = image;
     }
+
+    public String getImagepath() {
+        return imagepath;
+    }
+
+    public void setImagepath(String imagepath) {
+        this.imagepath = imagepath;
+    }
+
 }

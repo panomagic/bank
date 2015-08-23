@@ -50,7 +50,7 @@ public class LoginServlet extends HttpServlet {
                 request.getSession().setAttribute("LOGGED_USER", user);    //saving user-bean in the session
                 if(user.getRole() == Role.ADMINISTRATOR) {
                     response.sendRedirect("admin.jsp");
-                    logger.info("Login as ADMINISTRATOR was performed");
+                    logger.info("Login as ADMINISTRATOR was performed by user " + user.getUserName());
                 }
                 else if(user.getRole() == Role.CLIENT) {
                     response.sendRedirect("/clientinfo");

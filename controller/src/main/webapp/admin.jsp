@@ -18,5 +18,8 @@
   <a href="viewclients"><fmt:message key="gotoclientslistlink" /></a><br>
   <a href="viewaccounts"><fmt:message key="gotoaccountslistlink" /></a><br>
   <a href="transactionshistory"><fmt:message key="gototranshistorylink" /></a>
+  <p>
+    <a href="logout"><fmt:message key="logoutlink" /></a>
+  </p>
 </body>
 </html>

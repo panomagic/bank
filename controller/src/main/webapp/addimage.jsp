@@ -9,18 +9,20 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title><fmt:message key="adminpagetitle" /></title>
+  <title><fmt:message key="addimagepagetitle" /></title>
 </head>
 <body>
 <p><b><fmt:message key="adminloginsuccessfull" /></b></p>
 <p><img src="image" /></p>
 <form action="upload" method="post" enctype="multipart/form-data">
   <input type="text" name="description" />
-  <input type="file" name="file" />
+  <input type="file" name="file" /><br>
   <input type="submit" value="Загрузить" />
 </form>
+<p>
 <a href="viewclients"><fmt:message key="gotoclientslistlink" /></a><br>
 <a href="viewaccounts"><fmt:message key="gotoaccountslistlink" /></a><br>
 <a href="transactionshistory"><fmt:message key="gototranshistorylink" /></a>
+</p>
 </body>
 </html>
