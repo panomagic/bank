@@ -37,10 +37,8 @@ public class GetImageServlet extends HttpServlet {
         if (context.getAttribute("cache") != null) {    //retrieving cache
             cache = (HashMap<Integer, Blob>) context.getAttribute("cache");
         }
-        System.out.println("Зашли в гетимедж, " + cache.get(loggedUser.getid()));
 
         if (cache.containsKey(loggedUser.getid())) {    //if cache has needed image
-            System.out.println("Зашли в ИФ получения из кеша");
             img = cache.get(loggedUser.getid());  //showing image from the cache
             try {
                 imgData = img.getBytes(1, (int) img.length());
@@ -50,8 +48,9 @@ public class GetImageServlet extends HttpServlet {
             response.setContentType("image/jpeg");
             os.write(imgData);
             os.close();
+            logger.debug("Showing image from cache");
             for (Map.Entry<Integer, Blob> e : cache.entrySet()) {
-                System.out.println("Кеш во время показа картинки: " + e.getKey() + " - " + e.getValue());
+                logger.debug("Cache while showing an image: " + e.getKey() + " - " + e.getValue());
             }
         }
 
@@ -75,7 +74,6 @@ public class GetImageServlet extends HttpServlet {
 
         //if an image is not cached and is saved in DB
         if (!cache.containsKey(loggedUser.getid()) && user.getImagepath() == null) {
-            System.out.println("Зашли в ИФ, когда в кеше нет, а базе картинка до 100 кб");
 
             img = user.getImage();
             try {
@@ -86,13 +84,12 @@ public class GetImageServlet extends HttpServlet {
             response.setContentType("image/jpeg");
             os.write(imgData);
             os.close();
+            logger.debug("Showing image less then 100 KB from DB");
             cache.put(user.getid(), img);
             context.setAttribute("cache", cache);   //renew cache
         } else if (!cache.containsKey(loggedUser.getid())) {    //image is in the filesystem
-            System.out.println("Зашли в ЕЛС когда картинка на диске больше 100 Кб");
 
             InputStream is = new FileInputStream(user.getImagepath());
-            System.out.println(user.getImagepath());
             os = response.getOutputStream();
             response.setContentType("image/jpeg");
             while (is.available() > 0) {
@@ -101,8 +98,8 @@ public class GetImageServlet extends HttpServlet {
             }
             is.close();
             os.close();
+            logger.debug("Showing image more than 100 KB from filesystem");
             context.setAttribute("cache", cache);
         }
-        System.out.println("Вышли из гетимедж");
     }
 }

@@ -15,7 +15,7 @@
   <fmt:message key="clientloginsuccessfull" />
 </h2>
 <p><img src="image" /></p>
-<a href="upload">Добавить изображение/Add image</a><br>
+<a href="upload"><fmt:message key="addimagelink" /></a><br>
 <h3>
   <fmt:message key="youracclist" />
 </h3>

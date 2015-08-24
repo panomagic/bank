@@ -12,17 +12,15 @@
   <title><fmt:message key="addimagepagetitle" /></title>
 </head>
 <body>
-<p><b><fmt:message key="adminloginsuccessfull" /></b></p>
+<p><b><fmt:message key="addimagesubheading" /></b></p>
 <p><img src="image" /></p>
 <form action="upload" method="post" enctype="multipart/form-data">
   <input type="text" name="description" />
   <input type="file" name="file" /><br>
-  <input type="submit" value="Загрузить" />
+  <input type="submit" value="<fmt:message key="loadimage" />" />
 </form>
 <p>
-<a href="viewclients"><fmt:message key="gotoclientslistlink" /></a><br>
-<a href="viewaccounts"><fmt:message key="gotoaccountslistlink" /></a><br>
-<a href="transactionshistory"><fmt:message key="gototranshistorylink" /></a>
+  <a href="logout"><fmt:message key="logoutlink" /></a>
 </p>
 </body>
 </html>

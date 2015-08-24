@@ -14,7 +14,7 @@
 <body>
   <p><b><fmt:message key="adminloginsuccessfull" /></b></p>
   <p><img src="image" /></p>
-  <a href="upload">Добавить изображение/Add image</a><br>
+  <a href="upload"><fmt:message key="addimagelink" /></a><br>
   <a href="viewclients"><fmt:message key="gotoclientslistlink" /></a><br>
   <a href="viewaccounts"><fmt:message key="gotoaccountslistlink" /></a><br>
   <a href="transactionshistory"><fmt:message key="gototranshistorylink" /></a>

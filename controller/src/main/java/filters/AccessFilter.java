@@ -33,7 +33,7 @@ public class AccessFilter implements Filter {
         clientAccessUrls.add("/addtransaction");
         clientAccessUrls.add("/transcurrencymismatch.jsp");
         clientAccessUrls.add("/transactionshistorybyclient");
-        //clientAccessUrls.add("/images/*");
+        clientAccessUrls.add("/image");
         clientAccessUrls.add("/upload");
     }
 

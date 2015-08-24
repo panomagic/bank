@@ -127,7 +127,6 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
             fis = new FileInputStream(uploadedFile);
 
             if (uploadedFile.length() > 102400) {   //if an image is >100 kb saving it to the file system
-                System.out.println(uploadedFile.length());  //для проверки, убрать
                 statement = connection.prepareStatement("UPDATE users SET image=?, imagepath=? WHERE id=?");
                 statement.setBinaryStream(1, null); //erasing blob image in DB to avoid conflicts
                 statement.setString(2, uploadedFile.getPath());

@@ -2,7 +2,6 @@ package servlets;
 
 import beans.Role;
 import beans.User;
-import daos.GenericDAO;
 import daos.PersistException;
 import mysql.MySQLDAOFactory;
 import mysql.MySQLUserDAOImpl;
@@ -103,7 +102,7 @@ public class UploadServlet extends HttpServlet {
                 cache.remove(loggedUser.getid());
             }
             for (Map.Entry<Integer, Blob> e : cache.entrySet()) {
-                System.out.println("Кеш после загрузки картинки: " + e.getKey() + " - " + e.getValue());
+                logger.debug("Cache after image uploading: " + e.getKey() + " - " + e.getValue());
             }
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
