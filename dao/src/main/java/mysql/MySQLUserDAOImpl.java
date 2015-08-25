@@ -144,11 +144,17 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
                 Files.delete(Paths.get(uploadedFile.getPath()));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (PersistException e) {
-            e.printStackTrace();
+            logger.error("MySQL DB error", e);
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                } catch (SQLException excep) {
+                    logger.warn("MySQL DB error", excep);
+                }
+            }
+        }
+        catch (FileNotFoundException | PersistException e) {
+            logger.error("MySQL DB error", e);
         } finally {
             connection.setAutoCommit(true);
             statement.close();

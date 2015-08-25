@@ -48,6 +48,14 @@ public class UploadServlet extends HttpServlet {
         return null;
     }
 
+    private String getFileExtension(String fileName) {
+        String extension = null;
+        int i = fileName.lastIndexOf('.');
+        if (i > 0)
+            extension = fileName.substring(i + 1);
+        return extension;
+    }
+
     private static Map<Integer, Blob> cache = new HashMap<>(); //creating cache map
 
 
@@ -57,17 +65,11 @@ public class UploadServlet extends HttpServlet {
 
         String uploadFolder = "D:\\Java\\bank-images";  //defines path to user images folder
         String fileName = getSubmittedFileName(filePart);
-        String extension = null;
-
-        //retrieving file extension
-        int i = fileName.lastIndexOf('.');
-        if (i > 0)
-            extension = fileName.substring(i + 1);
 
         User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
 
         //setting path as 'folder/userid.ext'
-        String uploadPath = uploadFolder + "\\" + loggedUser.getid().toString() + "." + extension;
+        String uploadPath = uploadFolder + "\\" + loggedUser.getid().toString() + "." + getFileExtension(fileName);
 
         Path path = Paths.get(uploadPath);
         try (InputStream input = filePart.getInputStream()) {
@@ -104,9 +106,7 @@ public class UploadServlet extends HttpServlet {
             for (Map.Entry<Integer, Blob> e : cache.entrySet()) {
                 logger.debug("Cache after image uploading: " + e.getKey() + " - " + e.getValue());
             }
-        } catch (PersistException e) {
-            logger.error("MySQL DB error", e);
-        } catch (SQLException e) {
+        } catch (PersistException | SQLException e) {
             logger.error("MySQL DB error", e);
         } finally {
             if (connection != null)
@@ -121,7 +121,7 @@ public class UploadServlet extends HttpServlet {
         context.setAttribute("cache", cache);    //saving cache Map in order to have access to it from other servlets by all users
 
         if (Role.ADMINISTRATOR == loggedUser.getRole())
-            response.sendRedirect("admin.jsp");
+            response.sendRedirect("/admin");
         else if (Role.CLIENT == loggedUser.getRole())
             response.sendRedirect("/clientinfo");
     }

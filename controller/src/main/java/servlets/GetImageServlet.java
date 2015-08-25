@@ -33,7 +33,9 @@ public class GetImageServlet extends HttpServlet {
         User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
 
         Map<Integer, Blob> cache = new HashMap<>();
+
         ServletContext context = request.getSession().getServletContext();
+
         if (context.getAttribute("cache") != null) {    //retrieving cache
             cache = (HashMap<Integer, Blob>) context.getAttribute("cache");
         }
@@ -55,6 +57,7 @@ public class GetImageServlet extends HttpServlet {
         }
 
         User user = null;
+
         if (!cache.containsKey(loggedUser.getid())) {   //retrieving user form DB if cache does not have needed image
             MySQLDAOFactory factory = new MySQLDAOFactory();
             Connection connection = null;
@@ -74,7 +77,6 @@ public class GetImageServlet extends HttpServlet {
 
         //if an image is not cached and is saved in DB
         if (!cache.containsKey(loggedUser.getid()) && user.getImagepath() == null) {
-
             img = user.getImage();
             try {
                 imgData = img.getBytes(1, (int) img.length());
@@ -88,7 +90,6 @@ public class GetImageServlet extends HttpServlet {
             cache.put(user.getid(), img);
             context.setAttribute("cache", cache);   //renew cache
         } else if (!cache.containsKey(loggedUser.getid())) {    //image is in the filesystem
-
             InputStream is = new FileInputStream(user.getImagepath());
             os = response.getOutputStream();
             response.setContentType("image/jpeg");

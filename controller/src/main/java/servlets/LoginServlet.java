@@ -49,7 +49,7 @@ public class LoginServlet extends HttpServlet {
                 user.setPassword("");   //clearing the password in order to don't save it in the session
                 request.getSession().setAttribute("LOGGED_USER", user);    //saving user-bean in the session
                 if(user.getRole() == Role.ADMINISTRATOR) {
-                    response.sendRedirect("admin.jsp");
+                    response.sendRedirect("/admin");
                     logger.info("Login as ADMINISTRATOR was performed by user " + user.getUserName());
                 }
                 else if(user.getRole() == Role.CLIENT) {
