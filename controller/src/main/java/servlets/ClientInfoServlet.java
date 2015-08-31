@@ -22,41 +22,52 @@ import java.util.List;
 @WebServlet("/clientinfo")
 public class ClientInfoServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(ClientInfoServlet.class);
-        public void doGet(HttpServletRequest request, HttpServletResponse response)
-                throws ServletException, IOException {
+
+    static List<Account> fillAccountsList() throws PersistException {
+        MySQLDAOFactory factory = new MySQLDAOFactory();
+        Connection connection = factory.getContext();
+        GenericDAO dao = factory.getDAO(connection, Account.class);
+        return dao.getAll();
+    }
+
+    static List<Account> fillUserAccountsList(User loggedUser, List<Account> accounts, List<Account> allAccounts) throws PersistException {
+        for (int i = 0; i < allAccounts.size(); i++) {
+            if (allAccounts.get(i).getClientID() == loggedUser.getClientID())
+                accounts.add(allAccounts.get(i));
+        }
+        return accounts;
+    }
+
+    static List<Client> fillClientsList() throws PersistException {
+        MySQLDAOFactory factory = new MySQLDAOFactory();
+        Connection connection = factory.getContext();
+        GenericDAO dao = factory.getDAO(connection, Client.class);
+        return dao.getAll();
+    }
+
+    static List<Currency> fillCurrenciesList() throws PersistException {
+        MySQLDAOFactory factory = new MySQLDAOFactory();
+        Connection connection = factory.getContext();
+        GenericDAO dao = factory.getDAO(connection, Currency.class);
+        return dao.getAll();
+    }
+
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
         User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
-        List<Account> accounts = new ArrayList<Account>();        //only accounts of user's client
-        List<Account> allAccounts = new ArrayList<Account>();           //all accounts list
-        try {
-            MySQLDAOFactory factory = new MySQLDAOFactory();
-            Connection connection = factory.getContext();
-            GenericDAO dao = factory.getDAO(connection, Account.class);
-            allAccounts = dao.getAll();
-            for (int i = 0; i < allAccounts.size(); i++) {
-                if (allAccounts.get(i).getClientID() == loggedUser.getClientID())
-                    accounts.add(allAccounts.get(i));
-            }
-        } catch (PersistException e) {
-            logger.error("MySQL DB error", e);
-        }
+        List<Account> accounts = new ArrayList<>();        //only accounts of user's client
+        List<Account> allAccounts;           //all accounts list
 
-        List<Client> clients = new ArrayList<Client>();
-        try {
-            MySQLDAOFactory factory = new MySQLDAOFactory();
-            Connection connection = factory.getContext();
-            GenericDAO dao = factory.getDAO(connection, Client.class);
-            clients = dao.getAll();
-        } catch (PersistException e) {
-            logger.error("MySQL DB error", e);
-        }
 
-        List<Currency> currencies = new ArrayList<Currency>();
+        List<Client> clients = null;
+        List<Currency> currencies = null;
+
         try {
-            MySQLDAOFactory factory = new MySQLDAOFactory();
-            Connection connection = factory.getContext();
-            GenericDAO dao = factory.getDAO(connection, Currency.class);
-            currencies = dao.getAll();
+            allAccounts = fillAccountsList();
+            accounts = fillUserAccountsList(loggedUser, accounts, allAccounts);
+            clients = fillClientsList();
+            currencies = fillCurrenciesList();
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }

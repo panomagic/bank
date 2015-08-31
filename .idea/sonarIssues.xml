@@ -102,16 +102,7 @@
         </entry>
         <entry key="$PROJECT_DIR$/controller/src/main/java/servlets/ClientInfoServlet.java">
           <value>
-            <set>
-              <SonarIssue>
-                <option name="isNew" value="false" />
-                <option name="key" value="1791eeca-97d2-4f27-9429-2a13dd0967a3" />
-                <option name="line" value="41" />
-                <option name="message" value="Define a constant instead of duplicating this literal &quot;MySQL DB error&quot; 3 times." />
-                <option name="ruleKey" value="squid:S1192" />
-                <option name="severity" value="MINOR" />
-              </SonarIssue>
-            </set>
+            <set />
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/controller/src/main/java/servlets/GetImageServlet.java">

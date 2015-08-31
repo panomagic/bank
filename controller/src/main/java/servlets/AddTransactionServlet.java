@@ -18,10 +18,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static servlets.ClientInfoServlet.*;
+
+
 @WebServlet(name="addtransaction", urlPatterns={"/addtransaction"})
 
 public class AddTransactionServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(AddTransactionServlet.class);
+
+
 
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -29,64 +34,44 @@ public class AddTransactionServlet extends HttpServlet {
         List<Account> payerAccounts = new ArrayList<>();   //showing payer accounts separately for user roles: all accounts for admin and only his own for client
         User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
 
-        MySQLDAOFactory factory = new MySQLDAOFactory();
-        GenericDAO daoAccount = null;
-        try {
-            Connection connection = factory.getContext();
-            daoAccount = factory.getDAO(connection, Account.class);
-        } catch (PersistException e) {
-            logger.error("MySQL DB error", e);
-        }
-
         if (Role.ADMINISTRATOR == loggedUser.getRole()) {
             try {
-                payerAccounts = daoAccount.getAll();
+                payerAccounts = fillAccountsList();
             } catch (PersistException e) {
                 logger.error("MySQL DB error", e);
             }
         }
         else if (Role.CLIENT == loggedUser.getRole()) {
             try {
-                List<Account> allAccounts;
-                allAccounts = daoAccount.getAll();
-                for (int i = 0; i < allAccounts.size(); i++) {
-                    if (allAccounts.get(i).getClientID() == loggedUser.getClientID())
-                        payerAccounts.add(allAccounts.get(i));
-                }
+                List<Account> allAccounts = fillAccountsList();
+                payerAccounts = fillUserAccountsList(loggedUser, payerAccounts, allAccounts);
             } catch (PersistException e) {
                 logger.error("MySQL DB error", e);
             }
         }
         request.setAttribute("payerAccounts", payerAccounts);
 
-        List<Account> recipientAccounts = new ArrayList<>(); //all recipient accounts list
+        List<Account> recipientAccounts = null; //all recipient accounts list
         try {
-            Connection connection = factory.getContext();
-            daoAccount = factory.getDAO(connection, Account.class);
-            recipientAccounts = daoAccount.getAll();
+            recipientAccounts = fillAccountsList();
         } catch (PersistException e) {
-            logger.error("MySQL DB error", e);
+            e.printStackTrace();
         }
+
         request.setAttribute("recipientAccounts", recipientAccounts);
 
-        List<Client> clients = new ArrayList<>();
+        List<Client> clients = null;
+        List<Currency> currencies = null;
+
         try {
-            Connection connection = factory.getContext();
-            GenericDAO daoClient = factory.getDAO(connection, Client.class);
-            clients = daoClient.getAll();
+            clients = fillClientsList();
+            currencies = fillCurrenciesList();
+
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
         request.setAttribute("allClients", clients);
 
-        List<Currency> currencies = new ArrayList<>();
-        try {
-            Connection connection = factory.getContext();
-            GenericDAO daoCurrency = factory.getDAO(connection, Currency.class);
-            currencies = daoCurrency.getAll();
-        } catch (PersistException e) {
-            logger.error("MySQL DB error", e);
-        }
         request.setAttribute("allCurrencies", currencies);
 
         request.setAttribute("userrole", loggedUser.getRole());
