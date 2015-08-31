@@ -7,6 +7,7 @@ import java.util.Set;
 public class Client implements Identified<Integer> {
 
     public Client() {
+        //no-args constructor
     }
 
     private Integer id;

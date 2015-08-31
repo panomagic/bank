@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name="login", urlPatterns={"/login"})
@@ -45,8 +44,8 @@ public class LoginServlet extends HttpServlet {
         }
 
         if (user != null) { //authentication procedure by password matching
-            if(user.getPassword() != null && user.getPassword().equals(request.getParameter("password"))) {
-                user.setPassword("");   //clearing the password in order to don't save it in the session
+            if(user.getPsw() != null && user.getPsw().equals(request.getParameter("psw"))) {
+                user.setPsw("");   //clearing the password in order to don't save it in the session
                 request.getSession().setAttribute("LOGGED_USER", user);    //saving user-bean in the session
                 if(user.getRole() == Role.ADMINISTRATOR) {
                     response.sendRedirect("/admin");
@@ -62,6 +61,11 @@ public class LoginServlet extends HttpServlet {
                 request.getSession().setAttribute("language", request.getParameter("chosenlanguage"));    //saving interface language in session
                 logger.info("Login was not performed for user " + request.getParameter("userName"));
             }
+        }
+        else {
+            response.sendRedirect("loginfailed.jsp");
+            request.getSession().setAttribute("language", request.getParameter("chosenlanguage"));    //saving interface language in session
+            logger.info("Login was not performed for user " + request.getParameter("userName"));
         }
 
         request.getSession().setAttribute("language", request.getParameter("chosenlanguage"));    //saving interface language in session

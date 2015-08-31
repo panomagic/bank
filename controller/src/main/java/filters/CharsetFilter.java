@@ -19,7 +19,7 @@ public class CharsetFilter implements Filter
             encoding = "UTF-8";
     }
 
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain       next)
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain next)
             throws IOException, ServletException
     {
         // Respect the client-specified character encoding
@@ -38,5 +38,7 @@ public class CharsetFilter implements Filter
         next.doFilter(request, response);
     }
 
-    public void destroy(){}
+    public void destroy() {
+        //this method gives the filter an opportunity to clean up any resources that are being held
+    }
 }

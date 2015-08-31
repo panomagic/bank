@@ -48,7 +48,7 @@ public class UploadServlet extends HttpServlet {
         return null;
     }
 
-    private String getFileExtension(String fileName) {
+    private static String getFileExtension(String fileName) {
         String extension = null;
         int i = fileName.lastIndexOf('.');
         if (i > 0)
@@ -56,20 +56,31 @@ public class UploadServlet extends HttpServlet {
         return extension;
     }
 
+    private static final String UPLOADFOLDER = "D:\\Java\\bank-images"; //defines path to user images folder on server
+
     private static Map<Integer, Blob> cache = new HashMap<>(); //creating cache map
 
-
+    /**
+     * Method receives user image as filepart and copies it to:
+     * - defined folder in the server's filesystem {@code UPLOADFOLDER} for images over than 100KB
+     * (also renames output file to userid.ext)
+     * - database via {@code addImageToDB} method and {@code cache} for images less than 100KB
+     * {@code cache}
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
 
-        String uploadFolder = "D:\\Java\\bank-images";  //defines path to user images folder
         String fileName = getSubmittedFileName(filePart);
 
         User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
 
         //setting path as 'folder/userid.ext'
-        String uploadPath = uploadFolder + "\\" + loggedUser.getid().toString() + "." + getFileExtension(fileName);
+        String uploadPath = UPLOADFOLDER + "\\" + loggedUser.getid().toString() + "." + getFileExtension(fileName);
 
         Path path = Paths.get(uploadPath);
         try (InputStream input = filePart.getInputStream()) {
@@ -83,14 +94,13 @@ public class UploadServlet extends HttpServlet {
         try {
             connection = factory.getContext();
         } catch (PersistException e) {
-            logger.error("Error while creating connection");
+            logger.error("Error while creating connection", e);
         }
         MySQLUserDAOImpl mySQLUserDAO = new MySQLUserDAOImpl(connection);
 
-        //retrieving cache if it exists
         ServletContext context = request.getSession().getServletContext();
         if (context.getAttribute("cache") != null) {
-            cache = (HashMap<Integer, Blob>) context.getAttribute("cache");
+            cache = (HashMap<Integer, Blob>) context.getAttribute("cache"); //retrieving cache if it exists
         }
 
         try {

@@ -12,7 +12,7 @@
       <input type="text" name="userName" size="35">
     </p>
     <p><b>Password / Пароль:</b><br>
-      <input type="text" name="password" size="35">
+      <input type="text" name="psw" size="35">
     </p>
     <p><b>Choose language / Выберите язык:</b><br>
       <select name="chosenlanguage">

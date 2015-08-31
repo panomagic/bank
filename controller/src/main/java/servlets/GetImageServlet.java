@@ -64,14 +64,14 @@ public class GetImageServlet extends HttpServlet {
             try {
                 connection = factory.getContext();
             } catch (PersistException e) {
-                logger.error("Error while creating connection");
+                logger.error("Error while creating connection", e);
             }
 
             MySQLUserDAOImpl mySQLUserDAO = new MySQLUserDAOImpl(connection);
             try {
                 user = mySQLUserDAO.getByPK(loggedUser.getid());
             } catch (PersistException e) {
-                e.printStackTrace();
+                logger.warn("MySQL DB error", e);
             }
         }
 

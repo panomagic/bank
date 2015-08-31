@@ -30,11 +30,11 @@ public class UpdateDeleteClientServlet extends HttpServlet {
             Connection connection = factory.getContext();
             GenericDAO dao = factory.getDAO(connection, Client.class);
 
-            if (request.getParameter("action").equals("update")) {
+            if ("update".equals(request.getParameter("action"))) {
                 forwardPage = "updateclient.jsp";
                 client = (Client) dao.getByPK(Integer.parseInt(request.getParameter("id")));
                 request.setAttribute("client", client);
-            } else if (request.getParameter("action").equals("delete")) {
+            } else if ("delete".equals(request.getParameter("action"))) {
                 forwardPage = "deleteclient.jsp";
                 client = new Client();
                 client.setid(Integer.parseInt(request.getParameter("id")));

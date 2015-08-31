@@ -11,7 +11,7 @@ import java.sql.SQLException;
  * List of special methods for UserDAO
  */
 public interface UserDAO {
-    void addImageToDB(File uploadedFile, User user) throws SQLException, IOException;
+    void addImageToDB(File uploadedFile, User user) throws Exception;
 
     Blob getImageFromDB(User loggedUser);
 }

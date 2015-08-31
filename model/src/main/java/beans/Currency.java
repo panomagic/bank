@@ -2,10 +2,11 @@ package beans;
 
 public class Currency implements Identified<Integer> {
     public Currency() {
+        //no-args constructor
     }
 
     private Integer id;
-    private String currency;
+    private String currencyName;
 
     public Integer getid() {
         return id;
@@ -15,11 +16,11 @@ public class Currency implements Identified<Integer> {
         this.id = id;
     }
 
-    public String getCurrency() {
-        return currency;
+    public String getCurrencyName() {
+        return currencyName;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
+    public void setCurrencyName(String currencyName) {
+        this.currencyName = currencyName;
     }
 }

@@ -61,7 +61,7 @@ public class MySQLCurrencyDAOImpl extends AbstractJDBCDAO<Currency, Integer> imp
             while (rs.next()) {
                 PersistCurrency currency = new PersistCurrency();
                 currency.setid(rs.getInt("id"));
-                currency.setCurrency(rs.getString("currency"));
+                currency.setCurrencyName(rs.getString("currency"));
                 result.add(currency);
             }
         } catch (Exception e) {
@@ -73,7 +73,7 @@ public class MySQLCurrencyDAOImpl extends AbstractJDBCDAO<Currency, Integer> imp
     @Override
     public void prepareStatementForInsert(PreparedStatement statement, Currency object) throws PersistException {
         try {
-            statement.setString(1, object.getCurrency());
+            statement.setString(1, object.getCurrencyName());
         } catch (Exception e) {
             throw new PersistException(e);
         }
@@ -82,7 +82,7 @@ public class MySQLCurrencyDAOImpl extends AbstractJDBCDAO<Currency, Integer> imp
     @Override
     public void prepareStatementForUpdate(PreparedStatement statement, Currency object) throws PersistException {
         try {
-            statement.setString(1, object.getCurrency());
+            statement.setString(1, object.getCurrencyName());
         } catch (Exception e) {
             throw new PersistException(e);
         }

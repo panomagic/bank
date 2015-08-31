@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="rules">
+    <option name="sonarRulesByRuleKey">
+      <map>
+        <entry key="squid:S1186">
+          <value>
+            <Rule>
+              <option name="htmlDesc" value="&lt;p&gt;There are several reasons for a method not to have a method body:&lt;/p&gt;&#10;&lt;ul&gt;&#10;  &lt;li&gt;It is an unintentional omission, and should be fixed to prevent an unexpected behavior in production.&lt;/li&gt;&#10;  &lt;li&gt;It is not yet, or never will be, supported. In this case an &lt;code&gt;UnsupportedOperationException&lt;/code&gt; should be thrown.&lt;/li&gt;&#10;  &lt;li&gt;The method is an intentionally-blank override. In this case a nested comment should explain the reason for the blank override.&lt;/li&gt;&#10;  &lt;li&gt;&#10;    There is a desire to provide a public, no-args constructor.&#10;    In this case, it can simply be omitted from the code; a default constructor will automatically be generated.&#10;  &lt;/li&gt;&#10;&lt;/ul&gt;&#10;&#10;&lt;h2&gt;Noncompliant Code Example&lt;/h2&gt;&#10;&lt;pre&gt;&#10;public void doSomething() {&#10;}&#10;&#10;public void doSomethingElse() {&#10;}&#10;&lt;/pre&gt;&#10;&#10;&lt;h2&gt;Compliant Solution&lt;/h2&gt;&#10;&lt;pre&gt;&#10;@Override&#10;public void doSomething() {&#10;  // Do nothing because of X and Y.&#10;}&#10;&#10;@Override&#10;public void doSomethingElse() {&#10;  throw new UnsupportedOperationException();&#10;}&#10;&lt;/pre&gt;&#10;&#10;&lt;h2&gt;Exceptions&lt;/h2&gt;&#10;&lt;p&gt;An abstract class may have empty methods, in order to provide default implementations for child classes.&lt;/p&gt;&#10;&lt;pre&gt;&#10;public abstract class Animal {&#10;  void speak() {&#10;  }&#10;}&#10;&lt;/pre&gt;" />
+              <option name="key" value="squid:S1186" />
+              <option name="langName" value="Java" />
+              <option name="name" value="Methods should not be empty" />
+              <option name="severity" value="MAJOR" />
+            </Rule>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

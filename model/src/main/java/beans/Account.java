@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 public class Account implements Identified<Integer> {
 
     public Account() {
+        //no-args constructor
     }
 
     private Integer id;

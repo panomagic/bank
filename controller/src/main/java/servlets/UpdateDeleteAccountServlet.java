@@ -44,11 +44,11 @@ public class UpdateDeleteAccountServlet extends HttpServlet {
             Connection connection = factory.getContext();
             GenericDAO dao = factory.getDAO(connection, Account.class);
 
-            if(request.getParameter("action").equals("update")) {
+            if ("update".equals(request.getParameter("action"))) {
                 forwardPage = "updateaccount.jsp";
                 account = (Account) dao.getByPK(Integer.parseInt(request.getParameter("id")));
                 request.setAttribute("account", account);
-            } else if(request.getParameter("action").equals("delete")) {
+            } else if ("delete".equals(request.getParameter("action"))) {
                 forwardPage = "deleteaccount.jsp";
                 account = new Account();
                 account.setid(Integer.parseInt(request.getParameter("id")));

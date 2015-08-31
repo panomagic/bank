@@ -5,7 +5,9 @@ import org.apache.log4j.Logger;
 public class PersistException extends Exception {
     private static final Logger logger = Logger.getLogger(TransactionFailedException.class);
 
-    public PersistException() {}
+    public PersistException() {
+        //no-args constructor
+    }
 
     public PersistException(String message) {
         super(message);

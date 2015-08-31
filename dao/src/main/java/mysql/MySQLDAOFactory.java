@@ -16,7 +16,7 @@ public class MySQLDAOFactory implements DAOFactory<Connection> {
 
     private static final String URL = "jdbc:mysql://localhost:3306/bank";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "970195";
+    private static final String PSW = "970195";
     private final String driver = "com.mysql.jdbc.Driver";
     private Map<Class, DAOCreator> creators;
 
@@ -25,7 +25,7 @@ public class MySQLDAOFactory implements DAOFactory<Connection> {
     public Connection getContext() throws PersistException {
         Connection connection = null;
         try {
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            connection = DriverManager.getConnection(URL, USERNAME, PSW);
         } catch (SQLException e) {
             throw new PersistException(e);
         }

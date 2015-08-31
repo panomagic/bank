@@ -1,8 +1,11 @@
 package servlets;
 
+import beans.Account;
+import beans.Client;
 import beans.Currency;
-import daos.*;
-import beans.*;
+import beans.User;
+import daos.GenericDAO;
+import daos.PersistException;
 import mysql.MySQLDAOFactory;
 import org.apache.log4j.Logger;
 
@@ -13,8 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet("/clientinfo")
 public class ClientInfoServlet extends HttpServlet {
@@ -75,7 +78,7 @@ public class ClientInfoServlet extends HttpServlet {
 
             for (int j = 0; j < currencies.size(); j++) {
                 if (accounts.get(i).getCurrencyID() == currencies.get(j).getid())
-                    currency = currencies.get(j).getCurrency();
+                    currency = currencies.get(j).getCurrencyName();
             }
             records[i] = new Object[]{
                     accounts.get(i).getid(),

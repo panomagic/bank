@@ -3,11 +3,13 @@ package beans;
 import java.sql.Blob;
 
 public class User implements Identified<Integer> {
-    public User() {}
+    public User() {
+        //no-args constructor
+    }
 
     private Integer id;
     private String userName;
-    private String password;
+    private String psw;
     private Role role;
     private int clientID;
     private Blob image;
@@ -30,12 +32,12 @@ public class User implements Identified<Integer> {
         this.userName = userName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPsw() {
+        return psw;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPsw(String psw) {
+        this.psw = psw;
     }
 
     public Role getRole() {

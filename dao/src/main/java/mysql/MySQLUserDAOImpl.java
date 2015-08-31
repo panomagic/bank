@@ -32,13 +32,13 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
     @Override
     public String getCreateQuery() {
         return "INSERT INTO users (userName, " +
-                "password, role, clients_clientID) VALUES(?,?,?,?)";
+                "psw, role, clients_clientID) VALUES(?,?,?,?)";
     }
 
     @Override
     public String getUpdateQuery() {
         return "UPDATE users SET userName=?, " +
-                "password=?, role=?, clients_clientID=? WHERE id=?";
+                "psw=?, role=?, clients_clientID=? WHERE id=?";
     }
 
     @Override
@@ -67,7 +67,7 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
                 PersistUser user = new PersistUser();
                 user.setid(rs.getInt("id"));
                 user.setUserName(rs.getString("userName"));
-                user.setPassword(rs.getString("password"));
+                user.setPsw(rs.getString("psw"));
                 user.setRole(Role.fromString(rs.getString("role")));
                 user.setClientID(rs.getInt("clients_clientID"));
                 user.setImage(rs.getBlob("image"));
@@ -84,7 +84,7 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
     public void prepareStatementForInsert(PreparedStatement statement, User object) throws PersistException {
         try {
             statement.setString(1, object.getUserName());
-            statement.setString(2, object.getPassword());
+            statement.setString(2, object.getPsw());
             statement.setString(3, object.getRole().roleAsChar());
             statement.setInt(4, object.getClientID());
         } catch (Exception e) {
@@ -96,7 +96,7 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
     public void prepareStatementForUpdate(PreparedStatement statement, User object) throws PersistException {
         try {
             statement.setString(1, object.getUserName());
-            statement.setString(2, object.getPassword());
+            statement.setString(2, object.getPsw());
             statement.setString(3, object.getRole().roleAsChar());
             statement.setInt(4, object.getClientID());
             statement.setInt(5, object.getid());

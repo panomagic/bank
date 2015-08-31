@@ -80,12 +80,12 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
                     connection.close();
                     logger.info("DB connection is closed");
                 } catch (SQLException e) {
-                    logger.warn("Cannot close connection");
+                    logger.warn("Cannot close connection", e);
                 }
             }
         }
 
-        if ((list == null) || (list.size() == 0))
+        if ((list == null) || (list.isEmpty()))
             return null;
         if (list.size() > 1)
             throw new PersistException("Received more than one record");
@@ -108,7 +108,7 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
                     connection.close();
                     logger.info("DB connection is closed");
                 } catch (SQLException e) {
-                    logger.warn("Cannot close connection");
+                    logger.warn("Cannot close connection", e);
                 }
             }
         }
@@ -147,7 +147,7 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
                     connection.close();
                     logger.info("DB connection is closed");
                 } catch (SQLException e) {
-                    logger.warn("Cannot close connection");
+                    logger.warn("Cannot close connection", e);
                 }
             }
         }
@@ -170,7 +170,7 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
                     connection.close();
                     logger.info("DB connection is closed");
                 } catch (SQLException e) {
-                    logger.warn("Cannot close connection");
+                    logger.warn("Cannot close connection", e);
                 }
             }
         }
@@ -180,11 +180,7 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
     public void delete(T object) throws PersistException {
         String sql = getDeleteQuery();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
-            try {
-                statement.setObject(1, object.getid());
-            } catch (Exception e) {
-                throw new PersistException(e);
-            }
+            statement.setObject(1, object.getid());
             int count = statement.executeUpdate();
             if (count != 1)
                 throw new PersistException("On delete modify more than 1 record: " + count);
@@ -196,7 +192,7 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
                     connection.close();
                     logger.info("DB connection is closed");
                 } catch (SQLException e) {
-                    logger.warn("Cannot close connection");
+                    logger.warn("Cannot close connection", e);
                 }
             }
         }

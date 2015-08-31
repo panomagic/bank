@@ -90,10 +90,10 @@
         </c:forEach>
       </td>
       <td width="70" align="center">
-        <c:forEach var="currency" items="${allCurrencies}">
+        <c:forEach var="currencyName" items="${allCurrencies}">
           <c:choose>
-            <c:when test="${transaction.currencyID == currency.id}">
-              ${currency.currency}
+            <c:when test="${transaction.currencyID == currencyName.id}">
+              ${currencyName.currencyName}
             </c:when>
           </c:choose>
         </c:forEach>

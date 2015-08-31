@@ -79,43 +79,39 @@ public class MySQLTransactionDAOImpl extends AbstractJDBCDAO<Transaction, Intege
     //use addTransaction method instead
     @Override
     public void prepareStatementForInsert(PreparedStatement statement, Transaction object) throws PersistException {
+        //declared in AbstractJDBCDAO
     }
 
     @Override
     public void prepareStatementForUpdate(PreparedStatement statement, Transaction object) throws PersistException {
+        //declared in AbstractJDBCDAO
     }
 
     @Override
     public void prepareStatementForDelete(PreparedStatement statement, Transaction object) throws PersistException {
+        //declared in AbstractJDBCDAO
     }
 
-    public void addTransaction(Transaction transaction) throws PersistException, SQLException {
+    public void addTransaction(Transaction transaction) throws PersistException {
 
         PreparedStatement preparedStatement = null;
 
         Account payerAcc = null;
         Account recipientAcc = null;
 
+        MySQLDAOFactory factory = new MySQLDAOFactory();
+
         try {
-            MySQLDAOFactory factory = new MySQLDAOFactory();
             Connection connection = factory.getContext();
             GenericDAO dao = factory.getDAO(connection, Account.class);
             payerAcc = (Account) dao.getByPK(transaction.getPayerAccID());
+            Connection connection2 = factory.getContext();
+            GenericDAO dao2 = factory.getDAO(connection2, Account.class);
+            recipientAcc = (Account) dao2.getByPK(transaction.getRecipientAccID());
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
 
-        try {
-            MySQLDAOFactory factory = new MySQLDAOFactory();
-            Connection connection = factory.getContext();
-            GenericDAO dao = factory.getDAO(connection, Account.class);
-            recipientAcc = (Account) dao.getByPK(transaction.getRecipientAccID());
-        } catch (PersistException e) {
-            logger.error("MySQL DB error", e);
-        }
-
-
-        MySQLDAOFactory factory = new MySQLDAOFactory();
         Connection connection = factory.getContext();
         try {
             preparedStatement = connection.prepareStatement("INSERT INTO transactions (currencies_currencyID, " +
@@ -163,14 +159,14 @@ public class MySQLTransactionDAOImpl extends AbstractJDBCDAO<Transaction, Intege
             try {
                 connection.setAutoCommit(true);
             } catch (SQLException e) {
-                logger.warn("Cannot change autoCommit mode");
+                logger.warn("Cannot change autoCommit mode", e);
             }
 
             if(preparedStatement != null) {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {
-                    logger.warn("Cannot close prepared statement");
+                    logger.warn("Cannot close prepared statement", e);
                 }
             }
 

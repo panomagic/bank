@@ -1,0 +1,1136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="issues">
+    <option name="index">
+      <map>
+        <entry key="/Dummy.txt">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="/a.regexp">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="/a.sql">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/java/filters/AccessFilter.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/java/filters/CharsetFilter.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="f8be09e7-1957-40a9-8d3d-6b98b0ebee05" />
+                <option name="line" value="41" />
+                <option name="message" value="Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation." />
+                <option name="ruleKey" value="squid:S1186" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="fc50f2b5-5a60-459a-b746-1b794f584f11" />
+                <option name="line" value="41" />
+                <option name="message" value="Move this closing curly brace to the next line." />
+                <option name="ruleKey" value="squid:RightCurlyBraceStartLineCheck" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/java/servlets/AddAccountServlet.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="170fd2a8-528c-403a-af9e-2a3c78296150" />
+                <option name="message" value="1 duplicated blocks of code must be removed." />
+                <option name="ruleKey" value="common-java:DuplicatedBlocks" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="31b9ea4c-64d7-4685-ace4-85a009a57881" />
+                <option name="line" value="15" />
+                <option name="message" value="Remove this unused import 'java.sql.SQLException'." />
+                <option name="ruleKey" value="squid:UselessImportCheck" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="91239220-9318-4106-af3a-579f2b9b94b9" />
+                <option name="line" value="21" />
+                <option name="message" value="Rename the &quot;logger&quot; logger to comply with the format &quot;LOG(?:GER)?&quot;." />
+                <option name="ruleKey" value="squid:S1312" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/java/servlets/AddClientServlet.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="0c54442f-b79a-4376-b49b-e0684193078f" />
+                <option name="message" value="1 duplicated blocks of code must be removed." />
+                <option name="ruleKey" value="common-java:DuplicatedBlocks" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="05aa6466-7ac1-4781-9c23-263f51e82122" />
+                <option name="line" value="20" />
+                <option name="message" value="Rename the &quot;logger&quot; logger to comply with the format &quot;LOG(?:GER)?&quot;." />
+                <option name="ruleKey" value="squid:S1312" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/java/servlets/AddTransactionServlet.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/java/servlets/ClientInfoServlet.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="1791eeca-97d2-4f27-9429-2a13dd0967a3" />
+                <option name="line" value="41" />
+                <option name="message" value="Define a constant instead of duplicating this literal &quot;MySQL DB error&quot; 3 times." />
+                <option name="ruleKey" value="squid:S1192" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/java/servlets/GetImageServlet.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="6db0c301-afbe-492a-a624-936736b322f0" />
+                <option name="line" value="50" />
+                <option name="message" value="Define a constant instead of duplicating this literal &quot;image/jpeg&quot; 3 times." />
+                <option name="ruleKey" value="squid:S1192" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="3c55d720-d091-4a87-a426-098fcccc0461" />
+                <option name="line" value="73" />
+                <option name="message" value="Either log or rethrow this exception." />
+                <option name="ruleKey" value="squid:S1166" />
+                <option name="severity" value="CRITICAL" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="fc36943f-75d9-4c2b-8c7f-19cd2e3872d9" />
+                <option name="line" value="39" />
+                <option name="message" value="Define a constant instead of duplicating this literal &quot;cache&quot; 4 times." />
+                <option name="ruleKey" value="squid:S1192" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="81f4f8a8-88a0-42ec-9800-78ab489c3d65" />
+                <option name="line" value="27" />
+                <option name="message" value="The Cyclomatic Complexity of this method &quot;doGet&quot; is 13 which is greater than 10 authorized." />
+                <option name="ruleKey" value="squid:MethodCyclomaticComplexity" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="377a2b98-81c0-4934-a8f3-54e47118f4e7" />
+                <option name="line" value="25" />
+                <option name="message" value="Rename the &quot;logger&quot; logger to comply with the format &quot;LOG(?:GER)?&quot;." />
+                <option name="ruleKey" value="squid:S1312" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="3b88b1a9-0320-4b73-b94e-bd3c4e097d63" />
+                <option name="line" value="66" />
+                <option name="message" value="Either log or rethrow this exception." />
+                <option name="ruleKey" value="squid:S1166" />
+                <option name="severity" value="CRITICAL" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/java/servlets/LoginServlet.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="4994cf81-64f3-44a7-b962-3d926e4d9f2d" />
+                <option name="line" value="21" />
+                <option name="message" value="Rename the &quot;logger&quot; logger to comply with the format &quot;LOG(?:GER)?&quot;." />
+                <option name="ruleKey" value="squid:S1312" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="19bd7be0-02d7-4bbe-b030-4ed8f936aa1d" />
+                <option name="line" value="17" />
+                <option name="message" value="Remove this unused import 'java.util.ArrayList'." />
+                <option name="ruleKey" value="squid:UselessImportCheck" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/java/servlets/LogoutServlet.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="1b60ab73-d1e1-43ec-b570-501997ae36c7" />
+                <option name="line" value="16" />
+                <option name="message" value="Rename the &quot;logger&quot; logger to comply with the format &quot;LOG(?:GER)?&quot;." />
+                <option name="ruleKey" value="squid:S1312" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/java/servlets/TransactionsHistoryByClientServlet.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="438c8c63-630c-4ccc-946f-ddeac526dfa8" />
+                <option name="line" value="41" />
+                <option name="message" value="Define a constant instead of duplicating this literal &quot;MySQL DB error&quot; 4 times." />
+                <option name="ruleKey" value="squid:S1192" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="f5c82bb9-e154-4eed-a623-178293502f48" />
+                <option name="message" value="2 duplicated blocks of code must be removed." />
+                <option name="ruleKey" value="common-java:DuplicatedBlocks" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="c19d4b0d-aabc-4992-a6a4-4711e755a742" />
+                <option name="line" value="20" />
+                <option name="message" value="Rename the &quot;logger&quot; logger to comply with the format &quot;LOG(?:GER)?&quot;." />
+                <option name="ruleKey" value="squid:S1312" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/java/servlets/TransactionsHistoryServlet.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="2d35561b-e7a6-4556-ab9c-c0bfebf391ee" />
+                <option name="line" value="36" />
+                <option name="message" value="Define a constant instead of duplicating this literal &quot;MySQL DB error&quot; 4 times." />
+                <option name="ruleKey" value="squid:S1192" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="8fa8042b-dccd-486f-8e44-dffe64b1c19a" />
+                <option name="line" value="24" />
+                <option name="message" value="Rename the &quot;logger&quot; logger to comply with the format &quot;LOG(?:GER)?&quot;." />
+                <option name="ruleKey" value="squid:S1312" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="09a782bc-7b34-4a75-999c-1e79c220ec77" />
+                <option name="message" value="2 duplicated blocks of code must be removed." />
+                <option name="ruleKey" value="common-java:DuplicatedBlocks" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="c0a02b23-bef7-4a1f-92c8-303063285a05" />
+                <option name="line" value="18" />
+                <option name="message" value="Remove this unused import 'java.sql.SQLException'." />
+                <option name="ruleKey" value="squid:UselessImportCheck" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/java/servlets/UpdateDeleteAccountServlet.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="803bca7f-3a81-411b-8098-33b37af8127f" />
+                <option name="line" value="22" />
+                <option name="message" value="Rename the &quot;logger&quot; logger to comply with the format &quot;LOG(?:GER)?&quot;." />
+                <option name="ruleKey" value="squid:S1312" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="cbce5038-08e4-4581-ade5-7a011874f581" />
+                <option name="line" value="37" />
+                <option name="message" value="Define a constant instead of duplicating this literal &quot;MySQL DB error&quot; 3 times." />
+                <option name="ruleKey" value="squid:S1192" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/java/servlets/UpdateDeleteClientServlet.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="b4e49d89-7ef6-4898-8a47-d924a4bd2d2f" />
+                <option name="message" value="1 duplicated blocks of code must be removed." />
+                <option name="ruleKey" value="common-java:DuplicatedBlocks" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="01d70e13-c163-4642-859a-5d9f567e0917" />
+                <option name="line" value="20" />
+                <option name="message" value="Rename the &quot;logger&quot; logger to comply with the format &quot;LOG(?:GER)?&quot;." />
+                <option name="ruleKey" value="squid:S1312" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/java/servlets/UploadServlet.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="5c8b291c-cdae-44f3-8062-9e22e6f08cd3" />
+                <option name="line" value="102" />
+                <option name="message" value="Define a constant instead of duplicating this literal &quot;cache&quot; 3 times." />
+                <option name="ruleKey" value="squid:S1192" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="222c69a4-d46f-4e85-b4ec-22b278186aa8" />
+                <option name="line" value="59" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="a18f4de5-cb90-4d2c-9df0-5ce9d7e0d28b" />
+                <option name="line" value="34" />
+                <option name="message" value="Rename the &quot;logger&quot; logger to comply with the format &quot;LOG(?:GER)?&quot;." />
+                <option name="ruleKey" value="squid:S1312" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="b69f5a2c-5927-4cbc-bd2f-4efd55ab28ce" />
+                <option name="line" value="96" />
+                <option name="message" value="Either log or rethrow this exception." />
+                <option name="ruleKey" value="squid:S1166" />
+                <option name="severity" value="CRITICAL" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="177b8c8e-97f1-44fb-a7b8-da7d460e6a95" />
+                <option name="line" value="61" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/java/servlets/ViewAccountsServlet.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="d0246860-3948-4740-a331-2b01cacfc702" />
+                <option name="message" value="1 duplicated blocks of code must be removed." />
+                <option name="ruleKey" value="common-java:DuplicatedBlocks" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="e1997a98-47ba-4957-9782-ecb89e146f93" />
+                <option name="line" value="21" />
+                <option name="message" value="Rename the &quot;logger&quot; logger to comply with the format &quot;LOG(?:GER)?&quot;." />
+                <option name="ruleKey" value="squid:S1312" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="1d914121-0d31-44ca-862f-b2233ca6233a" />
+                <option name="line" value="35" />
+                <option name="message" value="Define a constant instead of duplicating this literal &quot;MySQL DB error&quot; 3 times." />
+                <option name="ruleKey" value="squid:S1192" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/java/servlets/ViewClientsServlet.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="f76efbfe-2134-4015-b96c-2a5a142cd422" />
+                <option name="message" value="1 duplicated blocks of code must be removed." />
+                <option name="ruleKey" value="common-java:DuplicatedBlocks" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="1f053cef-f062-4b5b-9411-204819580564" />
+                <option name="line" value="19" />
+                <option name="message" value="Rename the &quot;logger&quot; logger to comply with the format &quot;LOG(?:GER)?&quot;." />
+                <option name="ruleKey" value="squid:S1312" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/resources/BankBundle_en.properties">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/webapp/addtransaction.jsp">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/webapp/client.jsp">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/webapp/login.jsp">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/webapp/loginfailed.jsp">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/webapp/logout.jsp">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/webapp/transactionshistory.jsp">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/webapp/viewaccounts.jsp">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/dao/src/main/java/daos/AbstractJDBCDAO.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/dao/src/main/java/daos/DAOFactory.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="387c0d49-cedc-463c-afcb-d793a39cfe1b" />
+                <option name="line" value="6" />
+                <option name="message" value="Rename this generic name to match the regular expression '^[A-Z]$'." />
+                <option name="ruleKey" value="squid:S00119" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="4f9171b4-2dc4-4b10-bae6-93cb28b59f44" />
+                <option name="line" value="4" />
+                <option name="message" value="Rename this generic name to match the regular expression '^[A-Z]$'." />
+                <option name="ruleKey" value="squid:S00119" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/dao/src/main/java/daos/GenericDAO.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="dfdb4f79-3876-46de-9d31-7c10cb5b7f00" />
+                <option name="line" value="10" />
+                <option name="message" value="Rename this generic name to match the regular expression '^[A-Z]$'." />
+                <option name="ruleKey" value="squid:S00119" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/dao/src/main/java/daos/Management.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="f8e2d381-56bc-4ee3-be14-3d32ff020eec" />
+                <option name="line" value="83" />
+                <option name="message" value="This block of commented-out lines of code should be removed." />
+                <option name="ruleKey" value="squid:CommentedOutCodeLine" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="608ef8e0-71a6-4dea-961a-899914eb098e" />
+                <option name="line" value="200" />
+                <option name="message" value="This block of commented-out lines of code should be removed." />
+                <option name="ruleKey" value="squid:CommentedOutCodeLine" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="af60174e-e325-434a-b349-bff95e1ac2c4" />
+                <option name="line" value="264" />
+                <option name="message" value="This block of commented-out lines of code should be removed." />
+                <option name="ruleKey" value="squid:CommentedOutCodeLine" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="30168495-d2d5-46f8-a79e-43387409abf6" />
+                <option name="line" value="12" />
+                <option name="message" value="This block of commented-out lines of code should be removed." />
+                <option name="ruleKey" value="squid:CommentedOutCodeLine" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="8041be77-2afc-48da-a5d4-29e333bd1147" />
+                <option name="line" value="10" />
+                <option name="message" value="Add a private constructor to hide the implicit public one." />
+                <option name="ruleKey" value="squid:S1118" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="95274b69-63bc-41b5-ae14-cfd6d0d16327" />
+                <option name="line" value="189" />
+                <option name="message" value="This block of commented-out lines of code should be removed." />
+                <option name="ruleKey" value="squid:CommentedOutCodeLine" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="64715ccd-272d-4c2e-816f-130e6a2ea4dd" />
+                <option name="line" value="237" />
+                <option name="message" value="This block of commented-out lines of code should be removed." />
+                <option name="ruleKey" value="squid:CommentedOutCodeLine" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="7b070acb-d636-4b0c-8679-b9270043f868" />
+                <option name="line" value="149" />
+                <option name="message" value="This block of commented-out lines of code should be removed." />
+                <option name="ruleKey" value="squid:CommentedOutCodeLine" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="8e57e7d3-9bdc-49ea-8132-284887a70a5b" />
+                <option name="line" value="213" />
+                <option name="message" value="This block of commented-out lines of code should be removed." />
+                <option name="ruleKey" value="squid:CommentedOutCodeLine" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="4b19c46c-25b0-44c1-9fc9-e9f5ab05f294" />
+                <option name="line" value="280" />
+                <option name="message" value="This block of commented-out lines of code should be removed." />
+                <option name="ruleKey" value="squid:CommentedOutCodeLine" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="a032d3b4-c275-462d-beb6-d6deb3e394f8" />
+                <option name="line" value="104" />
+                <option name="message" value="This block of commented-out lines of code should be removed." />
+                <option name="ruleKey" value="squid:CommentedOutCodeLine" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="902b828a-b09b-4dfa-bddf-b10beaebc0ce" />
+                <option name="line" value="171" />
+                <option name="message" value="This block of commented-out lines of code should be removed." />
+                <option name="ruleKey" value="squid:CommentedOutCodeLine" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="76b7bb91-19de-4b3a-b6dd-1c13de2274dc" />
+                <option name="line" value="64" />
+                <option name="message" value="This block of commented-out lines of code should be removed." />
+                <option name="ruleKey" value="squid:CommentedOutCodeLine" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="b4bdd4c1-a2ca-4cc1-b656-566d328b9c25" />
+                <option name="line" value="74" />
+                <option name="message" value="This block of commented-out lines of code should be removed." />
+                <option name="ruleKey" value="squid:CommentedOutCodeLine" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="c360e389-3058-489b-a59d-6a11a8d5b6e2" />
+                <option name="line" value="162" />
+                <option name="message" value="This block of commented-out lines of code should be removed." />
+                <option name="ruleKey" value="squid:CommentedOutCodeLine" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="82c90b4e-be4d-46f2-89d3-93e2835bb204" />
+                <option name="line" value="224" />
+                <option name="message" value="This block of commented-out lines of code should be removed." />
+                <option name="ruleKey" value="squid:CommentedOutCodeLine" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="e220362c-a707-4cc4-b683-ad8296adaf03" />
+                <option name="line" value="136" />
+                <option name="message" value="This block of commented-out lines of code should be removed." />
+                <option name="ruleKey" value="squid:CommentedOutCodeLine" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="1753117b-25a8-4b58-bf9e-1e2c3f4fe492" />
+                <option name="line" value="247" />
+                <option name="message" value="This block of commented-out lines of code should be removed." />
+                <option name="ruleKey" value="squid:CommentedOutCodeLine" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/dao/src/main/java/daos/PersistException.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="a25f68dc-52d5-46bc-bb98-5d9ba16fdde8" />
+                <option name="line" value="8" />
+                <option name="message" value="Move this closing curly brace to the next line." />
+                <option name="ruleKey" value="squid:RightCurlyBraceStartLineCheck" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="25c60e6f-14d0-4d28-927e-3cfa364656fa" />
+                <option name="line" value="8" />
+                <option name="message" value="Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation." />
+                <option name="ruleKey" value="squid:S1186" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="66162425-789d-4c2b-a3ad-38897e64eee6" />
+                <option name="line" value="6" />
+                <option name="message" value="Rename the &quot;logger&quot; logger to comply with the format &quot;LOG(?:GER)?&quot;." />
+                <option name="ruleKey" value="squid:S1312" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/dao/src/main/java/daos/TransactionDAO.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="c0690883-86ca-4873-ad97-fded141263f8" />
+                <option name="line" value="11" />
+                <option name="message" value="Refactor this method to throw at most one checked exception instead of: !unknownSymbol!, java.sql.SQLException" />
+                <option name="ruleKey" value="squid:S1160" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/dao/src/main/java/daos/TransactionFailedException.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="01711786-20b3-4ff3-8455-ff3c80b854be" />
+                <option name="line" value="6" />
+                <option name="message" value="Rename the &quot;logger&quot; logger to comply with the format &quot;LOG(?:GER)?&quot;." />
+                <option name="ruleKey" value="squid:S1312" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/dao/src/main/java/daos/UserDAO.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="811adfad-8a82-4184-907d-868fe6d947c3" />
+                <option name="line" value="14" />
+                <option name="message" value="Refactor this method to throw at most one checked exception instead of: java.sql.SQLException, java.io.IOException" />
+                <option name="ruleKey" value="squid:S1160" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/dao/src/main/java/mysql/MySQLAccountDAOImpl.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="649a8ebe-a3e7-4643-babf-f5e76c377bde" />
+                <option name="line" value="16" />
+                <option name="message" value="Remove this method to simply inherit it." />
+                <option name="ruleKey" value="squid:S1185" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="45642b52-2f31-4f6e-a3ea-09512980adfb" />
+                <option name="message" value="1 duplicated blocks of code must be removed." />
+                <option name="ruleKey" value="common-java:DuplicatedBlocks" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="27ed9d77-9f02-4e38-bf34-4d887fe2faa3" />
+                <option name="line" value="52" />
+                <option name="message" value="Move this constructor to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/dao/src/main/java/mysql/MySQLClientDAOImpl.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="b91a5dad-de5a-473a-a1f0-6b5eed8148b6" />
+                <option name="message" value="1 duplicated blocks of code must be removed." />
+                <option name="ruleKey" value="common-java:DuplicatedBlocks" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="fc05459b-3b14-4df1-893c-6a38e6df77aa" />
+                <option name="line" value="52" />
+                <option name="message" value="Move this constructor to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="7a7d193a-e81e-4fd6-8cf4-ca7f5948d680" />
+                <option name="line" value="18" />
+                <option name="message" value="Remove this method to simply inherit it." />
+                <option name="ruleKey" value="squid:S1185" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/dao/src/main/java/mysql/MySQLCurrencyDAOImpl.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="b69ce647-0dbf-4041-a5a7-ce9ad66f08e8" />
+                <option name="message" value="1 duplicated blocks of code must be removed." />
+                <option name="ruleKey" value="common-java:DuplicatedBlocks" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/dao/src/main/java/mysql/MySQLDAOFactory.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="67861772-d2ad-4a18-bd5f-1a5b96ee6f00" />
+                <option name="line" value="20" />
+                <option name="message" value="Make this final field static too." />
+                <option name="ruleKey" value="squid:S1170" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="d9aa8c47-9c76-4729-8943-e876cf49117c" />
+                <option name="line" value="23" />
+                <option name="message" value="Rename the &quot;logger&quot; logger to comply with the format &quot;LOG(?:GER)?&quot;." />
+                <option name="ruleKey" value="squid:S1312" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="89c587f0-b116-4e13-a9c6-b296d23f34fb" />
+                <option name="line" value="19" />
+                <option name="message" value="Remove this hard-coded password." />
+                <option name="ruleKey" value="squid:S2068" />
+                <option name="severity" value="CRITICAL" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/dao/src/main/java/mysql/MySQLTransactionDAOImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/dao/src/main/java/mysql/MySQLUserDAOImpl.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="1d1fcce3-5bbc-48b0-a234-06718d41b5ac" />
+                <option name="message" value="1 duplicated blocks of code must be removed." />
+                <option name="ruleKey" value="common-java:DuplicatedBlocks" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="f8f34edc-de49-46bb-9bca-e483cc70003c" />
+                <option name="line" value="41" />
+                <option name="message" value="Remove this hard-coded password." />
+                <option name="ruleKey" value="squid:S2068" />
+                <option name="severity" value="CRITICAL" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="7167ae08-7977-4e49-ba03-430d838047c8" />
+                <option name="line" value="147" />
+                <option name="message" value="Define a constant instead of duplicating this literal &quot;MySQL DB error&quot; 4 times." />
+                <option name="ruleKey" value="squid:S1192" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="d76f20c9-8f65-4b78-9c98-8877a496afc1" />
+                <option name="line" value="19" />
+                <option name="message" value="Rename the &quot;logger&quot; logger to comply with the format &quot;LOG(?:GER)?&quot;." />
+                <option name="ruleKey" value="squid:S1312" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/model/src/main/java/beans/AccType.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="56eb96e6-38fc-4c56-977b-b2a9869885cb" />
+                <option name="line" value="3" />
+                <option name="message" value="Move this closing curly brace to the next line." />
+                <option name="ruleKey" value="squid:RightCurlyBraceStartLineCheck" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/model/src/main/java/beans/Account.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="d9b3cf24-2bd4-4c23-a358-a9310404ee50" />
+                <option name="line" value="11" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="32e6ced5-25f7-4543-a68e-69e037f2770e" />
+                <option name="line" value="12" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="78f4d24b-0ddb-426b-84b4-7e736f78d31f" />
+                <option name="line" value="13" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="3092dae5-21d2-4c06-9bd2-f60f30e90c75" />
+                <option name="line" value="7" />
+                <option name="message" value="Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation." />
+                <option name="ruleKey" value="squid:S1186" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="51d10978-78b0-4066-95ab-8289db4c0679" />
+                <option name="line" value="15" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="565fa863-680c-43a8-9641-bf92d8ce34c4" />
+                <option name="line" value="14" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/model/src/main/java/beans/AccountType.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/model/src/main/java/beans/Client.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="df18d4ca-11dc-4098-9cac-b2d4422404c5" />
+                <option name="line" value="13" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="ddd3bde6-d664-4239-9c38-31afece5c037" />
+                <option name="line" value="15" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="a9f8eb5f-5317-4b5b-9b8c-9be1acafd18d" />
+                <option name="line" value="14" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="ca5f5fb6-d291-43d9-91be-533266fdb0e9" />
+                <option name="line" value="19" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="bbc67da7-1bae-4924-b06b-67405be2e2c9" />
+                <option name="line" value="9" />
+                <option name="message" value="Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation." />
+                <option name="ruleKey" value="squid:S1186" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="f327f4cd-771f-4e2b-8642-5544db72417b" />
+                <option name="line" value="16" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="88dc7413-3002-4983-9b27-eaf558cf44a4" />
+                <option name="line" value="17" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/model/src/main/java/beans/Currency.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/model/src/main/java/beans/Identified.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="c865db51-5363-4f14-8617-456ad1cf10bf" />
+                <option name="line" value="8" />
+                <option name="message" value="Rename this generic name to match the regular expression '^[A-Z]$'." />
+                <option name="ruleKey" value="squid:S00119" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/model/src/main/java/beans/Transaction.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="dcf1603b-e20c-4ec4-a948-bbbfdc568a99" />
+                <option name="line" value="20" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="a1b676a2-6f5a-4fa8-8fdf-dc6abbcccb71" />
+                <option name="line" value="12" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="2cd0d240-67f6-4020-9f54-1b396359d203" />
+                <option name="line" value="13" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="a114acb7-d001-474e-8322-7ebfed3d1765" />
+                <option name="line" value="15" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="912b2dc1-b5ee-45ab-8e64-373742f654f8" />
+                <option name="line" value="14" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="074e7d8a-7c1b-47f0-a17f-6c2b47ab7fd1" />
+                <option name="line" value="8" />
+                <option name="message" value="Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation." />
+                <option name="ruleKey" value="squid:S1186" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="ea3cc01d-e86d-48eb-9cfd-31daf66bc69e" />
+                <option name="line" value="18" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="847853de-69b0-4e64-80e0-a939a41eea90" />
+                <option name="line" value="19" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="c66922a0-17c3-4724-9677-153087fae07c" />
+                <option name="line" value="16" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="fd645b80-6669-4a4a-bff7-4d9d60c9af1d" />
+                <option name="line" value="17" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/model/src/main/java/beans/TransactionType.java">
+          <value>
+            <set>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="0b3f635d-4723-4938-ad32-984da509961e" />
+                <option name="line" value="4" />
+                <option name="message" value="Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation." />
+                <option name="ruleKey" value="squid:S1186" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="de94ef6b-2617-4436-8eea-2102ac0ed828" />
+                <option name="line" value="8" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="99f400b8-074c-4452-a09e-f5e05680d7ab" />
+                <option name="line" value="9" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+            </set>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/model/src/main/java/beans/User.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

@@ -2,6 +2,7 @@ package beans;
 
 public class AccountType {
     public AccountType() {
+        //no-args constructor
     }
 
     private int accTypeID;
@@ -14,13 +15,13 @@ public class AccountType {
         this.accTypeID = accTypeID;
     }
 
-    private AccType accountType;
+    private AccType accountTypeName;
 
-    public AccType getAccountType() {
-        return accountType;
+    public AccType getAccountTypeName() {
+        return accountTypeName;
     }
 
-    public void setAccountType(AccType accountType) {
-        this.accountType = accountType;
+    public void setAccountTypeName(AccType accountTypeName) {
+        this.accountTypeName = accountTypeName;
     }
 }

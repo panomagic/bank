@@ -2,6 +2,7 @@ package beans;
 
 public class TransactionType {
     public TransactionType() {
+        //no-args constructor
     }
 
     private int transTypeID;

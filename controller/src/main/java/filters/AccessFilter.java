@@ -37,6 +37,14 @@ public class AccessFilter implements Filter {
         clientAccessUrls.add("/upload");
     }
 
+    private static void redirectIfLoginFailed(User loggedUser, ServletResponse servletResponse) throws IOException {
+        HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
+
+        if (loggedUser == null) {   //if auth failed redirect user to loginfailed page
+            httpResponse.sendRedirect("loginfailed.jsp");
+        }
+    }
+
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
 
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
@@ -66,12 +74,10 @@ public class AccessFilter implements Filter {
             }
         }
 
-        if (loggedUser == null) {   //if auth failed redirect user to loginfailed page
-            httpResponse.sendRedirect("loginfailed.jsp");
-        }
+        redirectIfLoginFailed(loggedUser, servletResponse);
 
     }
     public void destroy() {
-
+        //this method gives the filter an opportunity to clean up any resources that are being held
     }
 }

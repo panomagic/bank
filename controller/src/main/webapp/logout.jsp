@@ -18,7 +18,7 @@
         <input type="text" name="userName" size="35">
       </p>
       <p><b><fmt:message key="password" /></b><br>
-        <input type="text" name="password" size="35">
+        <input type="text" name="psw" size="35">
       </p>
       <p><b><fmt:message key="chooselanguage" /></b><br>
         <select name="chosenlanguage">
