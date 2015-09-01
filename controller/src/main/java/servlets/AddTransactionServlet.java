@@ -55,7 +55,7 @@ public class AddTransactionServlet extends HttpServlet {
         try {
             recipientAccounts = fillAccountsList();
         } catch (PersistException e) {
-            e.printStackTrace();
+            logger.error("MySQL DB error", e);
         }
 
         request.setAttribute("recipientAccounts", recipientAccounts);
