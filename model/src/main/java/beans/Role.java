@@ -6,7 +6,7 @@ public enum Role { ADMINISTRATOR("a"), CLIENT("c");
         this.displayRole = displayRole;
     }
 
-    public String roleAsChar() {      //метод для работы с БД
+    public String roleAsChar() {
         return this.displayRole;
     }
 

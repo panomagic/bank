@@ -114,7 +114,7 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
         }
     }
 
-    public void addImageToDB(File uploadedFile, User user) throws SQLException, IOException {
+    public void addImageToDB(File uploadedFile, User user) throws PersistException {
         PreparedStatement statement = null;
         FileInputStream fis = null;
         MySQLDAOFactory factory;
@@ -140,6 +140,7 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
                 statement.setInt(3, user.getid());
                 statement.executeUpdate();
                 connection.commit();
+
                 fis.close();
                 Files.delete(Paths.get(uploadedFile.getPath()));
             }
@@ -149,19 +150,28 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
                 try {
                     connection.rollback();
                 } catch (SQLException excep) {
-                    logger.warn("MySQL DB error", excep);
+                    logger.error("MySQL DB error", excep);
                 }
             }
         }
         catch (FileNotFoundException | PersistException e) {
             logger.error("MySQL DB error", e);
-        } finally {
-            connection.setAutoCommit(true);
-            statement.close();
-            fis.close();
-            if (connection != null) {
-                connection.close();
-                logger.info("DB connection is closed");
+        } catch (IOException exception) {
+            logger.error("IO error", exception);
+        }
+        finally {
+            try {
+                connection.setAutoCommit(true);
+                statement.close();
+                fis.close();
+                if (connection != null) {
+                    connection.close();
+                    logger.info("DB connection is closed");
+                }
+            } catch (SQLException e) {
+                logger.error("MySQL DB error", e);
+            } catch (IOException exc) {
+                logger.error("IO error", exc);
             }
         }
     }

@@ -73,8 +73,8 @@ public class UpdateDeleteClientServlet extends HttpServlet {
 
         updateClient(request);
 
-        //return to clients list page
-        response.sendRedirect("viewclients");
+
+        response.sendRedirect("viewclients");   //return to clients list page
         return;
     }
 }

@@ -1,10 +1,8 @@
 package servlets;
 
-import beans.Account;
-import beans.Client;
-import beans.Currency;
 import beans.Transaction;
-import daos.*;
+import daos.GenericDAO;
+import daos.PersistException;
 import mysql.MySQLDAOFactory;
 import org.apache.log4j.Logger;
 
@@ -15,9 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static servlets.ClientInfoServlet.getAccountsClientsCurrencies;
 
 @WebServlet(name="transactionshistory", urlPatterns={"/transactionshistory"})
 public class TransactionsHistoryServlet extends HttpServlet {
@@ -37,38 +36,7 @@ public class TransactionsHistoryServlet extends HttpServlet {
         }
         request.setAttribute("allTransactions", transactions);
 
-        List accounts = new ArrayList();
-        try {
-            MySQLDAOFactory factory = new MySQLDAOFactory();
-            Connection connection = factory.getContext();
-            GenericDAO dao = factory.getDAO(connection, Account.class);
-            accounts = dao.getAll();
-        } catch (PersistException e) {
-            logger.error("MySQL DB error", e);
-        }
-        request.setAttribute("allAccounts", accounts);
-
-        List clients = new ArrayList();
-        try {
-            MySQLDAOFactory factory = new MySQLDAOFactory();
-            Connection connection = factory.getContext();
-            GenericDAO dao = factory.getDAO(connection, Client.class);
-            clients = dao.getAll();
-        } catch (PersistException e) {
-            logger.error("MySQL DB error", e);
-        }
-        request.setAttribute("allClients", clients);
-
-        List currencies = new ArrayList();
-        try {
-            MySQLDAOFactory factory = new MySQLDAOFactory();
-            Connection connection = factory.getContext();
-            GenericDAO dao = factory.getDAO(connection, Currency.class);
-            currencies = dao.getAll();
-        } catch (PersistException e) {
-            logger.error("MySQL DB error", e);
-        }
-        request.setAttribute("allCurrencies", currencies);
+        getAccountsClientsCurrencies(request);
 
         request.getRequestDispatcher("transactionshistory.jsp").forward(request, response);
     }

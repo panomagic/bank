@@ -9,7 +9,7 @@ public enum Gender { MALE("m"), FEMALE("f");
         this.displayGender = displayGender;
     }
 
-    public String genderAsChar() {      //метод для работы с БД
+    public String genderAsChar() {
         return this.displayGender;
     }
 
@@ -17,7 +17,6 @@ public enum Gender { MALE("m"), FEMALE("f");
         return name().toLowerCase(Locale.ENGLISH);
     }
 
-    //добавлен метод для определения пола при выводе из БД
     public static Gender fromString(String displayGender) {
         if (displayGender != null) {
             for (Gender g : Gender.values()) {

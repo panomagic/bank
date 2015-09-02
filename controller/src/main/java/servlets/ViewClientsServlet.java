@@ -1,9 +1,6 @@
 package servlets;
 
-import beans.Client;
-import daos.GenericDAO;
 import daos.PersistException;
-import mysql.MySQLDAOFactory;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -11,9 +8,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+
+import static servlets.ClientInfoServlet.fillClientsList;
 
 public class ViewClientsServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(ViewClientsServlet.class);
@@ -24,10 +22,7 @@ public class ViewClientsServlet extends HttpServlet {
 
         List clients = new ArrayList();
         try {
-            MySQLDAOFactory factory = new MySQLDAOFactory();
-            Connection connection = factory.getContext();
-            GenericDAO dao = factory.getDAO(connection, Client.class);
-            clients = dao.getAll();
+            clients = fillClientsList();
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }

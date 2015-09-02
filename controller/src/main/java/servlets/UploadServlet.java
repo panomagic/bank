@@ -79,7 +79,6 @@ public class UploadServlet extends HttpServlet {
 
         User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
 
-        //setting path as 'folder/userid.ext'
         String uploadPath = UPLOADFOLDER + "\\" + loggedUser.getid().toString() + "." + getFileExtension(fileName);
 
         Path path = Paths.get(uploadPath);
@@ -116,7 +115,7 @@ public class UploadServlet extends HttpServlet {
             for (Map.Entry<Integer, Blob> e : cache.entrySet()) {
                 logger.debug("Cache after image uploading: " + e.getKey() + " - " + e.getValue());
             }
-        } catch (PersistException | SQLException e) {
+        } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         } finally {
             if (connection != null)

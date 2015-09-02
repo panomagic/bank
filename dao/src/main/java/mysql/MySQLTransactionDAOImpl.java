@@ -76,7 +76,6 @@ public class MySQLTransactionDAOImpl extends AbstractJDBCDAO<Transaction, Intege
         return result;
     }
 
-    //use addTransaction method instead
     @Override
     public void prepareStatementForInsert(PreparedStatement statement, Transaction object) throws PersistException {
         //declared in AbstractJDBCDAO
@@ -127,14 +126,12 @@ public class MySQLTransactionDAOImpl extends AbstractJDBCDAO<Transaction, Intege
             connection.setAutoCommit(false);    //auto commit mode off
             preparedStatement.execute();
 
-            //updating payer's balance:
             preparedStatement = connection.prepareStatement("UPDATE accounts SET balance = ? " +
                     "WHERE id = ?");
             preparedStatement.setBigDecimal(1, payerAcc.getBalance().subtract(transaction.getSum()));
             preparedStatement.setInt(2, transaction.getPayerAccID());
             preparedStatement.execute();
 
-            //updating recipient's balance:
             preparedStatement = connection.prepareStatement("UPDATE accounts SET balance = ? " +
                     "WHERE id = ?");
             preparedStatement.setBigDecimal(1, recipientAcc.getBalance().add(transaction.getSum()));
@@ -151,7 +148,7 @@ public class MySQLTransactionDAOImpl extends AbstractJDBCDAO<Transaction, Intege
                 try {
                     connection.rollback();
                 } catch (SQLException excep) {
-                    logger.warn("MySQL DB error", excep);
+                    logger.error("MySQL DB error", excep);
                 }
             }
         }

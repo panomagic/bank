@@ -22,11 +22,8 @@ public class CharsetFilter implements Filter
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain next)
             throws IOException, ServletException
     {
-        // Respect the client-specified character encoding
-        // (see HTTP specification section 3.4.1)
-        if (null == request.getCharacterEncoding())
+        if (null == request.getCharacterEncoding()) // Respect the client-specified character encoding (HTTP specs section 3.4.1)
             request.setCharacterEncoding(encoding);
-
 
         /**
          * Set the default response content type and encoding

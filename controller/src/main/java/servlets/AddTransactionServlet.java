@@ -1,7 +1,8 @@
 package servlets;
 
 import beans.*;
-import daos.*;
+import daos.GenericDAO;
+import daos.PersistException;
 import mysql.MySQLDAOFactory;
 import mysql.MySQLTransactionDAOImpl;
 import org.apache.log4j.Logger;
@@ -14,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,34 +78,46 @@ public class AddTransactionServlet extends HttpServlet {
 
         request.getRequestDispatcher("addtransaction.jsp").forward(request, response);
     }
+
+    private static Account getPayerAccount(HttpServletRequest request) throws PersistException {
+        MySQLDAOFactory factory = new MySQLDAOFactory();
+        GenericDAO daoAccount;
+        Connection connection = factory.getContext();
+        daoAccount = factory.getDAO(connection, Account.class);
+        return (Account) daoAccount.getByPK(Integer.parseInt(request.getParameter("choosepayeraccount")));
+    }
+
+    private static Account getRecipientAccount(HttpServletRequest request) throws PersistException {
+        MySQLDAOFactory factory = new MySQLDAOFactory();
+        GenericDAO daoAccount;
+        Connection connection = factory.getContext();
+        daoAccount = factory.getDAO(connection, Account.class);
+        return (Account) daoAccount.getByPK(Integer.parseInt(request.getParameter("chooserecipientaccount")));
+
+    }
+
+    private static void addTransRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
+        if (loggedUser != null && Role.ADMINISTRATOR == loggedUser.getRole())
+            response.sendRedirect("viewaccounts");
+        else if (loggedUser != null && Role.CLIENT == loggedUser.getRole())
+            response.sendRedirect("clientinfo");
+    }
+
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         Transaction transaction = new Transaction();
 
-        MySQLDAOFactory factory = new MySQLDAOFactory();
-        GenericDAO daoAccount = null;
-
-        Account payerAccount = null;
+        Account payerAccount = new Account();
+        Account recipientAccount = new Account();
         try {
-            Connection connection = factory.getContext();
-            daoAccount = factory.getDAO(connection, Account.class);
-            payerAccount = (Account) daoAccount.getByPK(Integer.parseInt(request.getParameter("choosepayeraccount")));
+            payerAccount = getPayerAccount(request);
+            recipientAccount = getRecipientAccount(request);
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
 
-        Account recipientAccount = null;
-        try {
-            Connection connection = factory.getContext();
-            daoAccount = factory.getDAO(connection, Account.class);
-            recipientAccount = (Account) daoAccount.getByPK(Integer.parseInt(request.getParameter("chooserecipientaccount")));
-        } catch (PersistException e) {
-            logger.error("MySQL DB error", e);
-        }
-
-        //checking currency matching in payer's and recipient's accounts
-        if(payerAccount.getCurrencyID() != recipientAccount.getCurrencyID())
-        {
+        if (payerAccount.getCurrencyID() != recipientAccount.getCurrencyID()) {
             response.sendRedirect("transcurrencymismatch.jsp");
             logger.info("Money transfer attempt from account with id " + payerAccount.getid() + " to account with с id "
                     + recipientAccount.getid() + " was REJECTED due to currency mismatch");
@@ -122,6 +134,7 @@ public class AddTransactionServlet extends HttpServlet {
         transaction.setSum(new BigDecimal(Double.parseDouble(request.getParameter("sum"))));
 
         Connection connection = null;
+        MySQLDAOFactory factory = new MySQLDAOFactory();
         try {
             connection = factory.getContext();
         } catch (PersistException e) {
@@ -129,7 +142,6 @@ public class AddTransactionServlet extends HttpServlet {
         }
         MySQLTransactionDAOImpl mySQLTransactionDAO = new MySQLTransactionDAOImpl(connection);
 
-        //checking for debit payer's account: transfer amount must be less or equal to balance
         if (payerAccount.getAccTypeID() == 1 && transaction.getSum().compareTo(payerAccount.getBalance()) == 1) {
             response.sendRedirect("transoverdraft.jsp");
             logger.info("Money transfer attempt from account with id " + payerAccount.getid() + " to account with с id "
@@ -143,10 +155,6 @@ public class AddTransactionServlet extends HttpServlet {
             logger.error("MySQL DB error", e);
         }
 
-        User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
-        if (loggedUser != null && Role.ADMINISTRATOR == loggedUser.getRole())
-            response.sendRedirect("viewaccounts");
-        else if (loggedUser != null && Role.CLIENT == loggedUser.getRole())
-            response.sendRedirect("clientinfo");
+        addTransRedirect(request, response);
     }
 }

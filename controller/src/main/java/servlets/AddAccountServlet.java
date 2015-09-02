@@ -1,8 +1,9 @@
 package servlets;
 
-import daos.*;
-import beans.*;
-import mysql.*;
+import beans.Account;
+import daos.GenericDAO;
+import daos.PersistException;
+import mysql.MySQLDAOFactory;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -12,9 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static servlets.ClientInfoServlet.fillClientsList;
 
 @WebServlet(name="addaccount", urlPatterns={"/addaccount"})
 public class AddAccountServlet extends HttpServlet {
@@ -25,10 +27,7 @@ public class AddAccountServlet extends HttpServlet {
 
         List clients = new ArrayList();
         try {
-            MySQLDAOFactory factory = new MySQLDAOFactory();
-            Connection connection = factory.getContext();
-            GenericDAO dao = factory.getDAO(connection, Client.class);
-            clients = dao.getAll();
+            clients = fillClientsList();
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
@@ -56,7 +55,6 @@ public class AddAccountServlet extends HttpServlet {
             logger.error("MySQL DB error", e);
         }
 
-        //goto page with confirmation about successfully added account
         request.getRequestDispatcher("addaccountresult.jsp").forward(request, response);
     }
 }

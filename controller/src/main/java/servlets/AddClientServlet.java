@@ -43,11 +43,11 @@ public class AddClientServlet extends HttpServlet {
             Connection connection = factory.getContext();
             GenericDAO dao = factory.getDAO(connection, Client.class);
             dao.persist(client);
+            logger.info("New client was added successfully");
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
 
-        //goto page with the confirmation about successfully added client
         request.getRequestDispatcher("addclientresult.jsp").forward(request, response);
     }
 }

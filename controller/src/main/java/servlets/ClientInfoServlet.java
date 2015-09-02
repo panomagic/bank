@@ -52,6 +52,22 @@ public class ClientInfoServlet extends HttpServlet {
         return dao.getAll();
     }
 
+    static void getAccountsClientsCurrencies(HttpServletRequest request) {
+        List accounts = new ArrayList();
+        List clients = new ArrayList();
+        List currencies = new ArrayList();
+        try {
+            accounts = fillAccountsList();
+            clients = fillClientsList();
+            currencies = fillCurrenciesList();
+        } catch (PersistException e) {
+            logger.error("MySQL DB error", e);
+        }
+        request.setAttribute("allAccounts", accounts);
+        request.setAttribute("allClients", clients);
+        request.setAttribute("allCurrencies", currencies);
+    }
+
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 

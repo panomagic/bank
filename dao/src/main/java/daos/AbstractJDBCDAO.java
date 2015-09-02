@@ -115,23 +115,36 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
         return list;
     }
 
+    private static void closeConnection(Connection conn) {
+        if (conn != null) {
+            try {
+                conn.close();
+                logger.info("DB connection is closed");
+            } catch (SQLException e) {
+                logger.warn("Cannot close connection", e);
+            }
+        }
+    }
+
+    private static void recordAddingCheck(int countRecords) throws PersistException {
+        if (countRecords != 1)
+            throw new PersistException("On persist modify more than 1 record: " + countRecords);
+    }
+
     public T persist(T object) throws PersistException {    //method to create a record about an object
         if (object.getid() != null)
             throw new PersistException("Object is already persist");
         T persistInstance;
 
-        //adding record
         String sql = getCreateQuery();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             prepareStatementForInsert(statement, object);
             int count = statement.executeUpdate();
-            if (count != 1)
-                throw new PersistException("On persist modify more than 1 record: " + count);
+            recordAddingCheck(count);
         } catch (Exception e) {
             throw new PersistException(e);
         }
 
-        //receiving just added record
         sql = getSelectQuery() + " WHERE id = last_insert_id();";
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             ResultSet rs = statement.executeQuery();
@@ -142,14 +155,7 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
         } catch (Exception e) {
             throw new PersistException(e);
         } finally {
-            if (connection != null) {
-                try {
-                    connection.close();
-                    logger.info("DB connection is closed");
-                } catch (SQLException e) {
-                    logger.warn("Cannot close connection", e);
-                }
-            }
+            closeConnection(connection);
         }
         return persistInstance;
     }

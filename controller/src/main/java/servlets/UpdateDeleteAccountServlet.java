@@ -1,7 +1,6 @@
 package servlets;
 
 import beans.Account;
-import beans.Client;
 import daos.GenericDAO;
 import daos.PersistException;
 import mysql.MySQLDAOFactory;
@@ -17,6 +16,8 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
+import static servlets.ClientInfoServlet.fillClientsList;
+
 @WebServlet(name="updatedeleteaccount", urlPatterns={"/updatedeleteaccount"})
 public class UpdateDeleteAccountServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(UpdateDeleteAccountServlet.class);
@@ -29,10 +30,7 @@ public class UpdateDeleteAccountServlet extends HttpServlet {
 
         List clients = new ArrayList();
         try {
-            MySQLDAOFactory factory = new MySQLDAOFactory();
-            Connection connection = factory.getContext();
-            GenericDAO dao = factory.getDAO(connection, Client.class);
-            clients = dao.getAll();
+            clients = fillClientsList();
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
@@ -83,8 +81,7 @@ public class UpdateDeleteAccountServlet extends HttpServlet {
 
         updateAccount(request);
 
-        //return to accounts list page
-        response.sendRedirect("viewaccounts");
+        response.sendRedirect("viewaccounts");  //return to accounts list page
         return;
     }
 }

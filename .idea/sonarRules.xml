@@ -3,6 +3,17 @@
   <component name="rules">
     <option name="sonarRulesByRuleKey">
       <map>
+        <entry key="squid:S1160">
+          <value>
+            <Rule>
+              <option name="htmlDesc" value="&lt;p&gt;&#10;  Using checked exceptions forces method callers to deal with errors, either by propagating them or by handling them.&#10;  This makes those exceptions fully part of the API of the method.&#10;&lt;/p&gt;&#10;&#10;&lt;p&gt;&#10;  To keep the complexity for callers reasonable, methods should not throw more than one kind of checked exception.&#10;&lt;/p&gt;&#10;&#10;&lt;h2&gt;Noncompliant Code Example&lt;/h2&gt;&#10;&lt;pre&gt;&#10;public void delete() throws IOException, SQLException {      // Noncompliant&#10;  /* ... */&#10;}&#10;&lt;/pre&gt;&#10;&#10;&lt;h2&gt;Compliant Solution&lt;/h2&gt;&#10;&lt;pre&gt;&#10;public void delete() throws SomeApplicationLevelException {&#10;  /* ... */&#10;}&#10;&lt;/pre&gt;&#10;&#10;&lt;h2&gt;Exceptions&lt;/h2&gt;&#10;&lt;p&gt;&#10;  Overriding methods are not checked by this rule and are allowed to throw several checked exceptions.&#10;&lt;/p&gt;" />
+              <option name="key" value="squid:S1160" />
+              <option name="langName" value="Java" />
+              <option name="name" value="Public methods should throw at most one checked exception" />
+              <option name="severity" value="MAJOR" />
+            </Rule>
+          </value>
+        </entry>
         <entry key="squid:S1186">
           <value>
             <Rule>
