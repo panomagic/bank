@@ -5,10 +5,8 @@ import beans.User;
 import filters.AccessFilter;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
+import org.hamcrest.*;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
@@ -63,7 +61,15 @@ public class AccessFilterTest extends Mockito {
         verify(filterChain).doFilter(httpRequest, httpResponse);
     }
 
+    private ArgumentMatcher isValid() {
+        return new ArgumentMatcher() {
 
+            @Override
+            public boolean matches(Object element) {
+                return element.getClass().equals(String.class);
+            }
+        };
+    }
 
     @Test
     public void testDoFilterForClient() throws Exception {
@@ -75,7 +81,7 @@ public class AccessFilterTest extends Mockito {
         loggedUser.setRole(Role.CLIENT);
 
         List freeAccessUrls = spy(List.class);
-        List clientAccessUrls = new ArrayList<String>();
+        List clientAccessUrls = spy(List.class);
         clientAccessUrls.add(path);
 
         when(httpRequest.getSession()).thenReturn(session);
@@ -91,6 +97,9 @@ public class AccessFilterTest extends Mockito {
         //when(clientAccessUrls.contains(path)).thenReturn(true);
 
         accessFilter.doFilter(httpRequest, httpResponse, filterChain);
+
+
+        when(clientAccessUrls.contains(argThat(isValid()))).thenReturn(true);
 
         verify(httpResponse, never()).sendRedirect("accessdenied.jsp");
 

@@ -16,6 +16,7 @@
           <element id="archive" name="model-1.0-SNAPSHOT.jar">
             <element id="module-output" name="model" />
           </element>
+          <element id="library" level="project" name="Maven: org.hamcrest:hamcrest-all:1.3" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.35" />
           <element id="library" level="project" name="Maven: log4j:log4j:1.2.17" />
         </element>
