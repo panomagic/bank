@@ -17,8 +17,8 @@ import java.util.List;
 
 public class AccessFilter implements Filter {
 
-    private List<String> freeAccessUrls = new ArrayList<String>();
-    private List<String> clientAccessUrls = new ArrayList<String>();
+    List<String> freeAccessUrls = new ArrayList<String>();
+    List<String> clientAccessUrls = new ArrayList<String>();
 
 
     public void init(FilterConfig filterConfig) throws ServletException {

@@ -191,6 +191,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/controller/src/test/java/filters/AccessFilterTest.java">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/controller/src/test/java/servlet/AccessFilter.java">
           <value>
             <set />
