@@ -144,12 +144,10 @@ public class MySQLTransactionDAOImpl extends AbstractJDBCDAO<Transaction, Intege
                     " to account with с id " + recipientAcc.getid());
         } catch (SQLException e) {
             logger.error("MySQL DB error", e);
-            if (connection != null) {
-                try {
-                    connection.rollback();
-                } catch (SQLException excep) {
-                    logger.error("MySQL DB error", excep);
-                }
+            try {
+                connection.rollback();
+            } catch (SQLException excep) {
+                logger.error("MySQL DB error", excep);
             }
         }
         finally {

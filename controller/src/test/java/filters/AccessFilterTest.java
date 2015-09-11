@@ -38,8 +38,8 @@ public class AccessFilterTest extends Mockito {
 
         accessFilter.doFilter(httpRequest, httpResponse, filterChain);
 
-        verify(httpResponse, never()).sendRedirect("accessdenied.jsp");
-        verify(httpResponse, never()).sendRedirect("loginfailed.jsp");
+        verify(httpResponse, never()).sendRedirect("/accessdenied");
+        verify(httpResponse, never()).sendRedirect("/loginfailed");
         verify(filterChain).doFilter(httpRequest, httpResponse);
     }
 
@@ -57,8 +57,8 @@ public class AccessFilterTest extends Mockito {
 
         accessFilter.doFilter(httpRequest, httpResponse, filterChain);
 
-        verify(httpResponse, never()).sendRedirect("accessdenied.jsp");
-        verify(httpResponse, never()).sendRedirect("loginfailed.jsp");
+        verify(httpResponse, never()).sendRedirect("/accessdenied");
+        verify(httpResponse, never()).sendRedirect("/loginfailed");
         verify(filterChain).doFilter(httpRequest, httpResponse);
     }
 
@@ -76,8 +76,8 @@ public class AccessFilterTest extends Mockito {
 
         accessFilter.doFilter(httpRequest, httpResponse, filterChain);
 
-        verify(httpResponse, never()).sendRedirect("accessdenied.jsp");
-        verify(httpResponse, never()).sendRedirect("loginfailed.jsp");
+        verify(httpResponse, never()).sendRedirect("/accessdenied");
+        verify(httpResponse, never()).sendRedirect("/loginfailed");
         verify(filterChain).doFilter(httpRequest, httpResponse);
     }
 
@@ -95,8 +95,8 @@ public class AccessFilterTest extends Mockito {
 
         accessFilter.doFilter(httpRequest, httpResponse, filterChain);
 
-        verify(httpResponse).sendRedirect("accessdenied.jsp");
-        verify(httpResponse, never()).sendRedirect("loginfailed.jsp");
+        verify(httpResponse).sendRedirect("/accessdenied");
+        verify(httpResponse, never()).sendRedirect("/loginfailed");
         verify(filterChain, never()).doFilter(httpRequest, httpResponse);
     }
 
@@ -111,8 +111,8 @@ public class AccessFilterTest extends Mockito {
 
         accessFilter.doFilter(httpRequest, httpResponse, filterChain);
 
-        verify(httpResponse, never()).sendRedirect("accessdenied.jsp");
-        verify(httpResponse).sendRedirect("loginfailed.jsp");
+        verify(httpResponse, never()).sendRedirect("/accessdenied");
+        verify(httpResponse).sendRedirect("/loginfailed");
         verify(filterChain, never()).doFilter(httpRequest, httpResponse);
     }
 }

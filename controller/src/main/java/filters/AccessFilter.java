@@ -24,15 +24,15 @@ public class AccessFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         freeAccessUrls.add("/");
         freeAccessUrls.add("/login");
-        freeAccessUrls.add("/loginfailed.jsp");
+        freeAccessUrls.add("/loginfailed");
         freeAccessUrls.add("/logout");
-        freeAccessUrls.add("/accessdenied.jsp");
+        freeAccessUrls.add("/accessdenied");
 
         clientAccessUrls.add("/clientinfo");
-        clientAccessUrls.add("/client.jsp");
         clientAccessUrls.add("/addtransaction");
-        clientAccessUrls.add("/transcurrencymismatch.jsp");
         clientAccessUrls.add("/transactionshistorybyclient");
+        clientAccessUrls.add("/transcurrencymismatch");
+        clientAccessUrls.add("/transoverdraft");
         clientAccessUrls.add("/image");
         clientAccessUrls.add("/upload");
     }
@@ -41,7 +41,7 @@ public class AccessFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
 
         if (loggedUser == null) {   //if auth failed redirect user to loginfailed page
-            httpResponse.sendRedirect("loginfailed.jsp");
+            httpResponse.sendRedirect("/loginfailed");
         }
     }
 
@@ -70,7 +70,7 @@ public class AccessFilter implements Filter {
                 return;
             }
             else {
-                httpResponse.sendRedirect("accessdenied.jsp");
+                httpResponse.sendRedirect("/accessdenied");
             }
         }
 

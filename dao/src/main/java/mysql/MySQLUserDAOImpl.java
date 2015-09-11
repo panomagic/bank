@@ -146,12 +146,10 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
             }
         } catch (SQLException e) {
             logger.error("MySQL DB error", e);
-            if (connection != null) {
-                try {
-                    connection.rollback();
-                } catch (SQLException excep) {
-                    logger.error("MySQL DB error", excep);
-                }
+            try {
+                connection.rollback();
+            } catch (SQLException excep) {
+                logger.error("MySQL DB error", excep);
             }
         }
         catch (FileNotFoundException | PersistException e) {

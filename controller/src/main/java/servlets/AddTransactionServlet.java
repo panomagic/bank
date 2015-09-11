@@ -118,7 +118,7 @@ public class AddTransactionServlet extends HttpServlet {
         }
 
         if (payerAccount.getCurrencyID() != recipientAccount.getCurrencyID()) {
-            response.sendRedirect("transcurrencymismatch.jsp");
+            response.sendRedirect("/transcurrencymismatch");
             logger.info("Money transfer attempt from account with id " + payerAccount.getid() + " to account with с id "
                     + recipientAccount.getid() + " was REJECTED due to currency mismatch");
             return;
@@ -143,7 +143,7 @@ public class AddTransactionServlet extends HttpServlet {
         MySQLTransactionDAOImpl mySQLTransactionDAO = new MySQLTransactionDAOImpl(connection);
 
         if (payerAccount.getAccTypeID() == 1 && transaction.getSum().compareTo(payerAccount.getBalance()) == 1) {
-            response.sendRedirect("transoverdraft.jsp");
+            response.sendRedirect("/transoverdraft");
             logger.info("Money transfer attempt from account with id " + payerAccount.getid() + " to account with с id "
                      + recipientAccount.getid() + " was REJECTED: not enough money on payer's account");
             return;
