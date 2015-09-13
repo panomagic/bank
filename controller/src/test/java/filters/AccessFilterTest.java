@@ -108,41 +108,38 @@ public class AccessFilterTest extends Mockito {
 
         accessFilter.init(filterConfig);
 
-        if ((user == admin) && access) {
+        if (user != null) {
             when(httpRequest.getSession().getAttribute("LOGGED_USER")).thenReturn(loggedUser);
-            when(loggedUser.getRole()).thenReturn(Role.ADMINISTRATOR);
+            if ((user == admin) && access) {
+                when(loggedUser.getRole()).thenReturn(Role.ADMINISTRATOR);
+                accessFilter.doFilter(httpRequest, httpResponse, filterChain);
+                verify(httpResponse, never()).sendRedirect("/accessdenied");
+                verify(httpResponse, never()).sendRedirect("/loginfailed");
+                verify(filterChain).doFilter(httpRequest, httpResponse);
+            }
+            if (user == client) {
+                when(loggedUser.getRole()).thenReturn(Role.CLIENT);
+                accessFilter.doFilter(httpRequest, httpResponse, filterChain);
+                verify(httpResponse, never()).sendRedirect("/loginfailed");
+                if (access) {
+                    verify(httpResponse, never()).sendRedirect("/accessdenied");
+                    verify(filterChain).doFilter(httpRequest, httpResponse);
+                } else {
+                    verify(httpResponse).sendRedirect("/accessdenied");
+                    verify(filterChain, never()).doFilter(httpRequest, httpResponse);
+                }
+            }
+        }
+        else {
             accessFilter.doFilter(httpRequest, httpResponse, filterChain);
             verify(httpResponse, never()).sendRedirect("/accessdenied");
-            verify(httpResponse, never()).sendRedirect("/loginfailed");
-            verify(filterChain).doFilter(httpRequest, httpResponse);
-        }
-        if ((user == client) && access) {
-            when(httpRequest.getSession().getAttribute("LOGGED_USER")).thenReturn(loggedUser);
-            when(loggedUser.getRole()).thenReturn(Role.CLIENT);
-            accessFilter.doFilter(httpRequest, httpResponse, filterChain);
-            verify(httpResponse, never()).sendRedirect("/accessdenied");
-            verify(httpResponse, never()).sendRedirect("/loginfailed");
-            verify(filterChain).doFilter(httpRequest, httpResponse);
-        }
-        if ((user == client) && !access) {
-            when(httpRequest.getSession().getAttribute("LOGGED_USER")).thenReturn(loggedUser);
-            when(loggedUser.getRole()).thenReturn(Role.CLIENT);
-            accessFilter.doFilter(httpRequest, httpResponse, filterChain);
-            verify(httpResponse).sendRedirect("/accessdenied");
-            verify(httpResponse, never()).sendRedirect("/loginfailed");
-            verify(filterChain, never()).doFilter(httpRequest, httpResponse);
-        }
-        if ((user == null) && access) {
-            accessFilter.doFilter(httpRequest, httpResponse, filterChain);
-            verify(httpResponse, never()).sendRedirect("/accessdenied");
-            verify(httpResponse, never()).sendRedirect("/loginfailed");
-            verify(filterChain).doFilter(httpRequest, httpResponse);
-        }
-        if ((user == null) && !access) {
-            accessFilter.doFilter(httpRequest, httpResponse, filterChain);
-            verify(httpResponse, never()).sendRedirect("/accessdenied");
-            verify(httpResponse).sendRedirect("/loginfailed");
-            verify(filterChain, never()).doFilter(httpRequest, httpResponse);
+            if (access) {
+                verify(httpResponse, never()).sendRedirect("/loginfailed");
+                verify(filterChain).doFilter(httpRequest, httpResponse);
+            } else {
+                verify(httpResponse).sendRedirect("/loginfailed");
+                verify(filterChain, never()).doFilter(httpRequest, httpResponse);
+            }
         }
     }
 }
