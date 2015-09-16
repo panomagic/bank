@@ -13,7 +13,7 @@ public enum Gender { MALE("m"), FEMALE("f");
         return this.displayGender;
     }
 
-    public String genderAsString() {    //метод для вывода пола в виде строки
+    public String genderAsString() {    //gender output as a string
         return name().toLowerCase(Locale.ENGLISH);
     }
 
@@ -25,6 +25,6 @@ public enum Gender { MALE("m"), FEMALE("f");
                 }
             }
         }
-        throw new IllegalArgumentException("Ошибка при выводе пола, значение " + displayGender + " не найдено");
+        throw new IllegalArgumentException("Error while gender output, value " + displayGender + " not found");
     }
 }
