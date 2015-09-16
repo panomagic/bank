@@ -15,6 +15,7 @@ import java.util.Map;
 public class MySQLDAOFactory implements DAOFactory<Connection> {
 
     private static final String URL = "jdbc:mysql://localhost:3306/bank";
+    //private static final String URL = "jdbc:mysql://127.6.230.130:3306/bank";
     private static final String USERNAME = "root";
     private static final String PSW = "970195";
     private final String driver = "com.mysql.jdbc.Driver";

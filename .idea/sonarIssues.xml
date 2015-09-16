@@ -581,7 +581,7 @@
               <SonarIssue>
                 <option name="isNew" value="false" />
                 <option name="key" value="67861772-d2ad-4a18-bd5f-1a5b96ee6f00" />
-                <option name="line" value="20" />
+                <option name="line" value="21" />
                 <option name="message" value="Make this final field static too." />
                 <option name="ruleKey" value="squid:S1170" />
                 <option name="severity" value="MINOR" />
@@ -589,7 +589,7 @@
               <SonarIssue>
                 <option name="isNew" value="false" />
                 <option name="key" value="d9aa8c47-9c76-4729-8943-e876cf49117c" />
-                <option name="line" value="23" />
+                <option name="line" value="24" />
                 <option name="message" value="Rename the &quot;logger&quot; logger to comply with the format &quot;LOG(?:GER)?&quot;." />
                 <option name="ruleKey" value="squid:S1312" />
                 <option name="severity" value="MINOR" />
@@ -597,7 +597,7 @@
               <SonarIssue>
                 <option name="isNew" value="false" />
                 <option name="key" value="89c587f0-b116-4e13-a9c6-b296d23f34fb" />
-                <option name="line" value="19" />
+                <option name="line" value="20" />
                 <option name="message" value="Remove this hard-coded password." />
                 <option name="ruleKey" value="squid:S2068" />
                 <option name="severity" value="CRITICAL" />
