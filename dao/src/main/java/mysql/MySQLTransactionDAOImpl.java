@@ -141,7 +141,7 @@ public class MySQLTransactionDAOImpl extends AbstractJDBCDAO<Transaction, Intege
             connection.commit();    //finishing transaction by synchronous saving the transfer and changing account balances
 
             logger.info("New money transfer from account with id " + payerAcc.getid() +
-                    " to account with с id " + recipientAcc.getid());
+                    " to account with id " + recipientAcc.getid());
         } catch (SQLException e) {
             logger.error("MySQL DB error", e);
             try {
