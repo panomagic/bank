@@ -13,7 +13,7 @@ public enum Gender { MALE("m"), FEMALE("f");
         return this.displayGender;
     }
 
-    public String genderAsString() {    //gender output as a string
+    public String genderAsString() {    //gender output as string
         return name().toLowerCase(Locale.ENGLISH);
     }
 
