@@ -119,7 +119,7 @@ public class AddTransactionServlet extends HttpServlet {
 
         if (payerAccount.getCurrencyID() != recipientAccount.getCurrencyID()) {
             response.sendRedirect("/transcurrencymismatch");
-            logger.info("Money transfer attempt from account with id " + payerAccount.getid() + " to account with с id "
+            logger.info("Money transfer attempt from account with id " + payerAccount.getid() + " to account with id "
                     + recipientAccount.getid() + " was REJECTED due to currency mismatch");
             return;
         }
@@ -144,7 +144,7 @@ public class AddTransactionServlet extends HttpServlet {
 
         if (payerAccount.getAccTypeID() == 1 && transaction.getSum().compareTo(payerAccount.getBalance()) == 1) {
             response.sendRedirect("/transoverdraft");
-            logger.info("Money transfer attempt from account with id " + payerAccount.getid() + " to account with с id "
+            logger.info("Money transfer attempt from account with id " + payerAccount.getid() + " to account with id "
                      + recipientAccount.getid() + " was REJECTED: not enough money on payer's account");
             return;
         }
