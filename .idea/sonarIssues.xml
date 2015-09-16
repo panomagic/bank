@@ -693,22 +693,6 @@
             <set>
               <SonarIssue>
                 <option name="isNew" value="false" />
-                <option name="key" value="df18d4ca-11dc-4098-9cac-b2d4422404c5" />
-                <option name="line" value="13" />
-                <option name="message" value="Move this variable to comply with Java Code Conventions." />
-                <option name="ruleKey" value="squid:S1213" />
-                <option name="severity" value="MINOR" />
-              </SonarIssue>
-              <SonarIssue>
-                <option name="isNew" value="false" />
-                <option name="key" value="ddd3bde6-d664-4239-9c38-31afece5c037" />
-                <option name="line" value="15" />
-                <option name="message" value="Move this variable to comply with Java Code Conventions." />
-                <option name="ruleKey" value="squid:S1213" />
-                <option name="severity" value="MINOR" />
-              </SonarIssue>
-              <SonarIssue>
-                <option name="isNew" value="false" />
                 <option name="key" value="a9f8eb5f-5317-4b5b-9b8c-9be1acafd18d" />
                 <option name="line" value="14" />
                 <option name="message" value="Move this variable to comply with Java Code Conventions." />
@@ -717,8 +701,8 @@
               </SonarIssue>
               <SonarIssue>
                 <option name="isNew" value="false" />
-                <option name="key" value="ca5f5fb6-d291-43d9-91be-533266fdb0e9" />
-                <option name="line" value="19" />
+                <option name="key" value="df18d4ca-11dc-4098-9cac-b2d4422404c5" />
+                <option name="line" value="13" />
                 <option name="message" value="Move this variable to comply with Java Code Conventions." />
                 <option name="ruleKey" value="squid:S1213" />
                 <option name="severity" value="MINOR" />
@@ -733,6 +717,14 @@
               </SonarIssue>
               <SonarIssue>
                 <option name="isNew" value="false" />
+                <option name="key" value="ca5f5fb6-d291-43d9-91be-533266fdb0e9" />
+                <option name="line" value="19" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
                 <option name="key" value="f327f4cd-771f-4e2b-8642-5544db72417b" />
                 <option name="line" value="16" />
                 <option name="message" value="Move this variable to comply with Java Code Conventions." />
@@ -743,6 +735,14 @@
                 <option name="isNew" value="false" />
                 <option name="key" value="88dc7413-3002-4983-9b27-eaf558cf44a4" />
                 <option name="line" value="17" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="ddd3bde6-d664-4239-9c38-31afece5c037" />
+                <option name="line" value="15" />
                 <option name="message" value="Move this variable to comply with Java Code Conventions." />
                 <option name="ruleKey" value="squid:S1213" />
                 <option name="severity" value="MINOR" />

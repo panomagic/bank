@@ -16,7 +16,7 @@ public class Client implements Identified<Integer> {
     private Date dateOfBirth;
     private Date dateOfReg;
 
-    private Set clientsAccounts = new HashSet();    //возм., убрать
+    private Set clientsAccounts = new HashSet();    //temp.
 
 
     public Integer getid() {
