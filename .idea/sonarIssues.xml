@@ -211,6 +211,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/controller/src/main/webapp/updateaccount.jsp">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/controller/src/main/webapp/viewaccounts.jsp">
           <value>
             <set />
@@ -901,6 +906,11 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/pom.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/sonar-project.properties">
           <value>
             <set />
           </value>

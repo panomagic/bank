@@ -46,11 +46,11 @@
         <module name="model" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="1.8">
-      <module name="bank-multimodule" target="1.8" />
-      <module name="controller" target="1.8" />
-      <module name="dao" target="1.8" />
-      <module name="model" target="1.8" />
+    <bytecodeTargetLevel target="1.7">
+      <module name="bank-multimodule" target="1.7" />
+      <module name="controller" target="1.7" />
+      <module name="dao" target="1.7" />
+      <module name="model" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>
