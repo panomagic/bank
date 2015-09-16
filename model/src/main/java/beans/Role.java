@@ -18,6 +18,6 @@ public enum Role { ADMINISTRATOR("a"), CLIENT("c");
                 }
             }
         }
-        throw new IllegalArgumentException("Ошибка при выводе роли, значение " + displayRole + " не найдено");
+        throw new IllegalArgumentException("Error while role output, value " + displayRole + " not found");
     }
 }
