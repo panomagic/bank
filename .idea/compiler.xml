@@ -24,13 +24,6 @@
         <processorPath useClasspath="true" />
         <module name="filters" />
       </profile>
-      <profile default="false" name="Annotation profile for controller" enabled="true">
-        <sourceOutputDir name="target\generated-sources\annotations" />
-        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="true" />
-        <module name="controller" />
-      </profile>
       <profile default="false" name="Annotation profile for dao" enabled="true">
         <sourceOutputDir name="target\generated-sources\annotations" />
         <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
@@ -45,12 +38,20 @@
         <processorPath useClasspath="true" />
         <module name="model" />
       </profile>
+      <profile default="false" name="Annotation profile for controller" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="controller" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.7">
       <module name="bank-multimodule" target="1.7" />
       <module name="controller" target="1.7" />
       <module name="dao" target="1.7" />
       <module name="model" target="1.7" />
+      <module name="pack" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>
