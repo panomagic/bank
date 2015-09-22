@@ -14,5 +14,6 @@
   <b><fmt:message key="clientsuccess" /></b><br>
   <a href="viewclients"><fmt:message key="gotoclientslistlink" /></a><br>
   <a href="viewaccounts"><fmt:message key="gotoaccountslistlink" /></a><br>
+  <p><a href="admin"><fmt:message key="returntoadminpagelink" /></a></p>
 </body>
 </html>

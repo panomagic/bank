@@ -48,6 +48,6 @@ public class AddClientServlet extends HttpServlet {
             logger.error("MySQL DB error", e);
         }
 
-        request.getRequestDispatcher("addclientresult.jsp").forward(request, response);
+        request.getRequestDispatcher("/addclientresult").forward(request, response);
     }
 }

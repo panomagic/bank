@@ -7,6 +7,7 @@
           <element id="module-output" name="controller" />
           <element id="module-output" name="model" />
           <element id="module-output" name="dao" />
+          <element id="module-output" name="service" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.35" />

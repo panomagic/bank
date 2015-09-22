@@ -45,6 +45,13 @@
         <processorPath useClasspath="true" />
         <module name="controller" />
       </profile>
+      <profile default="false" name="Annotation profile for service" enabled="true">
+        <sourceOutputDir name="target\generated-sources\annotations" />
+        <sourceTestOutputDir name="target\generated-test-sources\test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="service" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.7">
       <module name="bank-multimodule" target="1.7" />
@@ -52,6 +59,7 @@
       <module name="dao" target="1.7" />
       <module name="model" target="1.7" />
       <module name="pack" target="1.7" />
+      <module name="service" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

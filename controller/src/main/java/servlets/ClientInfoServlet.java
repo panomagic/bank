@@ -8,6 +8,7 @@ import daos.GenericDAO;
 import daos.PersistException;
 import mysql.MySQLDAOFactory;
 import org.apache.log4j.Logger;
+import services.AccountServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,7 +28,8 @@ public class ClientInfoServlet extends HttpServlet {
         MySQLDAOFactory factory = new MySQLDAOFactory();
         Connection connection = factory.getContext();
         GenericDAO dao = factory.getDAO(connection, Account.class);
-        return dao.getAll();
+        AccountServiceImpl accountService = new AccountServiceImpl();
+        return accountService.getAllAccounts(dao);
     }
 
     static List<Account> fillUserAccountsList(User loggedUser, List<Account> accounts, List<Account> allAccounts) throws PersistException {

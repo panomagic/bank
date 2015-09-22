@@ -21,6 +21,9 @@
           <element id="archive" name="model-1.0-SNAPSHOT.jar">
             <element id="module-output" name="model" />
           </element>
+          <element id="archive" name="service-1.0-SNAPSHOT.jar">
+            <element id="module-output" name="service" />
+          </element>
         </element>
       </element>
       <element id="directory" name="META-INF">

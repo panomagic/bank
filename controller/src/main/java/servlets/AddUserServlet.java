@@ -1,11 +1,11 @@
 package servlets;
 
-import beans.Account;
+import beans.User;
+import beans.Role;
 import daos.GenericDAO;
 import daos.PersistException;
 import mysql.MySQLDAOFactory;
 import org.apache.log4j.Logger;
-import services.AccountServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,12 +16,11 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
-
 import static servlets.ClientInfoServlet.fillClientsList;
 
-@WebServlet(name="addaccount", urlPatterns={"/addaccount"})
-public class AddAccountServlet extends HttpServlet {
-    private static final Logger logger = Logger.getLogger(AddAccountServlet.class);
+@WebServlet(name="adduser", urlPatterns={"/adduser"})
+public class AddUserServlet extends HttpServlet {
+    private static final Logger logger = Logger.getLogger(AddUserServlet.class);
 
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -29,34 +28,35 @@ public class AddAccountServlet extends HttpServlet {
         List clients = new ArrayList();
         try {
             clients = fillClientsList();
+            clients.add(0, null);
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
 
         request.setAttribute("allClients", clients);
 
-        request.getRequestDispatcher("addaccount.jsp").forward(request, response);
+        request.getRequestDispatcher("adduser.jsp").forward(request, response);
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException
     {
-        Account account = new Account();
-        account.setClientID(Integer.parseInt(request.getParameter("chooseclient")));
-        account.setCurrencyID(Integer.parseInt(request.getParameter("currencyID")));
-        account.setAccTypeID(Integer.parseInt(request.getParameter("acctypeID")));
+        User user = new User();
+        user.setUserName(request.getParameter("userName"));
+        user.setPsw(request.getParameter("psw"));
+        user.setClientID(Integer.parseInt(request.getParameter("chooseclient")));
+        user.setRole(Role.fromString(request.getParameter("role")));
 
         try {
             MySQLDAOFactory factory = new MySQLDAOFactory();
             Connection connection = factory.getContext();
-            GenericDAO dao = factory.getDAO(connection, Account.class);
-            AccountServiceImpl accountService = new AccountServiceImpl();
-            accountService.addAccount(dao, account);
-            logger.info("New account was added for client with id " + account.getClientID());
+            GenericDAO dao = factory.getDAO(connection, User.class);
+            dao.persist(user);
+            logger.info("New user was added for client with id " + user.getClientID());
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
 
-        request.getRequestDispatcher("/addaccountresult").forward(request, response);
+        request.getRequestDispatcher("adduserresult.jsp").forward(request, response);
     }
 }

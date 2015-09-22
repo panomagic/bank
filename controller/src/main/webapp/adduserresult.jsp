@@ -8,12 +8,12 @@
 
 <html>
 <head>
-  <title><fmt:message key="addaccountresultpagetitle" /></title>
+    <title><fmt:message key="adduserresultpagetitle" /></title>
 </head>
 <body>
-  <b><fmt:message key="accountsuccess" /></b><br>
+  <b><fmt:message key="usersuccess" /></b><br>
+  <a href="viewclients"><fmt:message key="gotoclientslistlink" /></a><br>
   <a href="viewaccounts"><fmt:message key="gotoaccountslistlink" /></a><br>
-  <a href="viewclients"><fmt:message key="gotoclientslistlink" /></a>
   <p><a href="admin"><fmt:message key="returntoadminpagelink" /></a></p>
 </body>
 </html>
