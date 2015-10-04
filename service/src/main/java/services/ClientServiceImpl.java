@@ -1,18 +1,17 @@
 package services;
 
-import beans.Account;
+import beans.Client;
 import daos.PersistException;
-import mysql.MySQLAccountDAOImpl;
+import mysql.MySQLClientDAOImpl;
 import mysql.MySQLDAOFactory;
 import org.apache.log4j.Logger;
-
 import java.sql.Connection;
 import java.util.List;
 
-public class AccountServiceImpl implements AccountService {
-    private static final Logger logger = Logger.getLogger(AccountServiceImpl.class);
+public class ClientServiceImpl implements ClientService {
+    private static final Logger logger = Logger.getLogger(ClientServiceImpl.class);
 
-    private static MySQLAccountDAOImpl getAccountDaoImpl() {
+    private static MySQLClientDAOImpl getClientDaoImpl() {
         MySQLDAOFactory factory = new MySQLDAOFactory();
         Connection connection = null;
         try {
@@ -20,14 +19,14 @@ public class AccountServiceImpl implements AccountService {
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
-        return new MySQLAccountDAOImpl(connection);
+        return new MySQLClientDAOImpl(connection);
     }
 
     @Override
-    public Account addAccount(Account account) {
-        MySQLAccountDAOImpl mySQLAccountDAO = getAccountDaoImpl();
+    public Client addClient(Client client) {
+        MySQLClientDAOImpl mySQLClientDAO = getClientDaoImpl();
         try {
-            return mySQLAccountDAO.persist(account);
+            return mySQLClientDAO.persist(client);
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
             return null;
@@ -35,10 +34,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account getAccountByID(Integer id) {
-        MySQLAccountDAOImpl mySQLAccountDAO = getAccountDaoImpl();
+    public Client getClientByID(Integer id) {
+        MySQLClientDAOImpl mySQLClientDAO = getClientDaoImpl();
         try {
-            return mySQLAccountDAO.getByPK(id);
+            return mySQLClientDAO.getByPK(id);
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
             return null;
@@ -46,10 +45,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean updateAccount(Account account) {
-        MySQLAccountDAOImpl mySQLAccountDAO = getAccountDaoImpl();
+    public boolean updateClient(Client client) {
+        MySQLClientDAOImpl mySQLClientDAO = getClientDaoImpl();
         try {
-            mySQLAccountDAO.update(account);
+            mySQLClientDAO.update(client);
             return true;
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
@@ -58,10 +57,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean deleteAccount(Account account) {
-        MySQLAccountDAOImpl mySQLAccountDAO = getAccountDaoImpl();
+    public boolean deleteClient(Client client) {
+        MySQLClientDAOImpl mySQLClientDAO = getClientDaoImpl();
         try {
-            mySQLAccountDAO.delete(account);
+            mySQLClientDAO.delete(client);
             return true;
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
@@ -70,10 +69,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<Account> getAllAccounts() {
-        MySQLAccountDAOImpl mySQLAccountDAO = getAccountDaoImpl();
+    public List<Client> getAllClients() {
+        MySQLClientDAOImpl mySQLClientDAO = getClientDaoImpl();
         try {
-            return mySQLAccountDAO.getAll();
+            return mySQLClientDAO.getAll();
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
             return null;

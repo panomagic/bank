@@ -1,9 +1,6 @@
 package servlets;
 
 import beans.Account;
-import daos.GenericDAO;
-import daos.PersistException;
-import mysql.MySQLDAOFactory;
 import org.apache.log4j.Logger;
 import services.AccountServiceImpl;
 
@@ -13,9 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
-import java.util.ArrayList;
-import java.util.List;
 
 import static servlets.ClientInfoServlet.fillClientsList;
 
@@ -29,34 +23,20 @@ public class UpdateDeleteAccountServlet extends HttpServlet {
             throws ServletException, IOException {
         String forwardPage = "";
 
-        List clients = new ArrayList();
-        try {
-            clients = fillClientsList();
-        } catch (PersistException e) {
-            logger.error("MySQL DB error", e);
-        }
+        request.setAttribute("allClients", fillClientsList());
 
-        request.setAttribute("allClients", clients);
+        AccountServiceImpl accountService = new AccountServiceImpl();
 
-        try {
-            MySQLDAOFactory factory = new MySQLDAOFactory();
-            Connection connection = factory.getContext();
-            GenericDAO dao = factory.getDAO(connection, Account.class);
-            AccountServiceImpl accountService = new AccountServiceImpl();
-
-            if ("update".equals(request.getParameter("action"))) {
-                forwardPage = "updateaccount.jsp";
-                account = accountService.getAccountByID(dao, Integer.parseInt(request.getParameter("id")));
-                request.setAttribute("account", account);
-            } else if ("delete".equals(request.getParameter("action"))) {
-                forwardPage = "deleteaccount.jsp";
-                account = new Account();
-                account.setid(Integer.parseInt(request.getParameter("id")));
-                accountService.deleteAccount(dao, account);
-                logger.info("Account with id " + account.getid() + " was deleted");
-            }
-        } catch (PersistException e) {
-            logger.error("MySQL DB error", e);
+        if ("update".equals(request.getParameter("action"))) {
+            forwardPage = "updateaccount.jsp";
+            account = accountService.getAccountByID(Integer.parseInt(request.getParameter("id")));
+            request.setAttribute("account", account);
+        } else if ("delete".equals(request.getParameter("action"))) {
+            forwardPage = "deleteaccount.jsp";
+            account = new Account();
+            account.setid(Integer.parseInt(request.getParameter("id")));
+            accountService.deleteAccount(account);
+            logger.info("Account with id " + account.getid() + " was deleted");
         }
 
         request.getRequestDispatcher(forwardPage).forward(request, response);
@@ -67,17 +47,11 @@ public class UpdateDeleteAccountServlet extends HttpServlet {
         account.setCurrencyID(Integer.parseInt(request.getParameter("currencyID")));
         account.setAccTypeID(Integer.parseInt(request.getParameter("acctypeID")));
 
-        try {
-            MySQLDAOFactory factory = new MySQLDAOFactory();
-            Connection connection = factory.getContext();
-            GenericDAO dao = factory.getDAO(connection, Account.class);
-            AccountServiceImpl accountService = new AccountServiceImpl();
-            accountService.updateAccount(dao, account);
-            logger.info("Account with id " + account.getid() + " was updated");
-        } catch (PersistException e) {
-            logger.error("MySQL DB error", e);
-        }
+        AccountServiceImpl accountService = new AccountServiceImpl();
+        accountService.updateAccount(account);
+        logger.info("Account with id " + account.getid() + " was updated");
     }
+
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {

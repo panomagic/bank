@@ -120,18 +120,18 @@
             <set>
               <SonarIssue>
                 <option name="isNew" value="false" />
-                <option name="key" value="4994cf81-64f3-44a7-b962-3d926e4d9f2d" />
-                <option name="line" value="21" />
-                <option name="message" value="Rename the &quot;logger&quot; logger to comply with the format &quot;LOG(?:GER)?&quot;." />
-                <option name="ruleKey" value="squid:S1312" />
+                <option name="key" value="19bd7be0-02d7-4bbe-b030-4ed8f936aa1d" />
+                <option name="line" value="18" />
+                <option name="message" value="Remove this unused import 'java.util.ArrayList'." />
+                <option name="ruleKey" value="squid:UselessImportCheck" />
                 <option name="severity" value="MINOR" />
               </SonarIssue>
               <SonarIssue>
                 <option name="isNew" value="false" />
-                <option name="key" value="19bd7be0-02d7-4bbe-b030-4ed8f936aa1d" />
-                <option name="line" value="17" />
-                <option name="message" value="Remove this unused import 'java.util.ArrayList'." />
-                <option name="ruleKey" value="squid:UselessImportCheck" />
+                <option name="key" value="4994cf81-64f3-44a7-b962-3d926e4d9f2d" />
+                <option name="line" value="22" />
+                <option name="message" value="Rename the &quot;logger&quot; logger to comply with the format &quot;LOG(?:GER)?&quot;." />
+                <option name="ruleKey" value="squid:S1312" />
                 <option name="severity" value="MINOR" />
               </SonarIssue>
             </set>
@@ -425,16 +425,16 @@
               </SonarIssue>
               <SonarIssue>
                 <option name="isNew" value="false" />
-                <option name="key" value="64715ccd-272d-4c2e-816f-130e6a2ea4dd" />
-                <option name="line" value="237" />
+                <option name="key" value="7b070acb-d636-4b0c-8679-b9270043f868" />
+                <option name="line" value="149" />
                 <option name="message" value="This block of commented-out lines of code should be removed." />
                 <option name="ruleKey" value="squid:CommentedOutCodeLine" />
                 <option name="severity" value="MAJOR" />
               </SonarIssue>
               <SonarIssue>
                 <option name="isNew" value="false" />
-                <option name="key" value="7b070acb-d636-4b0c-8679-b9270043f868" />
-                <option name="line" value="149" />
+                <option name="key" value="64715ccd-272d-4c2e-816f-130e6a2ea4dd" />
+                <option name="line" value="237" />
                 <option name="message" value="This block of commented-out lines of code should be removed." />
                 <option name="ruleKey" value="squid:CommentedOutCodeLine" />
                 <option name="severity" value="MAJOR" />
@@ -449,16 +449,16 @@
               </SonarIssue>
               <SonarIssue>
                 <option name="isNew" value="false" />
-                <option name="key" value="4b19c46c-25b0-44c1-9fc9-e9f5ab05f294" />
-                <option name="line" value="280" />
+                <option name="key" value="a032d3b4-c275-462d-beb6-d6deb3e394f8" />
+                <option name="line" value="104" />
                 <option name="message" value="This block of commented-out lines of code should be removed." />
                 <option name="ruleKey" value="squid:CommentedOutCodeLine" />
                 <option name="severity" value="MAJOR" />
               </SonarIssue>
               <SonarIssue>
                 <option name="isNew" value="false" />
-                <option name="key" value="a032d3b4-c275-462d-beb6-d6deb3e394f8" />
-                <option name="line" value="104" />
+                <option name="key" value="4b19c46c-25b0-44c1-9fc9-e9f5ab05f294" />
+                <option name="line" value="280" />
                 <option name="message" value="This block of commented-out lines of code should be removed." />
                 <option name="ruleKey" value="squid:CommentedOutCodeLine" />
                 <option name="severity" value="MAJOR" />
@@ -481,14 +481,6 @@
               </SonarIssue>
               <SonarIssue>
                 <option name="isNew" value="false" />
-                <option name="key" value="b4bdd4c1-a2ca-4cc1-b656-566d328b9c25" />
-                <option name="line" value="74" />
-                <option name="message" value="This block of commented-out lines of code should be removed." />
-                <option name="ruleKey" value="squid:CommentedOutCodeLine" />
-                <option name="severity" value="MAJOR" />
-              </SonarIssue>
-              <SonarIssue>
-                <option name="isNew" value="false" />
                 <option name="key" value="c360e389-3058-489b-a59d-6a11a8d5b6e2" />
                 <option name="line" value="162" />
                 <option name="message" value="This block of commented-out lines of code should be removed." />
@@ -497,8 +489,8 @@
               </SonarIssue>
               <SonarIssue>
                 <option name="isNew" value="false" />
-                <option name="key" value="82c90b4e-be4d-46f2-89d3-93e2835bb204" />
-                <option name="line" value="224" />
+                <option name="key" value="b4bdd4c1-a2ca-4cc1-b656-566d328b9c25" />
+                <option name="line" value="74" />
                 <option name="message" value="This block of commented-out lines of code should be removed." />
                 <option name="ruleKey" value="squid:CommentedOutCodeLine" />
                 <option name="severity" value="MAJOR" />
@@ -507,6 +499,14 @@
                 <option name="isNew" value="false" />
                 <option name="key" value="e220362c-a707-4cc4-b683-ad8296adaf03" />
                 <option name="line" value="136" />
+                <option name="message" value="This block of commented-out lines of code should be removed." />
+                <option name="ruleKey" value="squid:CommentedOutCodeLine" />
+                <option name="severity" value="MAJOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="82c90b4e-be4d-46f2-89d3-93e2835bb204" />
+                <option name="line" value="224" />
                 <option name="message" value="This block of commented-out lines of code should be removed." />
                 <option name="ruleKey" value="squid:CommentedOutCodeLine" />
                 <option name="severity" value="MAJOR" />
@@ -680,6 +680,11 @@
             <set />
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/model/pom.xml">
+          <value>
+            <set />
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/model/src/main/java/beans/AccType.java">
           <value>
             <set>
@@ -699,16 +704,16 @@
             <set>
               <SonarIssue>
                 <option name="isNew" value="false" />
-                <option name="key" value="d9b3cf24-2bd4-4c23-a358-a9310404ee50" />
-                <option name="line" value="11" />
+                <option name="key" value="32e6ced5-25f7-4543-a68e-69e037f2770e" />
+                <option name="line" value="12" />
                 <option name="message" value="Move this variable to comply with Java Code Conventions." />
                 <option name="ruleKey" value="squid:S1213" />
                 <option name="severity" value="MINOR" />
               </SonarIssue>
               <SonarIssue>
                 <option name="isNew" value="false" />
-                <option name="key" value="32e6ced5-25f7-4543-a68e-69e037f2770e" />
-                <option name="line" value="12" />
+                <option name="key" value="d9b3cf24-2bd4-4c23-a358-a9310404ee50" />
+                <option name="line" value="11" />
                 <option name="message" value="Move this variable to comply with Java Code Conventions." />
                 <option name="ruleKey" value="squid:S1213" />
                 <option name="severity" value="MINOR" />
@@ -723,19 +728,19 @@
               </SonarIssue>
               <SonarIssue>
                 <option name="isNew" value="false" />
-                <option name="key" value="3092dae5-21d2-4c06-9bd2-f60f30e90c75" />
-                <option name="line" value="7" />
-                <option name="message" value="Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation." />
-                <option name="ruleKey" value="squid:S1186" />
-                <option name="severity" value="MAJOR" />
-              </SonarIssue>
-              <SonarIssue>
-                <option name="isNew" value="false" />
                 <option name="key" value="51d10978-78b0-4066-95ab-8289db4c0679" />
                 <option name="line" value="15" />
                 <option name="message" value="Move this variable to comply with Java Code Conventions." />
                 <option name="ruleKey" value="squid:S1213" />
                 <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="3092dae5-21d2-4c06-9bd2-f60f30e90c75" />
+                <option name="line" value="7" />
+                <option name="message" value="Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation." />
+                <option name="ruleKey" value="squid:S1186" />
+                <option name="severity" value="MAJOR" />
               </SonarIssue>
               <SonarIssue>
                 <option name="isNew" value="false" />
@@ -881,14 +886,6 @@
               </SonarIssue>
               <SonarIssue>
                 <option name="isNew" value="false" />
-                <option name="key" value="912b2dc1-b5ee-45ab-8e64-373742f654f8" />
-                <option name="line" value="14" />
-                <option name="message" value="Move this variable to comply with Java Code Conventions." />
-                <option name="ruleKey" value="squid:S1213" />
-                <option name="severity" value="MINOR" />
-              </SonarIssue>
-              <SonarIssue>
-                <option name="isNew" value="false" />
                 <option name="key" value="074e7d8a-7c1b-47f0-a17f-6c2b47ab7fd1" />
                 <option name="line" value="8" />
                 <option name="message" value="Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation." />
@@ -897,8 +894,8 @@
               </SonarIssue>
               <SonarIssue>
                 <option name="isNew" value="false" />
-                <option name="key" value="ea3cc01d-e86d-48eb-9cfd-31daf66bc69e" />
-                <option name="line" value="18" />
+                <option name="key" value="912b2dc1-b5ee-45ab-8e64-373742f654f8" />
+                <option name="line" value="14" />
                 <option name="message" value="Move this variable to comply with Java Code Conventions." />
                 <option name="ruleKey" value="squid:S1213" />
                 <option name="severity" value="MINOR" />
@@ -907,6 +904,14 @@
                 <option name="isNew" value="false" />
                 <option name="key" value="847853de-69b0-4e64-80e0-a939a41eea90" />
                 <option name="line" value="19" />
+                <option name="message" value="Move this variable to comply with Java Code Conventions." />
+                <option name="ruleKey" value="squid:S1213" />
+                <option name="severity" value="MINOR" />
+              </SonarIssue>
+              <SonarIssue>
+                <option name="isNew" value="false" />
+                <option name="key" value="ea3cc01d-e86d-48eb-9cfd-31daf66bc69e" />
+                <option name="line" value="18" />
                 <option name="message" value="Move this variable to comply with Java Code Conventions." />
                 <option name="ruleKey" value="squid:S1213" />
                 <option name="severity" value="MINOR" />
@@ -996,6 +1001,46 @@
           </value>
         </entry>
         <entry key="$PROJECT_DIR$/service/src/main/java/services/AccountServiceImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/service/src/main/java/services/ClientService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/service/src/main/java/services/ClientServiceImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/service/src/main/java/services/CurrencyService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/service/src/main/java/services/CurrencyServiceImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/service/src/main/java/services/TransactionService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/service/src/main/java/services/TransactionServiceImpl.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/service/src/main/java/services/UserService.java">
+          <value>
+            <set />
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/service/src/main/java/services/UserServiceImpl.java">
           <value>
             <set />
           </value>

@@ -2,17 +2,14 @@ package servlets;
 
 import beans.Client;
 import beans.Gender;
-import daos.GenericDAO;
-import daos.PersistException;
-import mysql.MySQLDAOFactory;
 import org.apache.log4j.Logger;
+import services.ClientServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -38,16 +35,10 @@ public class AddClientServlet extends HttpServlet {
             logger.warn("Date parsing error", e);
         }
 
-        try {
-            MySQLDAOFactory factory = new MySQLDAOFactory();
-            Connection connection = factory.getContext();
-            GenericDAO dao = factory.getDAO(connection, Client.class);
-            dao.persist(client);
-            logger.info("New client was added successfully");
-        } catch (PersistException e) {
-            logger.error("MySQL DB error", e);
-        }
+        ClientServiceImpl clientService = new ClientServiceImpl();
+        clientService.addClient(client);
+        logger.info("New client was added successfully");
 
-        request.getRequestDispatcher("/addclientresult").forward(request, response);
+        response.sendRedirect("/addclientresult");
     }
 }

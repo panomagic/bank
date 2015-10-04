@@ -1,19 +1,20 @@
 package servlets;
 
 import beans.User;
-import daos.PersistException;
-import mysql.MySQLDAOFactory;
-import mysql.MySQLUserDAOImpl;
 import org.apache.log4j.Logger;
-
+import services.UserServiceImpl;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.sql.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,14 +22,6 @@ import java.util.Map;
 public class GetImageServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(GetImageServlet.class);
 
-    private static User getUserFromDB(User user) throws PersistException {
-        MySQLDAOFactory factory = new MySQLDAOFactory();
-        Connection connection = factory.getContext();
-
-        MySQLUserDAOImpl mySQLUserDAO = new MySQLUserDAOImpl(connection);
-        return mySQLUserDAO.getByPK(user.getid());
-    }
-    
     private static void showImageFromFileSystem(User user, HttpServletResponse response) throws IOException {
         InputStream is = new FileInputStream(user.getImagepath());
         OutputStream outputStream = response.getOutputStream();
@@ -82,11 +75,8 @@ public class GetImageServlet extends HttpServlet {
         User user = new User();
 
         if (!cache.containsKey(loggedUser.getid())) {   //retrieving user from DB if cache does not have needed image
-            try {
-                user = getUserFromDB(loggedUser);
-            } catch (PersistException e) {
-                logger.error("MySQL DB error", e);
-            }
+            UserServiceImpl userService = new UserServiceImpl();
+            user = userService.getUserByID(loggedUser.getid());
         }
 
         if (!cache.containsKey(loggedUser.getid()) && user.getImagepath() == null) {

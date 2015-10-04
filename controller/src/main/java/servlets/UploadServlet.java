@@ -2,11 +2,8 @@ package servlets;
 
 import beans.Role;
 import beans.User;
-import daos.PersistException;
-import mysql.MySQLDAOFactory;
-import mysql.MySQLUserDAOImpl;
 import org.apache.log4j.Logger;
-
+import services.UserServiceImpl;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -23,8 +20,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.Blob;
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,7 +67,6 @@ public class UploadServlet extends HttpServlet {
      * @throws IOException
      */
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
 
         String fileName = getSubmittedFileName(filePart);
@@ -88,43 +82,24 @@ public class UploadServlet extends HttpServlet {
 
         File uploadedFile = new File(uploadPath);
 
-        MySQLDAOFactory factory = new MySQLDAOFactory();
-        Connection connection = null;
-        try {
-            connection = factory.getContext();
-        } catch (PersistException e) {
-            logger.error("Error while creating connection", e);
-        }
-        MySQLUserDAOImpl mySQLUserDAO = new MySQLUserDAOImpl(connection);
-
         ServletContext context = request.getSession().getServletContext();
         if (context.getAttribute("cache") != null) {
             cache = (HashMap<Integer, Blob>) context.getAttribute("cache"); //retrieving cache if it exists
         }
 
-        try {
-            mySQLUserDAO.addImageToDB(uploadedFile, loggedUser);
-            User user = mySQLUserDAO.getByPK(loggedUser.getid());   //retrieving new user with updated image
-            request.getSession().setAttribute("LOGGED_USER", user); //saving new user in session instead of older one
+        UserServiceImpl userService = new UserServiceImpl();
 
-            if (user.getImagepath() == null)    //if an image is saved in DB (<100 kb)
-                cache.put(loggedUser.getid(), mySQLUserDAO.getImageFromDB(loggedUser)); //saving image from DB to the cache
-            else {                              //otherwise remove old image from the cache to avoid conflicts
-                cache.remove(loggedUser.getid());
-            }
-            for (Map.Entry<Integer, Blob> e : cache.entrySet()) {
-                logger.debug("Cache after image uploading: " + e.getKey() + " - " + e.getValue());
-            }
-        } catch (PersistException e) {
-            logger.error("MySQL DB error", e);
-        } finally {
-            if (connection != null)
-                try {
-                    connection.close();
-                    logger.info("DB connection is closed");
-                } catch (SQLException e) {
-                    logger.warn("Cannot close connection", e);
-                }
+        userService.uploadImage(uploadedFile, loggedUser);          //adding image to database
+        User user = userService.getUserByID(loggedUser.getid());    //retrieving new user with updated image
+        request.getSession().setAttribute("LOGGED_USER", user); //saving new user in session instead of the older one
+
+        if (user.getImagepath() == null)    //if an image is saved in DB (<100 kb)
+            cache.put(loggedUser.getid(), userService.retrieveImage(loggedUser)); //saving image from DB to the cache
+        else {                              //otherwise remove old image from the cache to avoid conflicts
+            cache.remove(loggedUser.getid());
+        }
+        for (Map.Entry<Integer, Blob> e : cache.entrySet()) {
+            logger.debug("Cache after image uploading: " + e.getKey() + " - " + e.getValue());
         }
 
         context.setAttribute("cache", cache);    //saving cache Map in order to have access to it from other servlets by all users

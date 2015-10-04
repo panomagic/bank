@@ -4,19 +4,16 @@ import beans.Account;
 import beans.Client;
 import beans.Currency;
 import beans.User;
-import daos.GenericDAO;
-import daos.PersistException;
-import mysql.MySQLDAOFactory;
 import org.apache.log4j.Logger;
 import services.AccountServiceImpl;
-
+import services.ClientServiceImpl;
+import services.CurrencyServiceImpl;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,15 +21,12 @@ import java.util.List;
 public class ClientInfoServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(ClientInfoServlet.class);
 
-    static List<Account> fillAccountsList() throws PersistException {
-        MySQLDAOFactory factory = new MySQLDAOFactory();
-        Connection connection = factory.getContext();
-        GenericDAO dao = factory.getDAO(connection, Account.class);
+    static List<Account> fillAccountsList() {
         AccountServiceImpl accountService = new AccountServiceImpl();
-        return accountService.getAllAccounts(dao);
+        return accountService.getAllAccounts();
     }
 
-    static List<Account> fillUserAccountsList(User loggedUser, List<Account> accounts, List<Account> allAccounts) throws PersistException {
+    static List<Account> fillUserAccountsList(User loggedUser, List<Account> accounts, List<Account> allAccounts) {
         for (int i = 0; i < allAccounts.size(); i++) {
             if (allAccounts.get(i).getClientID() == loggedUser.getClientID())
                 accounts.add(allAccounts.get(i));
@@ -40,34 +34,20 @@ public class ClientInfoServlet extends HttpServlet {
         return accounts;
     }
 
-    static List<Client> fillClientsList() throws PersistException {
-        MySQLDAOFactory factory = new MySQLDAOFactory();
-        Connection connection = factory.getContext();
-        GenericDAO dao = factory.getDAO(connection, Client.class);
-        return dao.getAll();
+    static List<Client> fillClientsList() {
+        ClientServiceImpl clientService = new ClientServiceImpl();
+        return clientService.getAllClients();
     }
 
-    static List<Currency> fillCurrenciesList() throws PersistException {
-        MySQLDAOFactory factory = new MySQLDAOFactory();
-        Connection connection = factory.getContext();
-        GenericDAO dao = factory.getDAO(connection, Currency.class);
-        return dao.getAll();
+    static List<Currency> fillCurrenciesList() {
+        CurrencyServiceImpl currencyService = new CurrencyServiceImpl();
+        return currencyService.getAllCurrencies();
     }
 
     static void getAccountsClientsCurrencies(HttpServletRequest request) {
-        List accounts = new ArrayList();
-        List clients = new ArrayList();
-        List currencies = new ArrayList();
-        try {
-            accounts = fillAccountsList();
-            clients = fillClientsList();
-            currencies = fillCurrenciesList();
-        } catch (PersistException e) {
-            logger.error("MySQL DB error", e);
-        }
-        request.setAttribute("allAccounts", accounts);
-        request.setAttribute("allClients", clients);
-        request.setAttribute("allCurrencies", currencies);
+        request.setAttribute("allAccounts", fillAccountsList());
+        request.setAttribute("allClients", fillClientsList());
+        request.setAttribute("allCurrencies", fillCurrenciesList());
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -77,18 +57,10 @@ public class ClientInfoServlet extends HttpServlet {
         List<Account> accounts = new ArrayList<>();        //only accounts of user's client
         List<Account> allAccounts;           //all accounts list
 
-
-        List<Client> clients = null;
-        List<Currency> currencies = null;
-
-        try {
-            allAccounts = fillAccountsList();
-            accounts = fillUserAccountsList(loggedUser, accounts, allAccounts);
-            clients = fillClientsList();
-            currencies = fillCurrenciesList();
-        } catch (PersistException e) {
-            logger.error("MySQL DB error", e);
-        }
+        allAccounts = fillAccountsList();
+        accounts = fillUserAccountsList(loggedUser, accounts, allAccounts);
+        List<Client> clients = fillClientsList();
+        List<Currency> currencies = fillCurrenciesList();
 
         Object[][] records = new Object[accounts.size()][];
         String clientName = null;

@@ -6,6 +6,7 @@ import daos.GenericDAO;
 import daos.PersistException;
 import mysql.MySQLDAOFactory;
 import org.apache.log4j.Logger;
+import services.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,18 +30,12 @@ public class LoginServlet extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-        User user = null;
-        try {               //retrieving DB user with the same name as entered in the form
-            MySQLDAOFactory factory = new MySQLDAOFactory();
-            Connection connection = factory.getContext();
-            GenericDAO dao = factory.getDAO(connection, User.class);
-            List<User> userList = dao.getAll();
-            for (int i = 0; i < userList.size(); i++) {
-                if (userList.get(i).getUserName().equals(request.getParameter("userName")))
-                    user = userList.get(i);
-            }
-        } catch (PersistException e) {
-            logger.error("MySQL DB error", e);
+        User user = null;       //retrieving DB user with the same name as entered in the form
+        UserServiceImpl userService = new UserServiceImpl();
+        List<User> userList = userService.getAllUsers();
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getUserName().equals(request.getParameter("userName")))
+                user = userList.get(i);
         }
 
         if (user != null) { //authentication procedure by password matching

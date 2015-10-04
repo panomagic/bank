@@ -44,9 +44,6 @@
   <a href="transactionshistorybyclient"><fmt:message key="transhistorybyclientlink" /></a>
 </p>
 <p>
-  <a href="admin"><fmt:message key="returntoadminpagelink" /></a>
-</p>
-<p>
   <a href="logout"><fmt:message key="logoutlink" /></a>
 </p>
 </body>

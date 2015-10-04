@@ -1,18 +1,19 @@
 package services;
 
-import beans.Account;
+
+import beans.Currency;
 import daos.PersistException;
-import mysql.MySQLAccountDAOImpl;
+import mysql.MySQLCurrencyDAOImpl;
 import mysql.MySQLDAOFactory;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.util.List;
 
-public class AccountServiceImpl implements AccountService {
-    private static final Logger logger = Logger.getLogger(AccountServiceImpl.class);
+public class CurrencyServiceImpl implements CurrencyService {
+    private static final Logger logger = Logger.getLogger(CurrencyServiceImpl.class);
 
-    private static MySQLAccountDAOImpl getAccountDaoImpl() {
+    private static MySQLCurrencyDAOImpl getCurrencyDaoImpl() {
         MySQLDAOFactory factory = new MySQLDAOFactory();
         Connection connection = null;
         try {
@@ -20,14 +21,14 @@ public class AccountServiceImpl implements AccountService {
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
-        return new MySQLAccountDAOImpl(connection);
+        return new MySQLCurrencyDAOImpl(connection);
     }
 
     @Override
-    public Account addAccount(Account account) {
-        MySQLAccountDAOImpl mySQLAccountDAO = getAccountDaoImpl();
+    public Currency addCurrency(Currency currency) {
+        MySQLCurrencyDAOImpl mySQLCurrencyDAO = getCurrencyDaoImpl();
         try {
-            return mySQLAccountDAO.persist(account);
+            return mySQLCurrencyDAO.persist(currency);
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
             return null;
@@ -35,10 +36,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account getAccountByID(Integer id) {
-        MySQLAccountDAOImpl mySQLAccountDAO = getAccountDaoImpl();
+    public Currency getCurrencyByID(Integer id) {
+        MySQLCurrencyDAOImpl mySQLCurrencyDAO = getCurrencyDaoImpl();
         try {
-            return mySQLAccountDAO.getByPK(id);
+            return mySQLCurrencyDAO.getByPK(id);
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
             return null;
@@ -46,10 +47,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean updateAccount(Account account) {
-        MySQLAccountDAOImpl mySQLAccountDAO = getAccountDaoImpl();
+    public boolean updateCurrency(Currency currency) {
+        MySQLCurrencyDAOImpl mySQLCurrencyDAO = getCurrencyDaoImpl();
         try {
-            mySQLAccountDAO.update(account);
+            mySQLCurrencyDAO.update(currency);
             return true;
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
@@ -58,10 +59,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean deleteAccount(Account account) {
-        MySQLAccountDAOImpl mySQLAccountDAO = getAccountDaoImpl();
+    public boolean deleteCurrency(Currency currency) {
+        MySQLCurrencyDAOImpl mySQLCurrencyDAO = getCurrencyDaoImpl();
         try {
-            mySQLAccountDAO.delete(account);
+            mySQLCurrencyDAO.delete(currency);
             return true;
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
@@ -70,10 +71,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<Account> getAllAccounts() {
-        MySQLAccountDAOImpl mySQLAccountDAO = getAccountDaoImpl();
+    public List<Currency> getAllCurrencies() {
+        MySQLCurrencyDAOImpl mySQLCurrencyDAO = getCurrencyDaoImpl();
         try {
-            return mySQLAccountDAO.getAll();
+            return mySQLCurrencyDAO.getAll();
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
             return null;
