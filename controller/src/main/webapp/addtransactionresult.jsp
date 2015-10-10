@@ -10,7 +10,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title><fmt:message key="addaccountresultpagetitle" /></title>
+  <title><fmt:message key="addtransresultpagetitle" /></title>
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="../css/bootstrap.min.css">
   <!-- Optional theme -->
@@ -31,10 +31,10 @@
           <h4 class="modal-title"><fmt:message key="addmodalheader" /></h4>
         </div>
         <div class="modal-body">
-          <p><b><fmt:message key="accountsuccess" /></b></p>
+          <p><b><fmt:message key="transactionsuccess" /></b></p>
         </div>
         <div class="modal-footer">
-            <button id="okButton" type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+          <button id="okButton" type="button" class="btn btn-success" data-dismiss="modal">OK</button>
         </div>
       </div>
 
@@ -47,10 +47,21 @@
     });
   </script>
 
-  <script type="text/javascript">
-    document.getElementById("okButton").onclick = function () {
-    location.href = "/viewaccounts";
-    };
-  </script>
+  <c:choose>
+    <c:when test="${sessionScope.LOGGED_USER.role == 'ADMINISTRATOR'}">
+      <script type="text/javascript">
+        document.getElementById("okButton").onclick = function () {
+          location.href = "/viewaccounts";
+        };
+      </script>
+    </c:when>
+    <c:when test="${sessionScope.LOGGED_USER.role == 'CLIENT'}">
+      <script type="text/javascript">
+        document.getElementById("okButton").onclick = function () {
+          location.href = "/clientinfo";
+        };
+      </script>
+    </c:when>
+  </c:choose>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package servlets;
 
 import beans.Transaction;
+import beans.User;
 import services.TransactionServiceImpl;
 
 import javax.servlet.ServletException;
@@ -23,6 +24,9 @@ public class TransactionsHistoryServlet extends HttpServlet {
         List<Transaction> transactions = transactionService.getAllTransactions();
 
         request.setAttribute("allTransactions", transactions);
+
+        User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
+        request.setAttribute("userrole", loggedUser.getRole());
 
         getAccountsClientsCurrencies(request);
 

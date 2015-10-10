@@ -32,7 +32,7 @@ public class AddUserServlet extends HttpServlet {
         user.setUserName(request.getParameter("userName"));
         user.setPsw(request.getParameter("psw"));
         user.setClientID(Integer.parseInt(request.getParameter("chooseclient")));
-        user.setRole(Role.fromString(request.getParameter("role")));
+        user.setRole(Role.CLIENT);
 
         UserServiceImpl userService = new UserServiceImpl();
         userService.addUser(user);

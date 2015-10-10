@@ -10,7 +10,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title><fmt:message key="deleteclientpagetitle" /></title>
+  <title><fmt:message key="modalheadererr" /></title>
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="../css/bootstrap.min.css">
   <!-- Optional theme -->
@@ -28,10 +28,10 @@
     <!-- Modal content-->
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title"><fmt:message key="addmodalheader" /></h4>
+        <h4 class="modal-title"><fmt:message key="modalheadererr" /></h4>
       </div>
       <div class="modal-body">
-        <p><b><fmt:message key="clientdelsuccessfull" /></b></p>
+        <p><b><fmt:message key="transtosameaccerr" /></b></p>
       </div>
       <div class="modal-footer">
         <button id="okButton" type="button" class="btn btn-success" data-dismiss="modal">OK</button>
@@ -43,7 +43,7 @@
 
 <script type="text/javascript">
   document.getElementById("okButton").onclick = function () {
-    location.href = "/viewclients";
+    location.href = "/addtransaction";
   };
 </script>
 

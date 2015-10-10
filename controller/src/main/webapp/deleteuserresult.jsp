@@ -10,7 +10,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title><fmt:message key="addaccountresultpagetitle" /></title>
+  <title><fmt:message key="deleteuserpagetitle" /></title>
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="../css/bootstrap.min.css">
   <!-- Optional theme -->
@@ -31,10 +31,10 @@
           <h4 class="modal-title"><fmt:message key="addmodalheader" /></h4>
         </div>
         <div class="modal-body">
-          <p><b><fmt:message key="accountsuccess" /></b></p>
+          <p><b><fmt:message key="userdelsuccessfull" /></b></p>
         </div>
         <div class="modal-footer">
-            <button id="okButton" type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+          <button id="okButton" type="button" class="btn btn-success" data-dismiss="modal">OK</button>
         </div>
       </div>
 
@@ -42,15 +42,15 @@
   </div>
 
   <script type="text/javascript">
-    $(window).load(function(){
-      $('#myModal').modal({backdrop: "static"});
-    });
+    document.getElementById("okButton").onclick = function () {
+      location.href = "/viewusers";
+    };
   </script>
 
   <script type="text/javascript">
-    document.getElementById("okButton").onclick = function () {
-    location.href = "/viewaccounts";
-    };
+    $(window).load(function(){
+      $('#myModal').modal({backdrop: "static"});
+    });
   </script>
 </body>
 </html>

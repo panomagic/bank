@@ -32,7 +32,7 @@ public class UpdateDeleteAccountServlet extends HttpServlet {
             account = accountService.getAccountByID(Integer.parseInt(request.getParameter("id")));
             request.setAttribute("account", account);
         } else if ("delete".equals(request.getParameter("action"))) {
-            forwardPage = "deleteaccount.jsp";
+            forwardPage = "deleteaccountresult.jsp";
             account = new Account();
             account.setid(Integer.parseInt(request.getParameter("id")));
             accountService.deleteAccount(account);
@@ -58,7 +58,7 @@ public class UpdateDeleteAccountServlet extends HttpServlet {
 
         updateAccount(request);
 
-        response.sendRedirect("viewaccounts");  //return to accounts list page
+        request.getRequestDispatcher("updateaccountresult.jsp").forward(request, response);
         return;
     }
 }

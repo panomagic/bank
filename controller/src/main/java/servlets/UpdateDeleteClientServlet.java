@@ -56,7 +56,7 @@ public class UpdateDeleteClientServlet extends HttpServlet {
 
         updateClient(request);
 
-        response.sendRedirect("viewclients");   //return to clients list page
+        request.getRequestDispatcher("updateclientresult.jsp").forward(request, response);
         return;
     }
 }

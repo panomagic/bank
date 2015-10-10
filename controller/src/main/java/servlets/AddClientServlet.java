@@ -39,6 +39,6 @@ public class AddClientServlet extends HttpServlet {
         clientService.addClient(client);
         logger.info("New client was added successfully");
 
-        response.sendRedirect("/addclientresult");
+        request.getRequestDispatcher("addclientresult.jsp").forward(request, response);
     }
 }

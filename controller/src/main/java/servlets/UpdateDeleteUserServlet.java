@@ -32,7 +32,7 @@ public class UpdateDeleteUserServlet extends HttpServlet {
             user = userService.getUserByID(Integer.parseInt(request.getParameter("id")));
             request.setAttribute("user", user);
         } else if ("delete".equals(request.getParameter("action"))) {
-            forwardPage = "deleteuser.jsp";
+            forwardPage = "deleteuserresult.jsp";
             user = new User();
             user.setid(Integer.parseInt(request.getParameter("id")));
             userService.deleteUser(user);
@@ -52,7 +52,7 @@ public class UpdateDeleteUserServlet extends HttpServlet {
             user.setClientID(a);
         } else
             user.setClientID(Integer.parseInt(request.getParameter("chooseclient")));
-        user.setRole(Role.fromString(request.getParameter("role")));
+        user.setRole(Role.CLIENT);
 
         userService.updateUser(user);
         logger.info("User with id " + user.getid() + " was updated");
@@ -63,7 +63,7 @@ public class UpdateDeleteUserServlet extends HttpServlet {
 
         updateUser(request);
 
-        response.sendRedirect("admin");  //return to main page
+        request.getRequestDispatcher("updateuserresult.jsp").forward(request, response);
         return;
     }
 }

@@ -38,6 +38,6 @@ public class AddAccountServlet extends HttpServlet {
         accountService.addAccount(account);
         logger.info("New account was added for client with id " + account.getClientID());
 
-        response.sendRedirect("/addaccountresult");
+        request.getRequestDispatcher("addaccountresult.jsp").forward(request, response);
     }
 }

@@ -1,34 +1,37 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page isELIgnored="false" %>
 
 <fmt:setLocale value="${sessionScope.language}" />
 <fmt:setBundle basename="BankBundle" />
 
+<!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title><fmt:message key="loginfailedpagetitle" /></title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="../css/bootstrap-theme.min.css">
+  <!-- jQuery library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <!-- Latest compiled JavaScript -->
+  <script src="../js/bootstrap.min.js"></script>
 </head>
 <body>
-  <p><b><fmt:message key="loginerror" /></b></p>
-  <form action="login" method="POST">
-    <p><b><fmt:message key="username" /></b><br>
-      <input type="text" name="userName" size="35">
-    </p>
-    <p><b><fmt:message key="password" /></b><br>
-      <input type="text" name="psw" size="35">
-    </p>
-    <p><b><fmt:message key="chooselanguage" /></b><br>
-      <select name="chosenlanguage">
-        <option value="en">English</option>
-        <option value="ru">Русский</option>
-      </select>
-    </p>
-    <p>
-      <input type="submit" value="<fmt:message key="loginbutton" />">
-      <input type="reset" value="<fmt:message key="clearbutton" />">
-    </p>
-  </form>
+  <div class="container">
+    <div class="alert alert-danger">
+      <h2><fmt:message key="loginerror" /></h2>
+    </div>
+    <button type="submit" class="btn btn-success" id="loginButton">Login / Вход</button>
+  </div>
+
+  <script type="text/javascript">
+    document.getElementById("loginButton").onclick = function () {
+      location.href = "/login";
+    };
+  </script>
 </body>
 </html>

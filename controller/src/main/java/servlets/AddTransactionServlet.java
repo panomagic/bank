@@ -63,14 +63,6 @@ public class AddTransactionServlet extends HttpServlet {
         return accountService.getAccountByID(Integer.parseInt(request.getParameter("chooserecipientaccount")));
     }
 
-    private static void addTransRedirect(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
-        if (loggedUser != null && Role.ADMINISTRATOR == loggedUser.getRole())
-            response.sendRedirect("viewaccounts");
-        else if (loggedUser != null && Role.CLIENT == loggedUser.getRole())
-            response.sendRedirect("clientinfo");
-    }
-
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         Transaction transaction = new Transaction();
@@ -79,9 +71,16 @@ public class AddTransactionServlet extends HttpServlet {
         Account recipientAccount = getRecipientAccount(request);
 
         if (payerAccount.getCurrencyID() != recipientAccount.getCurrencyID()) {
-            response.sendRedirect("/transcurrencymismatch");
+            request.getRequestDispatcher("transcurrencymismatch.jsp").forward(request, response);
             logger.info("Money transfer attempt from account with id " + payerAccount.getid() + " to account with id "
                     + recipientAccount.getid() + " was REJECTED due to currency mismatch");
+            return;
+        }
+
+        if (payerAccount.getid() == recipientAccount.getid()) {
+            request.getRequestDispatcher("transtosameacc.jsp").forward(request, response);
+            logger.info("Money transfer attempt from account with id " + payerAccount.getid() + " to the same account " +
+                    "was REJECTED");
             return;
         }
 
@@ -95,7 +94,7 @@ public class AddTransactionServlet extends HttpServlet {
         transaction.setSum(new BigDecimal(Double.parseDouble(request.getParameter("sum"))));
 
         if (payerAccount.getAccTypeID() == 1 && transaction.getSum().compareTo(payerAccount.getBalance()) == 1) {
-            response.sendRedirect("/transoverdraft");
+            request.getRequestDispatcher("transoverdraft.jsp").forward(request, response);
             logger.info("Money transfer attempt from account with id " + payerAccount.getid() + " to account with id "
                      + recipientAccount.getid() + " was REJECTED: not enough money on payer's account");
             return;
@@ -104,6 +103,6 @@ public class AddTransactionServlet extends HttpServlet {
         TransactionServiceImpl transactionService = new TransactionServiceImpl();
         transactionService.addTransactionService(transaction);
 
-        addTransRedirect(request, response);
+        request.getRequestDispatcher("addtransactionresult.jsp").forward(request, response);
     }
 }

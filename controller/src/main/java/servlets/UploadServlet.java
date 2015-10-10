@@ -30,6 +30,8 @@ public class UploadServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
+        request.setAttribute("userrole", loggedUser.getRole());
         request.getRequestDispatcher("addimage.jsp").forward(request, response);
     }
 

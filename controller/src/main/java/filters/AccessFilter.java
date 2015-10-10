@@ -27,6 +27,8 @@ public class AccessFilter implements Filter {
         freeAccessUrls.add("/loginfailed");
         freeAccessUrls.add("/logout");
         freeAccessUrls.add("/accessdenied");
+        freeAccessUrls.add("/css/bootstrap.min.css");
+        freeAccessUrls.add("/css/bootstrap-theme.min.css");
 
         clientAccessUrls.add("/clientinfo");
         clientAccessUrls.add("/addtransaction");
@@ -35,6 +37,7 @@ public class AccessFilter implements Filter {
         clientAccessUrls.add("/transoverdraft");
         clientAccessUrls.add("/image");
         clientAccessUrls.add("/upload");
+        clientAccessUrls.add("/js/bootstrap.min.js");
     }
 
     private static void redirectIfLoginFailed(User loggedUser, ServletResponse servletResponse) throws IOException {
