@@ -22,9 +22,10 @@ public class ClientServiceImpl implements ClientService {
         return new MySQLClientDAOImpl(connection);
     }
 
+    MySQLClientDAOImpl mySQLClientDAO = getClientDaoImpl();
+
     @Override
     public Client addClient(Client client) {
-        MySQLClientDAOImpl mySQLClientDAO = getClientDaoImpl();
         try {
             return mySQLClientDAO.persist(client);
         } catch (PersistException e) {
@@ -35,7 +36,6 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public Client getClientByID(Integer id) {
-        MySQLClientDAOImpl mySQLClientDAO = getClientDaoImpl();
         try {
             return mySQLClientDAO.getByPK(id);
         } catch (PersistException e) {
@@ -46,7 +46,6 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public boolean updateClient(Client client) {
-        MySQLClientDAOImpl mySQLClientDAO = getClientDaoImpl();
         try {
             mySQLClientDAO.update(client);
             return true;
@@ -58,7 +57,6 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public boolean deleteClient(Client client) {
-        MySQLClientDAOImpl mySQLClientDAO = getClientDaoImpl();
         try {
             mySQLClientDAO.delete(client);
             return true;
@@ -70,7 +68,6 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public List<Client> getAllClients() {
-        MySQLClientDAOImpl mySQLClientDAO = getClientDaoImpl();
         try {
             return mySQLClientDAO.getAll();
         } catch (PersistException e) {

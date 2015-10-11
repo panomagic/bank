@@ -23,9 +23,10 @@ public class AccountServiceImpl implements AccountService {
         return new MySQLAccountDAOImpl(connection);
     }
 
+    MySQLAccountDAOImpl mySQLAccountDAO = getAccountDaoImpl();
+
     @Override
     public Account addAccount(Account account) {
-        MySQLAccountDAOImpl mySQLAccountDAO = getAccountDaoImpl();
         try {
             return mySQLAccountDAO.persist(account);
         } catch (PersistException e) {
@@ -36,7 +37,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account getAccountByID(Integer id) {
-        MySQLAccountDAOImpl mySQLAccountDAO = getAccountDaoImpl();
         try {
             return mySQLAccountDAO.getByPK(id);
         } catch (PersistException e) {
@@ -47,7 +47,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public boolean updateAccount(Account account) {
-        MySQLAccountDAOImpl mySQLAccountDAO = getAccountDaoImpl();
         try {
             mySQLAccountDAO.update(account);
             return true;
@@ -59,7 +58,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public boolean deleteAccount(Account account) {
-        MySQLAccountDAOImpl mySQLAccountDAO = getAccountDaoImpl();
         try {
             mySQLAccountDAO.delete(account);
             return true;
@@ -71,7 +69,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public List<Account> getAllAccounts() {
-        MySQLAccountDAOImpl mySQLAccountDAO = getAccountDaoImpl();
         try {
             return mySQLAccountDAO.getAll();
         } catch (PersistException e) {

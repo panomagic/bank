@@ -4,7 +4,6 @@ import beans.Role;
 import beans.User;
 import org.apache.log4j.Logger;
 import services.UserServiceImpl;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,13 +18,14 @@ public class UpdateDeleteUserServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(UpdateDeleteUserServlet.class);
 
     User user;
-    UserServiceImpl userService = new UserServiceImpl();
 
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String forwardPage = "";
 
         request.setAttribute("allClients", fillClientsList());
+
+        UserServiceImpl userService = new UserServiceImpl();
 
         if ("update".equals(request.getParameter("action"))) {
             forwardPage = "updateuser.jsp";
@@ -54,6 +54,7 @@ public class UpdateDeleteUserServlet extends HttpServlet {
             user.setClientID(Integer.parseInt(request.getParameter("chooseclient")));
         user.setRole(Role.CLIENT);
 
+        UserServiceImpl userService = new UserServiceImpl();
         userService.updateUser(user);
         logger.info("User with id " + user.getid() + " was updated");
     }

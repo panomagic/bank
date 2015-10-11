@@ -82,7 +82,6 @@
       <p><input type="submit" class="btn btn-success" value="<fmt:message key="savebutton" />">
         <input type="reset" class="btn btn-default" value="<fmt:message key="clearbutton" />"></p>
     </form>
-    <p><a href="viewaccounts"><fmt:message key="backtoaccountslink" /></a></p>
   </div>
 </body>
 </html>

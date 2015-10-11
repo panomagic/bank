@@ -3,7 +3,7 @@ package daos;
 import org.apache.log4j.Logger;
 
 public class PersistException extends Exception {
-    private static final Logger logger = Logger.getLogger(TransactionFailedException.class);
+    private static final Logger logger = Logger.getLogger(PersistException.class);
 
     public PersistException() {
         //no-args constructor

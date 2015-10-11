@@ -16,11 +16,12 @@ public class UpdateDeleteClientServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(UpdateDeleteClientServlet.class);
 
     Client client;
-    ClientServiceImpl clientService = new ClientServiceImpl();
 
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String forwardPage = "";
+
+        ClientServiceImpl clientService = new ClientServiceImpl();
 
         if ("update".equals(request.getParameter("action"))) {
             forwardPage = "updateclient.jsp";
@@ -47,6 +48,7 @@ public class UpdateDeleteClientServlet extends HttpServlet {
             logger.warn("Date parsing error", e);
         }
 
+        ClientServiceImpl clientService = new ClientServiceImpl();
         clientService.updateClient(client);
         logger.info("Client with id " + client.getid() + " was updated");
     }

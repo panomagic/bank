@@ -2,9 +2,6 @@ package servlets;
 
 import beans.Role;
 import beans.User;
-import daos.GenericDAO;
-import daos.PersistException;
-import mysql.MySQLDAOFactory;
 import org.apache.log4j.Logger;
 import services.UserServiceImpl;
 
@@ -14,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.List;
 
 @WebServlet(name="login", urlPatterns={"/login"})

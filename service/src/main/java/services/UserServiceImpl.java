@@ -24,9 +24,10 @@ public class UserServiceImpl implements UserService {
         return new MySQLUserDAOImpl(connection);
     }
 
+    MySQLUserDAOImpl mySQLUserDAO = getUserDaoImpl();
+
     @Override
     public User addUser(User user) {
-        MySQLUserDAOImpl mySQLUserDAO = getUserDaoImpl();
         try {
             return mySQLUserDAO.persist(user);
         } catch (PersistException e) {
@@ -37,7 +38,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByID(Integer id) {
-        MySQLUserDAOImpl mySQLUserDAO = getUserDaoImpl();
         try {
             return mySQLUserDAO.getByPK(id);
         } catch (PersistException e) {
@@ -48,7 +48,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updateUser(User user) {
-        MySQLUserDAOImpl mySQLUserDAO = getUserDaoImpl();
         try {
             mySQLUserDAO.update(user);
             return true;
@@ -60,7 +59,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean deleteUser(User user) {
-        MySQLUserDAOImpl mySQLUserDAO = getUserDaoImpl();
         try {
             mySQLUserDAO.delete(user);
             return true;
@@ -72,7 +70,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() {
-        MySQLUserDAOImpl mySQLUserDAO = getUserDaoImpl();
         try {
             return mySQLUserDAO.getAll();
         } catch (PersistException e) {
@@ -82,7 +79,6 @@ public class UserServiceImpl implements UserService {
     }
 
     public void uploadImage(File uploadedFile, User loggedUser) {
-        MySQLUserDAOImpl mySQLUserDAO = getUserDaoImpl();
         try {
             mySQLUserDAO.addImageToDB(uploadedFile, loggedUser);
         } catch (PersistException e) {
@@ -91,7 +87,6 @@ public class UserServiceImpl implements UserService {
     }
 
     public Blob retrieveImage(User loggedUser) {
-        MySQLUserDAOImpl mySQLUserDAO = getUserDaoImpl();
         return mySQLUserDAO.getImageFromDB(loggedUser);
     }
 }

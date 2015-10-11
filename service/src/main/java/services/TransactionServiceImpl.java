@@ -22,9 +22,10 @@ public class TransactionServiceImpl implements TransactionService {
         return new MySQLTransactionDAOImpl(connection);
     }
 
+    MySQLTransactionDAOImpl mySQLTransactionDAO = getTransactionDaoImpl();
+
     @Override
     public void addTransactionService(Transaction transaction) {
-        MySQLTransactionDAOImpl mySQLTransactionDAO = getTransactionDaoImpl();
         try {
             mySQLTransactionDAO.addTransaction(transaction);
         } catch (PersistException e) {
@@ -34,7 +35,6 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public Transaction getTransactionByID(Integer id) {
-        MySQLTransactionDAOImpl mySQLTransactionDAO = getTransactionDaoImpl();
         try {
             return mySQLTransactionDAO.getByPK(id);
         } catch (PersistException e) {
@@ -45,7 +45,6 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public boolean updateTransaction(Transaction transaction) {     //todo maybe REMOVE because of unnecessary
-        MySQLTransactionDAOImpl mySQLTransactionDAO = getTransactionDaoImpl();
         try {
             mySQLTransactionDAO.update(transaction);
             return true;
@@ -57,7 +56,6 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public boolean deleteTransaction(Transaction transaction) {     //todo maybe REMOVE because of unnecessary
-        MySQLTransactionDAOImpl mySQLTransactionDAO = getTransactionDaoImpl();
         try {
             mySQLTransactionDAO.delete(transaction);
             return true;
@@ -69,7 +67,6 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<Transaction> getAllTransactions() {
-        MySQLTransactionDAOImpl mySQLTransactionDAO = getTransactionDaoImpl();
         try {
             return mySQLTransactionDAO.getAll();
         } catch (PersistException e) {
