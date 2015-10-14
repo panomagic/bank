@@ -1,8 +1,6 @@
 package services;
 
 import beans.Client;
-import daos.GenericDAO;
-import daos.PersistException;
 
 import java.util.List;
 

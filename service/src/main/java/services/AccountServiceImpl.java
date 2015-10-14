@@ -12,7 +12,8 @@ import java.util.List;
 public class AccountServiceImpl implements AccountService {
     private static final Logger logger = Logger.getLogger(AccountServiceImpl.class);
 
-    private static MySQLAccountDAOImpl getAccountDaoImpl() {
+    MySQLAccountDAOImpl mySQLAccountDAO;
+    {
         MySQLDAOFactory factory = new MySQLDAOFactory();
         Connection connection = null;
         try {
@@ -20,10 +21,8 @@ public class AccountServiceImpl implements AccountService {
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
-        return new MySQLAccountDAOImpl(connection);
+        mySQLAccountDAO = new MySQLAccountDAOImpl(connection);
     }
-
-    MySQLAccountDAOImpl mySQLAccountDAO = getAccountDaoImpl();
 
     @Override
     public Account addAccount(Account account) {
