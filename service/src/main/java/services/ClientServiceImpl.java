@@ -11,7 +11,9 @@ import java.util.List;
 public class ClientServiceImpl implements ClientService {
     private static final Logger logger = Logger.getLogger(ClientServiceImpl.class);
 
-    private static MySQLClientDAOImpl getClientDaoImpl() {
+    MySQLClientDAOImpl mySQLClientDAO;
+
+    public ClientServiceImpl() {
         MySQLDAOFactory factory = new MySQLDAOFactory();
         Connection connection = null;
         try {
@@ -19,10 +21,8 @@ public class ClientServiceImpl implements ClientService {
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
-        return new MySQLClientDAOImpl(connection);
+        mySQLClientDAO = new MySQLClientDAOImpl(connection);
     }
-
-    MySQLClientDAOImpl mySQLClientDAO = getClientDaoImpl();
 
     @Override
     public Client addClient(Client client) {

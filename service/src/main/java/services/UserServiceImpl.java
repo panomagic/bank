@@ -13,7 +13,9 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
 
-    private static MySQLUserDAOImpl getUserDaoImpl() {
+    MySQLUserDAOImpl mySQLUserDAO;
+
+    public UserServiceImpl() {
         MySQLDAOFactory factory = new MySQLDAOFactory();
         Connection connection = null;
         try {
@@ -21,10 +23,8 @@ public class UserServiceImpl implements UserService {
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
-        return new MySQLUserDAOImpl(connection);
+        mySQLUserDAO = new MySQLUserDAOImpl(connection);
     }
-
-    MySQLUserDAOImpl mySQLUserDAO = getUserDaoImpl();
 
     @Override
     public User addUser(User user) {

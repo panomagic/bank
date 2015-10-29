@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page isELIgnored="false" %>
 
 <fmt:setLocale value="${sessionScope.language}" />
@@ -47,21 +48,19 @@
     });
   </script>
 
-  <c:choose>
-    <c:when test="${sessionScope.LOGGED_USER.role == 'ADMINISTRATOR'}">
+  <sec:authorize access="hasRole('ADMINISTRATOR') and isAuthenticated()">
       <script type="text/javascript">
         document.getElementById("okButton").onclick = function () {
           location.href = "/viewaccounts";
         };
       </script>
-    </c:when>
-    <c:when test="${sessionScope.LOGGED_USER.role == 'CLIENT'}">
+  </sec:authorize>
+  <sec:authorize access="hasRole('CLIENT') and isAuthenticated()">
       <script type="text/javascript">
         document.getElementById("okButton").onclick = function () {
           location.href = "/clientinfo";
         };
       </script>
-    </c:when>
-  </c:choose>
+  </sec:authorize>
 </body>
 </html>

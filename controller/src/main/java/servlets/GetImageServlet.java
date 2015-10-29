@@ -2,6 +2,8 @@ package servlets;
 
 import beans.User;
 import org.apache.log4j.Logger;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import services.UserServiceImpl;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -16,6 +18,7 @@ import java.io.OutputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @WebServlet("/image")
@@ -48,11 +51,21 @@ public class GetImageServlet extends HttpServlet {
         Blob img;
         byte[] imgData = null;
 
-        User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
+        //User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
+        User loggedUser = null;
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserServiceImpl userService = new UserServiceImpl();
+        List<User> userList = userService.getAllUsers();
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getUserName().equals(userDetails.getUsername()))
+                loggedUser = userList.get(i);
+        }
 
         Map<Integer, Blob> cache;
 
-        ServletContext context = request.getSession().getServletContext();
+        //ServletContext context = request.getSession().getServletContext();
+        ServletContext context = request.getServletContext();
+
 
         cache = retrieveCache(context);     //retrieving cache
 
@@ -75,8 +88,8 @@ public class GetImageServlet extends HttpServlet {
         User user = new User();
 
         if (!cache.containsKey(loggedUser.getid())) {   //retrieving user from DB if cache does not have needed image
-            UserServiceImpl userService = new UserServiceImpl();
-            user = userService.getUserByID(loggedUser.getid());
+            UserServiceImpl userService2 = new UserServiceImpl();
+            user = userService2.getUserByID(loggedUser.getid());
         }
 
         if (!cache.containsKey(loggedUser.getid()) && user.getImagepath() == null) {

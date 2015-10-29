@@ -2,11 +2,12 @@ package servlets;
 
 import beans.Account;
 import beans.Role;
-import beans.Transaction;
 import beans.User;
-import org.apache.log4j.Logger;
-import services.AccountServiceImpl;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import services.TransactionServiceImpl;
+import services.UserServiceImpl;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,7 +28,15 @@ public class AddTransactionServlet extends HttpServlet {
             throws ServletException, IOException {
 
         List<Account> payerAccounts = new ArrayList<>();   //showing payer accounts separately for user roles: all accounts for admin and only his own for client
-        User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
+        //User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
+        User loggedUser = null;
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserServiceImpl userService = new UserServiceImpl();
+        List<User> userList = userService.getAllUsers();
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getUserName().equals(userDetails.getUsername()))
+                loggedUser = userList.get(i);
+        }
 
         if (Role.ADMINISTRATOR == loggedUser.getRole()) {
                 payerAccounts = fillAccountsList();

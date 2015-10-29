@@ -13,7 +13,8 @@ public class AccountServiceImpl implements AccountService {
     private static final Logger logger = Logger.getLogger(AccountServiceImpl.class);
 
     MySQLAccountDAOImpl mySQLAccountDAO;
-    {
+
+    public AccountServiceImpl() {
         MySQLDAOFactory factory = new MySQLDAOFactory();
         Connection connection = null;
         try {

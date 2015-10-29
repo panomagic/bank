@@ -3,6 +3,8 @@ package servlets;
 import beans.Role;
 import beans.User;
 import org.apache.log4j.Logger;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import services.UserServiceImpl;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -21,6 +23,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.Blob;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @WebServlet("/upload")
@@ -30,7 +33,15 @@ public class UploadServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
+        //User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
+        User loggedUser = null;
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserServiceImpl userService = new UserServiceImpl();
+        List<User> userList = userService.getAllUsers();
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getUserName().equals(userDetails.getUsername()))
+                loggedUser = userList.get(i);
+        }
         request.setAttribute("userrole", loggedUser.getRole());
         request.getRequestDispatcher("addimage.jsp").forward(request, response);
     }
@@ -73,7 +84,15 @@ public class UploadServlet extends HttpServlet {
 
         String fileName = getSubmittedFileName(filePart);
 
-        User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
+        //User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
+        User loggedUser = null;
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserServiceImpl userService = new UserServiceImpl();
+        List<User> userList = userService.getAllUsers();
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getUserName().equals(userDetails.getUsername()))
+                loggedUser = userList.get(i);
+        }
 
         String uploadPath = UPLOADFOLDER + "\\" + loggedUser.getid().toString() + "." + getFileExtension(fileName);
 
@@ -89,10 +108,10 @@ public class UploadServlet extends HttpServlet {
             cache = (HashMap<Integer, Blob>) context.getAttribute("cache"); //retrieving cache if it exists
         }
 
-        UserServiceImpl userService = new UserServiceImpl();
+        UserServiceImpl userService2 = new UserServiceImpl();
 
-        userService.uploadImage(uploadedFile, loggedUser);          //adding image to database
-        User user = userService.getUserByID(loggedUser.getid());    //retrieving new user with updated image
+        userService2.uploadImage(uploadedFile, loggedUser);          //adding image to database
+        User user = userService2.getUserByID(loggedUser.getid());    //retrieving new user with updated image
         request.getSession().setAttribute("LOGGED_USER", user); //saving new user in session instead of the older one
 
         if (user.getImagepath() == null)    //if an image is saved in DB (<100 kb)

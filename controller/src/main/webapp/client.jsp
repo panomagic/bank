@@ -11,7 +11,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title><fmt:message key="addtransactionpagetitle" /></title>
+  <title><fmt:message key="clientinfo" /></title>
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="../css/bootstrap.min.css">
   <!-- Optional theme -->

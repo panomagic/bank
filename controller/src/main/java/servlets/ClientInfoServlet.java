@@ -5,9 +5,13 @@ import beans.Client;
 import beans.Currency;
 import beans.User;
 import org.apache.log4j.Logger;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import services.AccountServiceImpl;
 import services.ClientServiceImpl;
 import services.CurrencyServiceImpl;
+import services.UserServiceImpl;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -53,7 +57,16 @@ public class ClientInfoServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
+        //User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
+        User loggedUser = null;
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        UserServiceImpl userService = new UserServiceImpl();
+        List<User> userList = userService.getAllUsers();
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getUserName().equals(userDetails.getUsername()))
+                loggedUser = userList.get(i);
+        }
+
         List<Account> accounts = new ArrayList<>();        //only accounts of user's client
         List<Account> allAccounts;           //all accounts list
 

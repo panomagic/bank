@@ -13,7 +13,9 @@ import java.util.List;
 public class TransactionServiceImpl implements TransactionService {
     private static final Logger logger = Logger.getLogger(TransactionServiceImpl.class);
 
-    private static MySQLTransactionDAOImpl getTransactionDaoImpl() {
+    MySQLTransactionDAOImpl mySQLTransactionDAO;
+
+    public TransactionServiceImpl() {
         MySQLDAOFactory factory = new MySQLDAOFactory();
         Connection connection = null;
         try {
@@ -21,10 +23,8 @@ public class TransactionServiceImpl implements TransactionService {
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
-        return new MySQLTransactionDAOImpl(connection);
+        mySQLTransactionDAO = new MySQLTransactionDAOImpl(connection);
     }
-
-    MySQLTransactionDAOImpl mySQLTransactionDAO = getTransactionDaoImpl();
 
     @Override
     public int addTransactionService(int payerAccID, int recipientAccID, BigDecimal sum) {
