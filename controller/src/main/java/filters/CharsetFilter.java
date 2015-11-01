@@ -8,6 +8,8 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
+//not needed since using org.springframework.web.filter.CharacterEncodingFilter
+
 public class CharsetFilter implements Filter
 {
     private String encoding;

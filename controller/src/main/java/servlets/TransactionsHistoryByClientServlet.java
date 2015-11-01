@@ -24,15 +24,7 @@ public class TransactionsHistoryByClientServlet extends HttpServlet {
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        //User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
-        User loggedUser = null;
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserServiceImpl userService = new UserServiceImpl();
-        List<User> userList = userService.getAllUsers();
-        for (int i = 0; i < userList.size(); i++) {
-            if (userList.get(i).getUserName().equals(userDetails.getUsername()))
-                loggedUser = userList.get(i);
-        }
+        User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
 
         List<Transaction> transactions = new ArrayList<>();
         TransactionServiceImpl transactionService = new TransactionServiceImpl();
