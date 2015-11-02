@@ -15,23 +15,18 @@
     <url>http://maven.apache.org</url>
 
     <properties>
-        <spring.mvc>4.0.0.RELEASE</spring.mvc>
+        <spring.web>4.0.0.RELEASE</spring.web>
         <javax.servlet>3.0.1</javax.servlet>
         <jstl.version>1.2</jstl.version>
         <spring.securiry>3.2.0.RELEASE</spring.securiry>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>${spring.mvc}</version>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>${spring.mvc}</version>
+            <version>${spring.web}</version>
         </dependency>
 
         <dependency>
