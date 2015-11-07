@@ -1,8 +1,6 @@
-package student.dao;
-
+package student;
 import org.springframework.jdbc.core.RowMapper;
 import student.model.Student;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
