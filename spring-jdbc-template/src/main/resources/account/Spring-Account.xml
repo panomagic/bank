@@ -3,9 +3,9 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-       <import resource="database/Spring-Datasource.xml"/>
-       <import resource="database/Spring-Database.xml"/>
-       <import resource="client/Spring-Client.xml"/>
-       <import resource="account/Spring-Account.xml"/>
+       <bean id="accountDao" class="account.dao.HSQLAccountDAOImpl">
+              <!--<constructor-arg ref="namedParameterJdbcTemplate"/>-->
+              <property name="dataSource" ref="dataSource" />
+       </bean>
 
 </beans>

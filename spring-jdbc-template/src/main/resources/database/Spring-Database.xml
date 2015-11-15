@@ -12,4 +12,21 @@
            <jdbc:script location="database/test-data.sql"/>
     </jdbc:embedded-database>
 
+    <!-- create jdbctemplate using dataSource -->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <bean id="namedParameterJdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg ref="jdbcTemplate"/>
+    </bean>
+
+    <!--<bean id="hsqlClientDAO" class="hsql.HSQLClientDAOImpl">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+
+    <bean id="clientService" class="hsql.service.ClientService">
+        <property name="hsqlClientDAO" ref="hsqlClientDAO" />
+    </bean>-->
+
 </beans>
