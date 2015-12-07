@@ -2,6 +2,8 @@ package servlets;
 
 import beans.User;
 import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import services.UserServiceImpl;
@@ -51,10 +53,12 @@ public class GetImageServlet extends HttpServlet {
         Blob img;
         byte[] imgData = null;
 
-        //User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
         User loggedUser = null;
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserServiceImpl userService = new UserServiceImpl();
+        ApplicationContext appContext = new ClassPathXmlApplicationContext(
+                "spring-service-module.xml");
+        UserServiceImpl userService = (UserServiceImpl) appContext.getBean("userServiceImpl");
+
         List<User> userList = userService.getAllUsers();
         for (int i = 0; i < userList.size(); i++) {
             if (userList.get(i).getUserName().equals(userDetails.getUsername()))
@@ -63,9 +67,7 @@ public class GetImageServlet extends HttpServlet {
 
         Map<Integer, Blob> cache;
 
-        //ServletContext context = request.getSession().getServletContext();
         ServletContext context = request.getServletContext();
-
 
         cache = retrieveCache(context);     //retrieving cache
 
@@ -88,7 +90,9 @@ public class GetImageServlet extends HttpServlet {
         User user = new User();
 
         if (!cache.containsKey(loggedUser.getid())) {   //retrieving user from DB if cache does not have needed image
-            UserServiceImpl userService2 = new UserServiceImpl();
+            ApplicationContext appContext2 = new ClassPathXmlApplicationContext(
+                    "spring-service-module.xml");
+            UserServiceImpl userService2 = (UserServiceImpl) appContext2.getBean("userServiceImpl");
             user = userService2.getUserByID(loggedUser.getid());
         }
 

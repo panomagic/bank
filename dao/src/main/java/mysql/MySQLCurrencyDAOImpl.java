@@ -5,20 +5,27 @@ import beans.Currency;
 import daos.AbstractJDBCDAO;
 import daos.CurrencyDAO;
 import daos.PersistException;
-
-import java.sql.Connection;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
+@Repository
 public class MySQLCurrencyDAOImpl extends AbstractJDBCDAO<Currency, Integer> implements CurrencyDAO {
 
     private class PersistCurrency extends Currency {
         public void setid(int id) {
             super.setid(id);
         }
+    }
+
+    @Autowired
+    public MySQLCurrencyDAOImpl(DataSource dataSource) {
+        super(dataSource);
     }
 
     @Override
@@ -48,10 +55,6 @@ public class MySQLCurrencyDAOImpl extends AbstractJDBCDAO<Currency, Integer> imp
 
     public Currency getByPK(int key) throws SQLException {
         return null;
-    }
-
-    public MySQLCurrencyDAOImpl(Connection connection) {
-        super(connection);
     }
 
     @Override

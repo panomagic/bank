@@ -2,8 +2,9 @@ package servlets;
 
 import beans.Account;
 import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import services.AccountServiceImpl;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-
 import static servlets.ClientInfoServlet.fillClientsList;
 
 @WebServlet(name="addaccount", urlPatterns={"/addaccount"})
@@ -34,7 +34,9 @@ public class AddAccountServlet extends HttpServlet {
         account.setCurrencyID(Integer.parseInt(request.getParameter("currencyID")));
         account.setAccTypeID(Integer.parseInt(request.getParameter("acctypeID")));
 
-        AccountServiceImpl accountService = new AccountServiceImpl();
+        ApplicationContext appContext = new ClassPathXmlApplicationContext(
+                "spring-service-module.xml");
+        AccountServiceImpl accountService = (AccountServiceImpl) appContext.getBean("accountServiceImpl");
         accountService.addAccount(account);
         logger.info("New account was added for client with id " + account.getClientID());
 

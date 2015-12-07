@@ -1,23 +1,32 @@
 package mysql;
 
-import beans.*;
+import beans.Client;
+import beans.Gender;
 import daos.AbstractJDBCDAO;
 import daos.ClientDAO;
 import daos.PersistException;
-
-import java.sql.Connection;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import javax.sql.DataSource;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
-import java.sql.Date;
 
+@Repository
 public class MySQLClientDAOImpl extends AbstractJDBCDAO<Client, Integer> implements ClientDAO {
+
     private class PersistClient extends Client {
         public void setid(int id) {
             super.setid(id);
         }
+    }
+
+    @Autowired
+    public MySQLClientDAOImpl(DataSource dataSource) {
+        super(dataSource);
     }
 
     @Override
@@ -47,10 +56,6 @@ public class MySQLClientDAOImpl extends AbstractJDBCDAO<Client, Integer> impleme
 
     public Client getByPK(int key) throws SQLException {
         return null;
-    }
-
-    public MySQLClientDAOImpl(Connection connection) {
-        super(connection);
     }
 
     @Override

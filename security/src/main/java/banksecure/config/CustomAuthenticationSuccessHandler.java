@@ -1,6 +1,8 @@
 package banksecure.config;
 
 import beans.User;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,7 +26,10 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         HttpSession session = httpServletRequest.getSession();
         User loggedUser = null;
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserServiceImpl userService = new UserServiceImpl();
+
+        ApplicationContext appContext = new ClassPathXmlApplicationContext(
+                "spring-service-module.xml");
+        UserServiceImpl userService = (UserServiceImpl) appContext.getBean("userServiceImpl");
         List<beans.User> userList = userService.getAllUsers();
         for (int i = 0; i < userList.size(); i++) {
             if (userList.get(i).getUserName().equals(userDetails.getUsername()))

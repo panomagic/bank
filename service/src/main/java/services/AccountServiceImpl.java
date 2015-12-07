@@ -3,26 +3,24 @@ package services;
 import beans.Account;
 import daos.PersistException;
 import mysql.MySQLAccountDAOImpl;
-import mysql.MySQLDAOFactory;
 import org.apache.log4j.Logger;
-
-import java.sql.Connection;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import java.util.List;
 
+@Service
 public class AccountServiceImpl implements AccountService {
     private static final Logger logger = Logger.getLogger(AccountServiceImpl.class);
 
+    @Autowired
     MySQLAccountDAOImpl mySQLAccountDAO;
 
+    @Autowired
+    public AccountServiceImpl(MySQLAccountDAOImpl mySQLAccountDAO) {
+        this.mySQLAccountDAO = mySQLAccountDAO;
+    }
+
     public AccountServiceImpl() {
-        MySQLDAOFactory factory = new MySQLDAOFactory();
-        Connection connection = null;
-        try {
-            connection = factory.getContext();
-        } catch (PersistException e) {
-            logger.error("MySQL DB error", e);
-        }
-        mySQLAccountDAO = new MySQLAccountDAOImpl(connection);
     }
 
     @Override

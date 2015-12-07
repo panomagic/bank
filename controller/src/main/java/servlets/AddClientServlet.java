@@ -3,8 +3,9 @@ package servlets;
 import beans.Client;
 import beans.Gender;
 import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import services.ClientServiceImpl;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -35,7 +36,10 @@ public class AddClientServlet extends HttpServlet {
             logger.warn("Date parsing error", e);
         }
 
-        ClientServiceImpl clientService = new ClientServiceImpl();
+        ApplicationContext appContext = new ClassPathXmlApplicationContext(
+                "spring-service-module.xml");
+        ClientServiceImpl clientService = (ClientServiceImpl) appContext.getBean("clientServiceImpl");
+
         clientService.addClient(client);
         logger.info("New client was added successfully");
 

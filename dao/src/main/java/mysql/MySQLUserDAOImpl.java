@@ -7,7 +7,9 @@ import daos.GenericDAO;
 import daos.PersistException;
 import daos.UserDAO;
 import org.apache.log4j.Logger;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import javax.sql.DataSource;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -15,6 +17,7 @@ import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
+@Repository
 public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements UserDAO {
     private static final Logger logger = Logger.getLogger(MySQLUserDAOImpl.class);
 
@@ -23,6 +26,14 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
             super.setid(id);
         }
     }
+
+    @Autowired
+    public MySQLUserDAOImpl(DataSource dataSource) {
+        super(dataSource);
+    }
+
+    @Autowired
+    MySQLDAOFactory mySQLDAOFactory;
 
     @Override
     public String getSelectQuery() {
@@ -53,10 +64,6 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
 
     public User getByPK(int key) throws SQLException {
         return null;
-    }
-
-    public MySQLUserDAOImpl(Connection connection) {
-        super(connection);
     }
 
     @Override
@@ -117,12 +124,10 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
     public void addImageToDB(File uploadedFile, User user) throws PersistException {
         PreparedStatement statement = null;
         FileInputStream fis = null;
-        MySQLDAOFactory factory;
         Connection connection = null;
 
         try {
-            factory = new MySQLDAOFactory();
-            connection = factory.getContext();
+            connection = getDataSource().getConnection();
 
             fis = new FileInputStream(uploadedFile);
 
@@ -152,7 +157,7 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
                 logger.error("MySQL DB error", excep);
             }
         }
-        catch (FileNotFoundException | PersistException e) {
+        catch (FileNotFoundException e) {
             logger.error("MySQL DB error", e);
         } catch (IOException exception) {
             logger.error("IO error", exception);
@@ -175,15 +180,16 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
     }
 
     public Blob getImageFromDB(User loggedUser) {
-        MySQLDAOFactory factory = new MySQLDAOFactory();
         GenericDAO daoUser;
 
         User user = null;
         try {
-            Connection connection = factory.getContext();
-            daoUser = factory.getDAO(connection, User.class);
+            Connection connection = getDataSource().getConnection();
+            daoUser = mySQLDAOFactory.getDAO(connection, User.class);
             user = (User) daoUser.getByPK(loggedUser.getid());
         } catch (PersistException e) {
+            logger.error("MySQL DB error", e);
+        } catch (SQLException e) {
             logger.error("MySQL DB error", e);
         }
         return user.getImage();

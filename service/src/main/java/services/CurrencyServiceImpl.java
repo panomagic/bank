@@ -3,25 +3,24 @@ package services;
 import beans.Currency;
 import daos.PersistException;
 import mysql.MySQLCurrencyDAOImpl;
-import mysql.MySQLDAOFactory;
 import org.apache.log4j.Logger;
-import java.sql.Connection;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import java.util.List;
 
+@Service
 public class CurrencyServiceImpl implements CurrencyService {
     private static final Logger logger = Logger.getLogger(CurrencyServiceImpl.class);
 
+    @Autowired
     MySQLCurrencyDAOImpl mySQLCurrencyDAO;
 
+    @Autowired
+    public CurrencyServiceImpl(MySQLCurrencyDAOImpl mySQLCurrencyDAO) {
+        this.mySQLCurrencyDAO = mySQLCurrencyDAO;
+    }
+
     public CurrencyServiceImpl() {
-        MySQLDAOFactory factory = new MySQLDAOFactory();
-        Connection connection = null;
-        try {
-            connection = factory.getContext();
-        } catch (PersistException e) {
-            logger.error("MySQL DB error", e);
-        }
-        mySQLCurrencyDAO = new MySQLCurrencyDAOImpl(connection);
     }
 
     @Override

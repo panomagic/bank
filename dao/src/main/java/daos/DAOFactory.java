@@ -7,10 +7,6 @@ public interface DAOFactory<Context> {
         GenericDAO create(Context context);
     }
 
-    /** Returns DB connection */
-    Context getContext() throws PersistException;
-
-
     /** Returns an object for object persistence management */
     GenericDAO getDAO(Context context, Class dtoClass) throws PersistException;
 }

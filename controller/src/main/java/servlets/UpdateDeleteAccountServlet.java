@@ -2,6 +2,8 @@ package servlets;
 
 import beans.Account;
 import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import services.AccountServiceImpl;
 
 import javax.servlet.ServletException;
@@ -25,7 +27,9 @@ public class UpdateDeleteAccountServlet extends HttpServlet {
 
         request.setAttribute("allClients", fillClientsList());
 
-        AccountServiceImpl accountService = new AccountServiceImpl();
+        ApplicationContext appContext = new ClassPathXmlApplicationContext(
+                "spring-service-module.xml");
+        AccountServiceImpl accountService = (AccountServiceImpl) appContext.getBean("accountServiceImpl");
 
         if ("update".equals(request.getParameter("action"))) {
             forwardPage = "updateaccount.jsp";
@@ -47,11 +51,13 @@ public class UpdateDeleteAccountServlet extends HttpServlet {
         account.setCurrencyID(Integer.parseInt(request.getParameter("currencyID")));
         account.setAccTypeID(Integer.parseInt(request.getParameter("acctypeID")));
 
-        AccountServiceImpl accountService = new AccountServiceImpl();
+        ApplicationContext appContext = new ClassPathXmlApplicationContext(
+                "spring-service-module.xml");
+        AccountServiceImpl accountService = (AccountServiceImpl) appContext.getBean("accountServiceImpl");
+
         accountService.updateAccount(account);
         logger.info("Account with id " + account.getid() + " was updated");
     }
-
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {

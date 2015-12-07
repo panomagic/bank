@@ -1,5 +1,7 @@
 package servlets;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import services.ClientServiceImpl;
 import services.UserServiceImpl;
 import javax.servlet.ServletException;
@@ -14,8 +16,11 @@ public class ViewUsersServlet extends HttpServlet {
     @Override
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        UserServiceImpl userService = new UserServiceImpl();
-        ClientServiceImpl clientService = new ClientServiceImpl();
+        ApplicationContext appContext = new ClassPathXmlApplicationContext(
+                "spring-service-module.xml");
+        UserServiceImpl userService = (UserServiceImpl) appContext.getBean("userServiceImpl");
+
+        ClientServiceImpl clientService = (ClientServiceImpl) appContext.getBean("clientServiceImpl");
 
         request.setAttribute("allUsers", userService.getAllUsers());
         request.setAttribute("allClients", clientService.getAllClients());

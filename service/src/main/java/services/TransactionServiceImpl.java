@@ -3,36 +3,44 @@ package services;
 import beans.Account;
 import beans.Transaction;
 import daos.PersistException;
-import mysql.MySQLDAOFactory;
 import mysql.MySQLTransactionDAOImpl;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
-import java.sql.Connection;
 import java.util.List;
 
+@Service
 public class TransactionServiceImpl implements TransactionService {
     private static final Logger logger = Logger.getLogger(TransactionServiceImpl.class);
 
+    @Autowired
     MySQLTransactionDAOImpl mySQLTransactionDAO;
 
+    @Autowired
+    public TransactionServiceImpl(MySQLTransactionDAOImpl mySQLTransactionDAO) {
+        this.mySQLTransactionDAO = mySQLTransactionDAO;
+    }
+
     public TransactionServiceImpl() {
-        MySQLDAOFactory factory = new MySQLDAOFactory();
-        Connection connection = null;
-        try {
-            connection = factory.getContext();
-        } catch (PersistException e) {
-            logger.error("MySQL DB error", e);
-        }
-        mySQLTransactionDAO = new MySQLTransactionDAOImpl(connection);
     }
 
     @Override
     public int addTransactionService(int payerAccID, int recipientAccID, BigDecimal sum) {
         Transaction transaction = new Transaction();
-        AccountServiceImpl accountServicePayer = new AccountServiceImpl();
+        ApplicationContext appContext = new ClassPathXmlApplicationContext(
+                "spring-service-module.xml");
+        AccountServiceImpl accountServicePayer = (AccountServiceImpl) appContext.getBean("accountServiceImpl");
+
         Account payerAccount = accountServicePayer.getAccountByID(payerAccID);
-        AccountServiceImpl accountServiceRecipient = new AccountServiceImpl();
+
+        ApplicationContext appContext2 = new ClassPathXmlApplicationContext(
+                "spring-service-module.xml");
+        AccountServiceImpl accountServiceRecipient = (AccountServiceImpl) appContext2.getBean("accountServiceImpl");
         Account recipientAccount = accountServiceRecipient.getAccountByID(recipientAccID);
+
 
         if (payerAccount.getCurrencyID() != recipientAccount.getCurrencyID()) {
             logger.info("Money transfer attempt from account with id " + payerAccount.getid() + " to account with id "

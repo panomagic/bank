@@ -3,22 +3,18 @@ package servlets;
 import beans.Account;
 import beans.Role;
 import beans.User;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import services.TransactionServiceImpl;
-import services.UserServiceImpl;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
 import static servlets.ClientInfoServlet.*;
 
 
@@ -71,7 +67,10 @@ public class AddTransactionServlet extends HttpServlet {
         int recipientAccID = Integer.parseInt(request.getParameter("chooserecipientaccount"));
         BigDecimal sum = new BigDecimal(Double.parseDouble(request.getParameter("sum")));
 
-        TransactionServiceImpl transactionService = new TransactionServiceImpl();
+        ApplicationContext appContext = new ClassPathXmlApplicationContext(
+                "spring-service-module.xml");
+        TransactionServiceImpl transactionService = (TransactionServiceImpl) appContext.getBean("transactionServiceImpl");
+
         int forwardType = transactionService.addTransactionService(payerAccID, recipientAccID, sum);
 
         forwardTo(request, response, forwardType);

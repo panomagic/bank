@@ -1,21 +1,30 @@
 package mysql;
 
-import beans.*;
-import daos.*;
-
-import java.sql.Connection;
+import beans.Account;
+import daos.AbstractJDBCDAO;
+import daos.AccountDAO;
+import daos.PersistException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
+@Repository
 public class MySQLAccountDAOImpl extends AbstractJDBCDAO<Account, Integer> implements AccountDAO {
 
     private class PersistAccount extends Account {
         public void setid(int id) {
             super.setid(id);
         }
+    }
+
+    @Autowired
+    public MySQLAccountDAOImpl(DataSource dataSource) {
+        super(dataSource);
     }
 
     @Override
@@ -47,10 +56,6 @@ public class MySQLAccountDAOImpl extends AbstractJDBCDAO<Account, Integer> imple
 
     public Account getByPK(int key) throws SQLException {
         return null;
-    }
-
-    public MySQLAccountDAOImpl(Connection connection) {
-        super(connection);
     }
 
     @Override

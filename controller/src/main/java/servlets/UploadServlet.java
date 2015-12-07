@@ -3,6 +3,8 @@ package servlets;
 import beans.Role;
 import beans.User;
 import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import services.UserServiceImpl;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -89,7 +91,9 @@ public class UploadServlet extends HttpServlet {
             cache = (HashMap<Integer, Blob>) context.getAttribute("cache"); //retrieving cache if it exists
         }
 
-        UserServiceImpl userService = new UserServiceImpl();
+        ApplicationContext appContext = new ClassPathXmlApplicationContext(
+                "spring-service-module.xml");
+        UserServiceImpl userService = (UserServiceImpl) appContext.getBean("userServiceImpl");
 
         userService.uploadImage(uploadedFile, loggedUser);          //adding image to database
         User user = userService.getUserByID(loggedUser.getid());    //retrieving new user with updated image

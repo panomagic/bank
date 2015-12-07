@@ -2,11 +2,9 @@ package servlets;
 
 import beans.Transaction;
 import beans.User;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import services.TransactionServiceImpl;
-import services.UserServiceImpl;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -27,7 +25,11 @@ public class TransactionsHistoryByClientServlet extends HttpServlet {
         User loggedUser = (User) request.getSession().getAttribute("LOGGED_USER");
 
         List<Transaction> transactions = new ArrayList<>();
-        TransactionServiceImpl transactionService = new TransactionServiceImpl();
+
+        ApplicationContext appContext = new ClassPathXmlApplicationContext(
+                "spring-service-module.xml");
+        TransactionServiceImpl transactionService = (TransactionServiceImpl) appContext.getBean("transactionServiceImpl");
+
         List<Transaction> allTransactions = transactionService.getAllTransactions();
         for (int i = 0; i < allTransactions.size(); i++) {
             if ((allTransactions.get(i).getPayerID() == loggedUser.getClientID()) ||

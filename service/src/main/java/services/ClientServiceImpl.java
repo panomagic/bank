@@ -3,26 +3,26 @@ package services;
 import beans.Client;
 import daos.PersistException;
 import mysql.MySQLClientDAOImpl;
-import mysql.MySQLDAOFactory;
 import org.apache.log4j.Logger;
-import java.sql.Connection;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import java.util.List;
 
+@Service
 public class ClientServiceImpl implements ClientService {
     private static final Logger logger = Logger.getLogger(ClientServiceImpl.class);
 
+    @Autowired
     MySQLClientDAOImpl mySQLClientDAO;
 
-    public ClientServiceImpl() {
-        MySQLDAOFactory factory = new MySQLDAOFactory();
-        Connection connection = null;
-        try {
-            connection = factory.getContext();
-        } catch (PersistException e) {
-            logger.error("MySQL DB error", e);
-        }
-        mySQLClientDAO = new MySQLClientDAOImpl(connection);
+    @Autowired
+    public ClientServiceImpl(MySQLClientDAOImpl mySQLClientDAO) {
+        this.mySQLClientDAO = mySQLClientDAO;
     }
+
+    public ClientServiceImpl() {
+    }
+
 
     @Override
     public Client addClient(Client client) {

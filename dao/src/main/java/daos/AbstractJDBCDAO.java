@@ -2,7 +2,7 @@ package daos;
 
 import beans.Identified;
 import org.apache.log4j.Logger;
-
+import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,9 +16,20 @@ import java.util.List;
  */
 public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integer> implements GenericDAO<T, PK> {
 
-    private Connection connection;
+
     private static final Logger logger = Logger.getLogger(AbstractJDBCDAO.class);
 
+    private DataSource dataSource;
+
+    private Connection connection;
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    public DataSource getDataSource() {
+        return dataSource;
+    }
 
     /**
      * Returns SQL query for all records from DB table
@@ -204,7 +215,13 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
         }
     }
 
-    public AbstractJDBCDAO(Connection connection) {
-        this.connection = connection;
+    public AbstractJDBCDAO(DataSource dataSource) {
+        this.dataSource = dataSource;
+        try {
+            connection = dataSource.getConnection();
+            logger.info("DB connection is established");
+        } catch (SQLException e) {
+            logger.warn("Cannot establish DB connection", e);
+        }
     }
 }

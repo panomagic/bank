@@ -5,33 +5,32 @@ import daos.DAOFactory;
 import daos.GenericDAO;
 import daos.PersistException;
 import org.apache.log4j.Logger;
-
+import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class MySQLDAOFactory implements DAOFactory<Connection> {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/bank";
-    //private static final String URL = "jdbc:mysql://127.6.230.130:3306/bank";
-    private static final String USERNAME = "root";
-    private static final String PSW = "970195";
+    //private static final String URL = "jdbc:mysql://127.6.230.130:3306/bank"; //openshift MySQLDB settings
+
+    //private static final String URL = "jdbc:mysql://localhost:3306/bank";     //old settings before dataSource
+    //private static final String USERNAME = "root";                            //old settings before dataSource
+    //private static final String PSW = "970195";                               //old settings before dataSource
+
     private final String driver = "com.mysql.jdbc.Driver";
     private Map<Class, DAOCreator> creators;
 
     private static final Logger logger = Logger.getLogger(MySQLDAOFactory.class);
 
-    public Connection getContext() throws PersistException {
-        Connection connection = null;
-        try {
-            connection = DriverManager.getConnection(URL, USERNAME, PSW);
-        } catch (SQLException e) {
-            throw new PersistException(e);
-        }
-        logger.info("DB connection is established");
-        return connection;
+    private DataSource dataSource;
+
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    public DataSource getDataSource() {
+        return dataSource;
     }
 
     @Override
@@ -42,7 +41,7 @@ public class MySQLDAOFactory implements DAOFactory<Connection> {
         return creator.create(connection);
     }
 
-    public MySQLDAOFactory() {
+    public void initMysqlDaoFactory() {
         try {
             Class.forName(driver);  //driver registration
         }
@@ -54,35 +53,35 @@ public class MySQLDAOFactory implements DAOFactory<Connection> {
         creators.put(Account.class, new DAOCreator<Connection>() {
             @Override
             public GenericDAO create(Connection connection) {
-                return new MySQLAccountDAOImpl(connection);
+                return new MySQLAccountDAOImpl(dataSource);
             }
         });
 
         creators.put(Client.class, new DAOCreator<Connection>() {
             @Override
             public GenericDAO create(Connection connection) {
-                return new MySQLClientDAOImpl(connection);
+                return new MySQLClientDAOImpl(dataSource);
             }
         });
 
         creators.put(Currency.class, new DAOCreator<Connection>() {
             @Override
             public GenericDAO create(Connection connection) {
-                return new MySQLCurrencyDAOImpl(connection);
+                return new MySQLCurrencyDAOImpl(dataSource);
             }
         });
 
         creators.put(Transaction.class, new DAOCreator<Connection>() {
             @Override
             public GenericDAO create(Connection connection) {
-                return new MySQLTransactionDAOImpl(connection);
+                return new MySQLTransactionDAOImpl(dataSource);
             }
         });
 
         creators.put(User.class, new DAOCreator<Connection>() {
             @Override
             public GenericDAO create(Connection connection) {
-                return new MySQLUserDAOImpl(connection);
+                return new MySQLUserDAOImpl(dataSource);
             }
         });
     }

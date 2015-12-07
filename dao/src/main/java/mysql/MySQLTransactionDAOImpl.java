@@ -4,11 +4,14 @@ import beans.Account;
 import beans.Transaction;
 import daos.*;
 import org.apache.log4j.Logger;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
+@Repository
 public class MySQLTransactionDAOImpl extends AbstractJDBCDAO<Transaction, Integer> implements TransactionDAO {
     private static final Logger logger = Logger.getLogger(MySQLTransactionDAOImpl.class);
 
@@ -17,6 +20,14 @@ public class MySQLTransactionDAOImpl extends AbstractJDBCDAO<Transaction, Intege
             super.setid(id);
         }
     }
+
+    @Autowired
+    public MySQLTransactionDAOImpl(DataSource dataSource) {
+        super(dataSource);
+    }
+
+    @Autowired
+    MySQLDAOFactory mySQLDAOFactory;
 
     @Override
     public String getSelectQuery() {
@@ -47,10 +58,6 @@ public class MySQLTransactionDAOImpl extends AbstractJDBCDAO<Transaction, Intege
 
     public Transaction getByPK(int key) throws SQLException {
         return null;
-    }
-
-    public MySQLTransactionDAOImpl(Connection connection) {
-        super(connection);
     }
 
     @Override
@@ -98,20 +105,36 @@ public class MySQLTransactionDAOImpl extends AbstractJDBCDAO<Transaction, Intege
         Account payerAcc = null;
         Account recipientAcc = null;
 
-        MySQLDAOFactory factory = new MySQLDAOFactory();
-
         try {
-            Connection connection = factory.getContext();
-            GenericDAO dao = factory.getDAO(connection, Account.class);
+            Connection connection = null;
+            try {
+                connection = getDataSource().getConnection();
+            } catch (SQLException e) {
+                logger.error("MySQL DB error", e);
+            }
+            GenericDAO dao = mySQLDAOFactory.getDAO(connection, Account.class);
             payerAcc = (Account) dao.getByPK(transaction.getPayerAccID());
-            Connection connection2 = factory.getContext();
-            GenericDAO dao2 = factory.getDAO(connection2, Account.class);
+
+            Connection connection2 = null;
+            try {
+                connection2 = getDataSource().getConnection();
+            } catch (SQLException e) {
+                logger.error("MySQL DB error", e);
+            }
+
+            GenericDAO dao2 = mySQLDAOFactory.getDAO(connection2, Account.class);
             recipientAcc = (Account) dao2.getByPK(transaction.getRecipientAccID());
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
 
-        Connection connection = factory.getContext();
+        Connection connection = null;
+        try {
+            connection = getDataSource().getConnection();
+        } catch (SQLException e) {
+            logger.error("MySQL DB error", e);
+        }
+
         try {
             preparedStatement = connection.prepareStatement("INSERT INTO transactions (currencies_currencyID, " +
                     "clients_payerID, accounts_payerAccID, clients_recipientID, accounts_recipientAccID, " +
