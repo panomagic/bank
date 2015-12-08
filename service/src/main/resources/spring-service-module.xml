@@ -7,16 +7,6 @@
        <context:annotation-config />
        <context:component-scan base-package="mysql, services" />
 
-       <!--<import resource="account-dao.xml" />
-       <import resource="mysql-dao-factory.xml" />
-       <import resource="spring-datasource.xml" />-->
-
-       <!--<bean id="connection" class="java.sql.Connection" abstract="true">
-              <property name="dataSource" ref="dataSource" />
-       </bean>-->
-
-       <!--<import resource="spring-account-service.xml" />-->
-       <!--<import resource="spring-user-service.xml" />-->
        <import resource="classpath*:abstractjdbcdao.xml" />
        <import resource="classpath*:mysql-dao-factory.xml" />
        <import resource="classpath*:spring-datasource.xml" />
