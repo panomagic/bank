@@ -1,6 +1,7 @@
 package banksecure.config;
 
 import beans.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.Authentication;
@@ -19,6 +20,9 @@ import java.util.List;
 @Component
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
+    @Autowired
+    UserServiceImpl userService;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                                         Authentication authentication) throws IOException, ServletException {
@@ -27,9 +31,10 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         User loggedUser = null;
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        ApplicationContext appContext = new ClassPathXmlApplicationContext(
+        /*ApplicationContext appContext = new ClassPathXmlApplicationContext(
                 "spring-service-module.xml");
-        UserServiceImpl userService = (UserServiceImpl) appContext.getBean("userServiceImpl");
+        UserServiceImpl userService = (UserServiceImpl) appContext.getBean("userServiceImpl");*/
+
         List<beans.User> userList = userService.getAllUsers();
         for (int i = 0; i < userList.size(); i++) {
             if (userList.get(i).getUserName().equals(userDetails.getUsername()))

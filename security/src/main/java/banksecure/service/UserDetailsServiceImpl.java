@@ -1,5 +1,7 @@
 package banksecure.service;
 
+import beans.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,16 +15,12 @@ import java.util.Arrays;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Bean
-    public UserDetailsService getUserDetailsService(){
-        return new UserDetailsServiceImpl();
-    }
+    @Autowired
+    UserSecureServiceImpl userSecureServiceImpl;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // с помощью нашего сервиса UserService получаем UserSecure
-        UserSecureServiceImpl userSecureServiceImpl = new UserSecureServiceImpl();
-        beans.User user = userSecureServiceImpl.getUser(username);
+        User user = userSecureServiceImpl.getUser(username);
         // указываем роли для этого пользователя
         GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().name());
 

@@ -2,8 +2,10 @@ package servlets;
 
 import beans.Transaction;
 import beans.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Controller;
 import services.TransactionServiceImpl;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +19,12 @@ import java.util.List;
 import static servlets.ClientInfoServlet.getAccountsClientsCurrencies;
 
 @WebServlet(name="transactionshistorybyclient", urlPatterns={"/transactionshistorybyclient"})
+@Controller
 public class TransactionsHistoryByClientServlet extends HttpServlet {
+
+    @Autowired
+    TransactionServiceImpl transactionService;
+
     @Override
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -26,9 +33,8 @@ public class TransactionsHistoryByClientServlet extends HttpServlet {
 
         List<Transaction> transactions = new ArrayList<>();
 
-        ApplicationContext appContext = new ClassPathXmlApplicationContext(
-                "spring-service-module.xml");
-        TransactionServiceImpl transactionService = (TransactionServiceImpl) appContext.getBean("transactionServiceImpl");
+        //ApplicationContext appContext = new ClassPathXmlApplicationContext("spring-service-module.xml");
+        //TransactionServiceImpl transactionService = (TransactionServiceImpl) appContext.getBean("transactionServiceImpl");
 
         List<Transaction> allTransactions = transactionService.getAllTransactions();
         for (int i = 0; i < allTransactions.size(); i++) {

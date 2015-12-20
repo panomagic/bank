@@ -19,9 +19,9 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
 
     private static final Logger logger = Logger.getLogger(AbstractJDBCDAO.class);
 
-    private DataSource dataSource;
+    public DataSource dataSource;
 
-    private Connection connection;
+    public Connection connection;
 
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;

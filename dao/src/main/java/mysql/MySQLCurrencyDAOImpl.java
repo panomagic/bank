@@ -6,6 +6,7 @@ import daos.AbstractJDBCDAO;
 import daos.CurrencyDAO;
 import daos.PersistException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -14,7 +15,8 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-@Repository
+@Repository("mySQLCurrencyDAO")
+@Scope("prototype")
 public class MySQLCurrencyDAOImpl extends AbstractJDBCDAO<Currency, Integer> implements CurrencyDAO {
 
     private class PersistCurrency extends Currency {

@@ -2,8 +2,10 @@ package servlets;
 
 import beans.Account;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Controller;
 import services.AccountServiceImpl;
 
 import javax.servlet.ServletException;
@@ -16,8 +18,12 @@ import java.io.IOException;
 import static servlets.ClientInfoServlet.fillClientsList;
 
 @WebServlet(name="updatedeleteaccount", urlPatterns={"/updatedeleteaccount"})
+@Controller
 public class UpdateDeleteAccountServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(UpdateDeleteAccountServlet.class);
+
+    @Autowired
+    AccountServiceImpl accountService;
 
     Account account;
 
@@ -27,9 +33,8 @@ public class UpdateDeleteAccountServlet extends HttpServlet {
 
         request.setAttribute("allClients", fillClientsList());
 
-        ApplicationContext appContext = new ClassPathXmlApplicationContext(
-                "spring-service-module.xml");
-        AccountServiceImpl accountService = (AccountServiceImpl) appContext.getBean("accountServiceImpl");
+        //ApplicationContext appContext = new ClassPathXmlApplicationContext("spring-service-module.xml");
+        //AccountServiceImpl accountService = (AccountServiceImpl) appContext.getBean("accountServiceImpl");
 
         if ("update".equals(request.getParameter("action"))) {
             forwardPage = "updateaccount.jsp";
@@ -51,9 +56,8 @@ public class UpdateDeleteAccountServlet extends HttpServlet {
         account.setCurrencyID(Integer.parseInt(request.getParameter("currencyID")));
         account.setAccTypeID(Integer.parseInt(request.getParameter("acctypeID")));
 
-        ApplicationContext appContext = new ClassPathXmlApplicationContext(
-                "spring-service-module.xml");
-        AccountServiceImpl accountService = (AccountServiceImpl) appContext.getBean("accountServiceImpl");
+        //ApplicationContext appContext = new ClassPathXmlApplicationContext("spring-service-module.xml");
+        //AccountServiceImpl accountService = (AccountServiceImpl) appContext.getBean("accountServiceImpl");
 
         accountService.updateAccount(account);
         logger.info("Account with id " + account.getid() + " was updated");

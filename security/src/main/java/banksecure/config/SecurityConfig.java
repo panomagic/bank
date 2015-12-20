@@ -1,6 +1,7 @@
 package banksecure.config;
 
 import banksecure.service.UserDetailsServiceImpl;
+import banksecure.service.UserSecureServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +14,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.AuthenticationEntryPoint;
+import services.UserServiceImpl;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +29,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public UserDetailsService getUserDetailsService(){
         return new UserDetailsServiceImpl();
+    }
+
+    @Bean
+    public UserSecureServiceImpl getUserSecureServiceImpl(){
+        return new UserSecureServiceImpl();
     }
 
     @Bean

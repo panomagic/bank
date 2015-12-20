@@ -3,8 +3,10 @@ package servlets;
 import beans.Client;
 import beans.Gender;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Controller;
 import services.ClientServiceImpl;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,8 +16,12 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+@Controller
 public class UpdateDeleteClientServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(UpdateDeleteClientServlet.class);
+
+    @Autowired
+    ClientServiceImpl clientService;
 
     Client client;
 
@@ -23,9 +29,8 @@ public class UpdateDeleteClientServlet extends HttpServlet {
             throws ServletException, IOException {
         String forwardPage = "";
 
-        ApplicationContext appContext = new ClassPathXmlApplicationContext(
-                "spring-service-module.xml");
-        ClientServiceImpl clientService = (ClientServiceImpl) appContext.getBean("clientServiceImpl");
+        //ApplicationContext appContext = new ClassPathXmlApplicationContext("spring-service-module.xml");
+        //ClientServiceImpl clientService = (ClientServiceImpl) appContext.getBean("clientServiceImpl");
 
         if ("update".equals(request.getParameter("action"))) {
             forwardPage = "updateclient.jsp";
@@ -52,9 +57,8 @@ public class UpdateDeleteClientServlet extends HttpServlet {
             logger.warn("Date parsing error", e);
         }
 
-        ApplicationContext appContext = new ClassPathXmlApplicationContext(
-                "spring-service-module.xml");
-        ClientServiceImpl clientService = (ClientServiceImpl) appContext.getBean("clientServiceImpl");
+        //ApplicationContext appContext = new ClassPathXmlApplicationContext("spring-service-module.xml");
+        //ClientServiceImpl clientService = (ClientServiceImpl) appContext.getBean("clientServiceImpl");
         clientService.updateClient(client);
         logger.info("Client with id " + client.getid() + " was updated");
     }

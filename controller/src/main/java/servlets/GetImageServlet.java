@@ -2,10 +2,12 @@ package servlets;
 
 import beans.User;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
 import services.UserServiceImpl;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -24,8 +26,12 @@ import java.util.List;
 import java.util.Map;
 
 @WebServlet("/image")
+@Controller
 public class GetImageServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(GetImageServlet.class);
+
+    @Autowired
+    UserServiceImpl userService;
 
     private static void showImageFromFileSystem(User user, HttpServletResponse response) throws IOException {
         InputStream is = new FileInputStream(user.getImagepath());
@@ -55,9 +61,8 @@ public class GetImageServlet extends HttpServlet {
 
         User loggedUser = null;
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        ApplicationContext appContext = new ClassPathXmlApplicationContext(
-                "spring-service-module.xml");
-        UserServiceImpl userService = (UserServiceImpl) appContext.getBean("userServiceImpl");
+        //ApplicationContext appContext = new ClassPathXmlApplicationContext("spring-service-module.xml");
+        //UserServiceImpl userService = (UserServiceImpl) appContext.getBean("userServiceImpl");
 
         List<User> userList = userService.getAllUsers();
         for (int i = 0; i < userList.size(); i++) {
@@ -90,10 +95,9 @@ public class GetImageServlet extends HttpServlet {
         User user = new User();
 
         if (!cache.containsKey(loggedUser.getid())) {   //retrieving user from DB if cache does not have needed image
-            ApplicationContext appContext2 = new ClassPathXmlApplicationContext(
-                    "spring-service-module.xml");
-            UserServiceImpl userService2 = (UserServiceImpl) appContext2.getBean("userServiceImpl");
-            user = userService2.getUserByID(loggedUser.getid());
+            //ApplicationContext appContext2 = new ClassPathXmlApplicationContext("spring-service-module.xml");
+            //UserServiceImpl userService2 = (UserServiceImpl) appContext2.getBean("userServiceImpl");
+            user = userService.getUserByID(loggedUser.getid());
         }
 
         if (!cache.containsKey(loggedUser.getid()) && user.getImagepath() == null) {

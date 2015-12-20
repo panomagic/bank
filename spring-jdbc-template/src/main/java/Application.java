@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Application {
     public static void main(String[] args) throws Exception {
-        ApplicationContext appContext = new ClassPathXmlApplicationContext(
+        /*ApplicationContext appContext = new ClassPathXmlApplicationContext(
                 "Spring-Module.xml");
 
         HSQLClientDAOImpl clientJdbcDAO = (HSQLClientDAOImpl) appContext.getBean("clientDao");
@@ -121,6 +121,6 @@ public class Application {
                 + testGetAccount.getAccTypeID() + " | "
                 + testGetAccount.getCurrencyID() + " | "
                 + testGetAccount.getClientID() + " | "
-                + testGetAccount.getBalance());
+                + testGetAccount.getBalance());*/
     }
 }

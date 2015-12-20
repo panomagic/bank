@@ -7,12 +7,14 @@ import mysql.MySQLTransactionDAOImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Scope;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.List;
 
-@Service
+@Service("transactionService")
+@Scope("prototype")
 public class TransactionServiceImpl implements TransactionService {
     private static final Logger logger = Logger.getLogger(TransactionServiceImpl.class);
 
@@ -24,21 +26,27 @@ public class TransactionServiceImpl implements TransactionService {
         this.mySQLTransactionDAO = mySQLTransactionDAO;
     }
 
+    @Autowired
+    AccountServiceImpl accountServicePayer;
+
+    @Autowired
+    AccountServiceImpl accountServiceRecipient;
+
     public TransactionServiceImpl() {
     }
 
     @Override
     public int addTransactionService(int payerAccID, int recipientAccID, BigDecimal sum) {
         Transaction transaction = new Transaction();
-        ApplicationContext appContext = new ClassPathXmlApplicationContext(
+        /*ApplicationContext appContext = new ClassPathXmlApplicationContext(
                 "spring-service-module.xml");
-        AccountServiceImpl accountServicePayer = (AccountServiceImpl) appContext.getBean("accountServiceImpl");
+        AccountServiceImpl accountServicePayer = (AccountServiceImpl) appContext.getBean("accountServiceImpl");*/
 
         Account payerAccount = accountServicePayer.getAccountByID(payerAccID);
 
-        ApplicationContext appContext2 = new ClassPathXmlApplicationContext(
+      /*  ApplicationContext appContext2 = new ClassPathXmlApplicationContext(
                 "spring-service-module.xml");
-        AccountServiceImpl accountServiceRecipient = (AccountServiceImpl) appContext2.getBean("accountServiceImpl");
+        AccountServiceImpl accountServiceRecipient = (AccountServiceImpl) appContext2.getBean("accountServiceImpl");*/
         Account recipientAccount = accountServiceRecipient.getAccountByID(recipientAccID);
 
 

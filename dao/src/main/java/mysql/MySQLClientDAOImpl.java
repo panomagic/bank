@@ -6,6 +6,7 @@ import daos.AbstractJDBCDAO;
 import daos.ClientDAO;
 import daos.PersistException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.Date;
@@ -15,7 +16,8 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-@Repository
+@Repository("mySQLClientDAO")
+@Scope("prototype")
 public class MySQLClientDAOImpl extends AbstractJDBCDAO<Client, Integer> implements ClientDAO {
 
     private class PersistClient extends Client {

@@ -5,10 +5,12 @@ import daos.PersistException;
 import mysql.MySQLAccountDAOImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-@Service
+@Service("accountService")
+@Scope("prototype")
 public class AccountServiceImpl implements AccountService {
     private static final Logger logger = Logger.getLogger(AccountServiceImpl.class);
 
@@ -21,6 +23,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     public AccountServiceImpl() {
+    }
+
+    public void setMySQLAccountDAO(MySQLAccountDAOImpl mySQLAccountDAO) {
+        this.mySQLAccountDAO = mySQLAccountDAO;
     }
 
     @Override

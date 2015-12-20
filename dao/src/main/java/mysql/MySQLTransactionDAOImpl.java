@@ -5,13 +5,15 @@ import beans.Transaction;
 import daos.*;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
-@Repository
+@Repository("mySQLTransactionDAO")
+@Scope("prototype")
 public class MySQLTransactionDAOImpl extends AbstractJDBCDAO<Transaction, Integer> implements TransactionDAO {
     private static final Logger logger = Logger.getLogger(MySQLTransactionDAOImpl.class);
 

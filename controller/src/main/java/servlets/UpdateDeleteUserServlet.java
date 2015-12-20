@@ -3,8 +3,10 @@ package servlets;
 import beans.Role;
 import beans.User;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Controller;
 import services.UserServiceImpl;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,8 +18,12 @@ import java.io.IOException;
 import static servlets.ClientInfoServlet.fillClientsList;
 
 @WebServlet(name="updatedeleteuser", urlPatterns={"/updatedeleteuser"})
+@Controller
 public class UpdateDeleteUserServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(UpdateDeleteUserServlet.class);
+
+    @Autowired
+    UserServiceImpl userService;
 
     User user;
 
@@ -27,9 +33,8 @@ public class UpdateDeleteUserServlet extends HttpServlet {
 
         request.setAttribute("allClients", fillClientsList());
 
-        ApplicationContext appContext = new ClassPathXmlApplicationContext(
-                "spring-service-module.xml");
-        UserServiceImpl userService = (UserServiceImpl) appContext.getBean("userServiceImpl");
+        //ApplicationContext appContext = new ClassPathXmlApplicationContext("spring-service-module.xml");
+        //UserServiceImpl userService = (UserServiceImpl) appContext.getBean("userServiceImpl");
 
         if ("update".equals(request.getParameter("action"))) {
             forwardPage = "updateuser.jsp";
@@ -58,9 +63,8 @@ public class UpdateDeleteUserServlet extends HttpServlet {
             user.setClientID(Integer.parseInt(request.getParameter("chooseclient")));
         user.setRole(Role.CLIENT);
 
-        ApplicationContext appContext = new ClassPathXmlApplicationContext(
-                "spring-service-module.xml");
-        UserServiceImpl userService = (UserServiceImpl) appContext.getBean("userServiceImpl");
+        //ApplicationContext appContext = new ClassPathXmlApplicationContext("spring-service-module.xml");
+        //UserServiceImpl userService = (UserServiceImpl) appContext.getBean("userServiceImpl");
 
         userService.updateUser(user);
         logger.info("User with id " + user.getid() + " was updated");

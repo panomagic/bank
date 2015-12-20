@@ -5,6 +5,7 @@ import daos.AbstractJDBCDAO;
 import daos.AccountDAO;
 import daos.PersistException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
@@ -13,7 +14,8 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-@Repository
+@Repository("mySQLAccountDAO")
+@Scope("prototype")
 public class MySQLAccountDAOImpl extends AbstractJDBCDAO<Account, Integer> implements AccountDAO {
 
     private class PersistAccount extends Account {

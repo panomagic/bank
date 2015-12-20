@@ -4,11 +4,15 @@ import beans.Account;
 import beans.Client;
 import beans.Currency;
 import beans.User;
+import mysql.MySQLAccountDAOImpl;
+import mysql.MySQLClientDAOImpl;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
 import services.AccountServiceImpl;
 import services.ClientServiceImpl;
 import services.CurrencyServiceImpl;
@@ -23,13 +27,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/clientinfo")
+@Controller
 public class ClientInfoServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(ClientInfoServlet.class);
 
+    @Autowired
+    static AccountServiceImpl accountService;
+
+    @Autowired
+    static ClientServiceImpl clientService;
+
+    @Autowired
+    static CurrencyServiceImpl currencyService;
+
+    @Autowired
+    UserServiceImpl userService;
+
     static List<Account> fillAccountsList() {
-        ApplicationContext appContext = new ClassPathXmlApplicationContext(
-                "spring-service-module.xml");
-        AccountServiceImpl accountService = (AccountServiceImpl) appContext.getBean("accountServiceImpl");
+        //ApplicationContext appContext = new ClassPathXmlApplicationContext("spring-service-module.xml");
+        //AccountServiceImpl accountService = (AccountServiceImpl) appContext.getBean("accountServiceImpl");
         return accountService.getAllAccounts();
     }
 
@@ -42,16 +58,14 @@ public class ClientInfoServlet extends HttpServlet {
     }
 
     static List<Client> fillClientsList() {
-        ApplicationContext appContext = new ClassPathXmlApplicationContext(
-                "spring-service-module.xml");
-        ClientServiceImpl clientService = (ClientServiceImpl) appContext.getBean("clientServiceImpl");
+        //ApplicationContext appContext = new ClassPathXmlApplicationContext("spring-service-module.xml");
+        //ClientServiceImpl clientService = (ClientServiceImpl) appContext.getBean("clientServiceImpl");
         return clientService.getAllClients();
     }
 
     static List<Currency> fillCurrenciesList() {
-        ApplicationContext appContext = new ClassPathXmlApplicationContext(
-                "spring-service-module.xml");
-        CurrencyServiceImpl currencyService = (CurrencyServiceImpl) appContext.getBean("currencyServiceImpl");
+        //ApplicationContext appContext = new ClassPathXmlApplicationContext("spring-service-module.xml");
+        //CurrencyServiceImpl currencyService = (CurrencyServiceImpl) appContext.getBean("currencyServiceImpl");
         return currencyService.getAllCurrencies();
     }
 
@@ -65,9 +79,8 @@ public class ClientInfoServlet extends HttpServlet {
             throws ServletException, IOException {
         User loggedUser = null;
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        ApplicationContext appContext = new ClassPathXmlApplicationContext(
-                "spring-service-module.xml");
-        UserServiceImpl userService = (UserServiceImpl) appContext.getBean("userServiceImpl");
+        //ApplicationContext appContext = new ClassPathXmlApplicationContext("spring-service-module.xml");
+        //UserServiceImpl userService = (UserServiceImpl) appContext.getBean("userServiceImpl");
 
         List<User> userList = userService.getAllUsers();
         for (int i = 0; i < userList.size(); i++) {

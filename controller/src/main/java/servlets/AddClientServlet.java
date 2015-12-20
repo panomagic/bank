@@ -3,8 +3,10 @@ package servlets;
 import beans.Client;
 import beans.Gender;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Controller;
 import services.ClientServiceImpl;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,8 +16,12 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+@Controller
 public class AddClientServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(AddClientServlet.class);
+
+    @Autowired
+    ClientServiceImpl clientService;
     
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -36,9 +42,8 @@ public class AddClientServlet extends HttpServlet {
             logger.warn("Date parsing error", e);
         }
 
-        ApplicationContext appContext = new ClassPathXmlApplicationContext(
-                "spring-service-module.xml");
-        ClientServiceImpl clientService = (ClientServiceImpl) appContext.getBean("clientServiceImpl");
+        //ApplicationContext appContext = new ClassPathXmlApplicationContext("spring-service-module.xml");
+        //ClientServiceImpl clientService = (ClientServiceImpl) appContext.getBean("clientServiceImpl");
 
         clientService.addClient(client);
         logger.info("New client was added successfully");

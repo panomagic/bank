@@ -8,6 +8,7 @@ import daos.PersistException;
 import daos.UserDAO;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.io.*;
@@ -17,7 +18,8 @@ import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
-@Repository
+@Repository("mySQLUserDAO")
+@Scope("prototype")
 public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements UserDAO {
     private static final Logger logger = Logger.getLogger(MySQLUserDAOImpl.class);
 
@@ -30,6 +32,7 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
     @Autowired
     public MySQLUserDAOImpl(DataSource dataSource) {
         super(dataSource);
+        logger.info("MySQLUserDAOImpl created");
     }
 
     @Autowired

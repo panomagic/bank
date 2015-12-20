@@ -3,8 +3,10 @@ package servlets;
 import beans.Role;
 import beans.User;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.stereotype.Controller;
 import services.UserServiceImpl;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -27,8 +29,12 @@ import java.util.Map;
 
 @WebServlet("/upload")
 @MultipartConfig
+@Controller
 public class UploadServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(UploadServlet.class);
+
+    @Autowired
+    UserServiceImpl userService;
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -91,9 +97,8 @@ public class UploadServlet extends HttpServlet {
             cache = (HashMap<Integer, Blob>) context.getAttribute("cache"); //retrieving cache if it exists
         }
 
-        ApplicationContext appContext = new ClassPathXmlApplicationContext(
-                "spring-service-module.xml");
-        UserServiceImpl userService = (UserServiceImpl) appContext.getBean("userServiceImpl");
+        //ApplicationContext appContext = new ClassPathXmlApplicationContext("spring-service-module.xml");
+        //UserServiceImpl userService = (UserServiceImpl) appContext.getBean("userServiceImpl");
 
         userService.uploadImage(uploadedFile, loggedUser);          //adding image to database
         User user = userService.getUserByID(loggedUser.getid());    //retrieving new user with updated image

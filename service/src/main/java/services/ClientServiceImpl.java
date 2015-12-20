@@ -5,10 +5,12 @@ import daos.PersistException;
 import mysql.MySQLClientDAOImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-@Service
+@Service("clientService")
+@Scope("prototype")
 public class ClientServiceImpl implements ClientService {
     private static final Logger logger = Logger.getLogger(ClientServiceImpl.class);
 
