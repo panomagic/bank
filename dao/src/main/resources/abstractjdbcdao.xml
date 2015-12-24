@@ -4,8 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-       <bean id="abstractjdbcdao" class="daos.AbstractJDBCDAO" abstract="true">
-              <property name="dataSource" ref="dataSource" />
+       <bean id="abstractjdbcdao" class="daos.AbstractJDBCDAO" abstract="true" autowire="byName">
+              <!--<property name="dataSource" ref="dataSource" />-->
        </bean>
 
 </beans>

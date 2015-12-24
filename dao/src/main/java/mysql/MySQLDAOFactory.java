@@ -85,4 +85,8 @@ public class MySQLDAOFactory implements DAOFactory<Connection> {
             }
         });
     }
+
+    public void destroyMysqlDaoFactory() {
+        logger.info("MysqlDaoFactory was destroyed");
+    }
 }

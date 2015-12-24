@@ -79,6 +79,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
     public void uploadImage(File uploadedFile, User loggedUser) {
         try {
             mySQLUserDAO.addImageToDB(uploadedFile, loggedUser);
@@ -87,6 +88,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
     public Blob retrieveImage(User loggedUser) {
         return mySQLUserDAO.getImageFromDB(loggedUser);
     }

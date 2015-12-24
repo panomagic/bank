@@ -1,12 +1,11 @@
 package servlets;
 
-import mysql.MySQLUserDAOImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
-import services.ClientServiceImpl;
-import services.UserServiceImpl;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+import services.ClientService;
+import services.UserService;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,19 +18,20 @@ import java.io.IOException;
 public class ViewUsersServlet extends HttpServlet {
 
     @Autowired
-    UserServiceImpl userService;
+    UserService userService;
 
     @Autowired
-    ClientServiceImpl clientService;
+    ClientService clientService;
+
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+                config.getServletContext());
+    }
 
     @Override
     public void doGet (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //ApplicationContext appContext = new ClassPathXmlApplicationContext("spring-service-module.xml");
-        //UserServiceImpl userService = (UserServiceImpl) appContext.getBean("userServiceImpl");
-
-        //ClientServiceImpl clientService = (ClientServiceImpl) appContext.getBean("clientServiceImpl");
-
         request.setAttribute("allUsers", userService.getAllUsers());
         request.setAttribute("allClients", clientService.getAllClients());
 

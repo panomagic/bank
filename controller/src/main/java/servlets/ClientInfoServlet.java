@@ -4,19 +4,14 @@ import beans.Account;
 import beans.Client;
 import beans.Currency;
 import beans.User;
-import mysql.MySQLAccountDAOImpl;
-import mysql.MySQLClientDAOImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import services.AccountServiceImpl;
-import services.ClientServiceImpl;
-import services.CurrencyServiceImpl;
-import services.UserServiceImpl;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+import services.*;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,55 +27,27 @@ public class ClientInfoServlet extends HttpServlet {
     private static final Logger logger = Logger.getLogger(ClientInfoServlet.class);
 
     @Autowired
-    static AccountServiceImpl accountService;
+    AccountService accountService;
 
     @Autowired
-    static ClientServiceImpl clientService;
+    ClientService clientService;
 
     @Autowired
-    static CurrencyServiceImpl currencyService;
+    CurrencyService currencyService;
 
     @Autowired
-    UserServiceImpl userService;
+    UserService userService;
 
-    static List<Account> fillAccountsList() {
-        //ApplicationContext appContext = new ClassPathXmlApplicationContext("spring-service-module.xml");
-        //AccountServiceImpl accountService = (AccountServiceImpl) appContext.getBean("accountServiceImpl");
-        return accountService.getAllAccounts();
-    }
-
-    static List<Account> fillUserAccountsList(User loggedUser, List<Account> accounts, List<Account> allAccounts) {
-        for (int i = 0; i < allAccounts.size(); i++) {
-            if (allAccounts.get(i).getClientID() == loggedUser.getClientID())
-                accounts.add(allAccounts.get(i));
-        }
-        return accounts;
-    }
-
-    static List<Client> fillClientsList() {
-        //ApplicationContext appContext = new ClassPathXmlApplicationContext("spring-service-module.xml");
-        //ClientServiceImpl clientService = (ClientServiceImpl) appContext.getBean("clientServiceImpl");
-        return clientService.getAllClients();
-    }
-
-    static List<Currency> fillCurrenciesList() {
-        //ApplicationContext appContext = new ClassPathXmlApplicationContext("spring-service-module.xml");
-        //CurrencyServiceImpl currencyService = (CurrencyServiceImpl) appContext.getBean("currencyServiceImpl");
-        return currencyService.getAllCurrencies();
-    }
-
-    static void getAccountsClientsCurrencies(HttpServletRequest request) {
-        request.setAttribute("allAccounts", fillAccountsList());
-        request.setAttribute("allClients", fillClientsList());
-        request.setAttribute("allCurrencies", fillCurrenciesList());
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+                config.getServletContext());
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         User loggedUser = null;
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        //ApplicationContext appContext = new ClassPathXmlApplicationContext("spring-service-module.xml");
-        //UserServiceImpl userService = (UserServiceImpl) appContext.getBean("userServiceImpl");
 
         List<User> userList = userService.getAllUsers();
         for (int i = 0; i < userList.size(); i++) {
@@ -89,12 +56,14 @@ public class ClientInfoServlet extends HttpServlet {
         }
 
         List<Account> accounts = new ArrayList<>();        //only accounts of user's client
-        List<Account> allAccounts;           //all accounts list
+        List<Account> allAccounts = accountService.getAllAccounts();         //all accounts list
+        for (int i = 0; i < allAccounts.size(); i++) {
+            if (allAccounts.get(i).getClientID() == loggedUser.getClientID())
+                accounts.add(allAccounts.get(i));
+        }
 
-        allAccounts = fillAccountsList();
-        accounts = fillUserAccountsList(loggedUser, accounts, allAccounts);
-        List<Client> clients = fillClientsList();
-        List<Currency> currencies = fillCurrenciesList();
+        List<Client> clients = clientService.getAllClients();
+        List<Currency> currencies = currencyService.getAllCurrencies();
 
         Object[][] records = new Object[accounts.size()][];
         String clientName = null;

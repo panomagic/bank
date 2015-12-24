@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import services.UserService;
 import services.UserServiceImpl;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +22,7 @@ import java.util.List;
 public class CustomAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     @Autowired
-    UserServiceImpl userService;
+    UserService userService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
@@ -30,10 +31,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         HttpSession session = httpServletRequest.getSession();
         User loggedUser = null;
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
-        /*ApplicationContext appContext = new ClassPathXmlApplicationContext(
-                "spring-service-module.xml");
-        UserServiceImpl userService = (UserServiceImpl) appContext.getBean("userServiceImpl");*/
 
         List<beans.User> userList = userService.getAllUsers();
         for (int i = 0; i < userList.size(); i++) {

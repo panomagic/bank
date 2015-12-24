@@ -15,8 +15,8 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-@Repository("mySQLCurrencyDAO")
-@Scope("prototype")
+//@Repository("mySQLCurrencyDAO")
+//@Scope("prototype")
 public class MySQLCurrencyDAOImpl extends AbstractJDBCDAO<Currency, Integer> implements CurrencyDAO {
 
     private class PersistCurrency extends Currency {
@@ -25,7 +25,11 @@ public class MySQLCurrencyDAOImpl extends AbstractJDBCDAO<Currency, Integer> imp
         }
     }
 
-    @Autowired
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    //@Autowired
     public MySQLCurrencyDAOImpl(DataSource dataSource) {
         super(dataSource);
     }

@@ -3,10 +3,14 @@ package servlets;
 import beans.Transaction;
 import beans.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
-import services.TransactionServiceImpl;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+import services.AccountService;
+import services.ClientService;
+import services.CurrencyService;
+import services.TransactionService;
+
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,14 +20,27 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static servlets.ClientInfoServlet.getAccountsClientsCurrencies;
-
 @WebServlet(name="transactionshistorybyclient", urlPatterns={"/transactionshistorybyclient"})
 @Controller
 public class TransactionsHistoryByClientServlet extends HttpServlet {
 
     @Autowired
-    TransactionServiceImpl transactionService;
+    AccountService accountService;
+
+    @Autowired
+    ClientService clientService;
+
+    @Autowired
+    CurrencyService currencyService;
+
+    @Autowired
+    TransactionService transactionService;
+
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this,
+                config.getServletContext());
+    }
 
     @Override
     public void doGet (HttpServletRequest request, HttpServletResponse response)
@@ -33,9 +50,6 @@ public class TransactionsHistoryByClientServlet extends HttpServlet {
 
         List<Transaction> transactions = new ArrayList<>();
 
-        //ApplicationContext appContext = new ClassPathXmlApplicationContext("spring-service-module.xml");
-        //TransactionServiceImpl transactionService = (TransactionServiceImpl) appContext.getBean("transactionServiceImpl");
-
         List<Transaction> allTransactions = transactionService.getAllTransactions();
         for (int i = 0; i < allTransactions.size(); i++) {
             if ((allTransactions.get(i).getPayerID() == loggedUser.getClientID()) ||
@@ -44,10 +58,10 @@ public class TransactionsHistoryByClientServlet extends HttpServlet {
         }
 
         request.setAttribute("allTransactions", transactions);
-
         request.setAttribute("userrole", loggedUser.getRole());
-
-        getAccountsClientsCurrencies(request);
+        request.setAttribute("allAccounts", accountService.getAllAccounts());
+        request.setAttribute("allClients", clientService.getAllClients());
+        request.setAttribute("allCurrencies", currencyService.getAllCurrencies());
 
         request.getRequestDispatcher("transactionshistory.jsp").forward(request, response);
     }

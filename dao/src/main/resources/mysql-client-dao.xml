@@ -3,13 +3,8 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-       <bean id="mysqldaofactory" class="mysql.MySQLDAOFactory"
-             init-method="initMysqlDaoFactory"
-             destroy-method="destroyMysqlDaoFactory">
-              <property name="dataSource" ref="dataSource" />
-       </bean>
-
-       <bean id="mysqldaofactory1" class="mysql.MySQLDAOFactory">
+       <bean id="mySQLClientDAO" class="mysql.MySQLClientDAOImpl" scope="prototype" autowire="byType">
+              <constructor-arg ref="dataSource"/>
        </bean>
 
 </beans>

@@ -16,8 +16,8 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-@Repository("mySQLClientDAO")
-@Scope("prototype")
+//@Repository("mySQLClientDAO")
+//@Scope("prototype")
 public class MySQLClientDAOImpl extends AbstractJDBCDAO<Client, Integer> implements ClientDAO {
 
     private class PersistClient extends Client {
