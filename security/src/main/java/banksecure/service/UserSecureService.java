@@ -2,6 +2,6 @@ package banksecure.service;
 
 import beans.User;
 
-public interface UserService {
+public interface UserSecureService {
     User getUser(String username);
 }

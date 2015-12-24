@@ -16,7 +16,7 @@ import java.util.Arrays;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    UserSecureServiceImpl userSecureServiceImpl;
+    UserSecureService userSecureServiceImpl;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
