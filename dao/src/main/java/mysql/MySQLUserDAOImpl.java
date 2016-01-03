@@ -214,7 +214,7 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
     Properties mailServerProperties;
     Session getMailSession;
     MimeMessage generateMailMessage;
-    public void generateAndSendEmail(String email) throws AddressException, MessagingException {
+    public void generateAndSendEmail(User user) throws AddressException, MessagingException {
 
         // Step1
         logger.info("1st ===> setup Mail Server Properties..");
@@ -228,13 +228,20 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
         logger.info("2nd ===> get Mail Session..");
         getMailSession = Session.getDefaultInstance(mailServerProperties, null);
         generateMailMessage = new MimeMessage(getMailSession);
-        generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+        generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(user.getEmail()));
         //generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress("test2@crunchify.com"));
-        generateMailMessage.setSubject("Confirmation of your registration on Bank project / " +
-                "Подтверждение регистрации на проекте Банк");
-        String emailBody = "Your account on Bank project has been created with credentials:<br>" +
-                "Username: <br>" +
-                "Password: <br><br>" +
+        generateMailMessage.setSubject("Confirmation of your registration on Bank project");
+        String userRole = null;
+
+        if (Role.ADMINISTRATOR.equals(user.getRole()))
+            userRole = "ADMINISTRATOR";
+        else if (Role.CLIENT.equals(user.getRole()))
+            userRole = "CLIENT";
+
+        String emailBody = "Congratulations! Your account on Bank project has been created with credentials:<br>" +
+                "Username: " + user.getUserName() + "<br>" +
+                "Password: " + user.getPsw() + "<br>" +
+                "Role: " + userRole + "<br><br>" +
                 "Best regards, <br>" +
                 "Bank Project Admin";
         generateMailMessage.setContent(emailBody, "text/html");
@@ -249,6 +256,6 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
         transport.connect("smtp.gmail.com", "bank.multimodule@gmail.com", "970195bank");
         transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
         transport.close();
-        logger.info("Confirmation email has been sent successfully");
+        logger.info("Confirmation email has been sent successfully to " + user.getEmail());
     }
 }

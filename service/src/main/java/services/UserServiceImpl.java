@@ -96,9 +96,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void sendEmailToUser(String email) {
+    public void sendEmailToUser(User user) {
         try {
-            mySQLUserDAO.generateAndSendEmail(email);
+            mySQLUserDAO.generateAndSendEmail(user);
         } catch (MessagingException e) {
             logger.error("Error during sending email", e);
         }

@@ -54,7 +54,7 @@ public class AddUserServlet extends HttpServlet {
         userService.addUser(user);
         logger.info("New user was added for client with id " + user.getClientID());
 
-        userService.sendEmailToUser(user.getEmail());
+        userService.sendEmailToUser(user);
 
         request.getRequestDispatcher("adduserresult.jsp").forward(request, response);
     }
