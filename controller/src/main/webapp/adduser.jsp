@@ -70,6 +70,9 @@
       <div class="form-group"><b><fmt:message key="enterpassword" /></b><br>
         <input type="text" name="psw" placeholder="Password" size="20" required>
       </div>
+      <div class="form-group"><b><fmt:message key="enteremail" /></b><br>
+        <input type="text" name="email" placeholder="Email" size="30">
+      </div>
       <div class="form-group"><b><fmt:message key="chooseclientforuser" /></b><br>
         <select name="chooseclient">
           <c:forEach var="client" items="${allClients}">

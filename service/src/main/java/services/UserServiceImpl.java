@@ -7,6 +7,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+
+import javax.mail.MessagingException;
 import java.io.File;
 import java.sql.Blob;
 import java.util.List;
@@ -91,5 +93,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public Blob retrieveImage(User loggedUser) {
         return mySQLUserDAO.getImageFromDB(loggedUser);
+    }
+
+    @Override
+    public void sendEmailToUser(String email) {
+        try {
+            mySQLUserDAO.generateAndSendEmail(email);
+        } catch (MessagingException e) {
+            logger.error("Error during sending email", e);
+        }
     }
 }

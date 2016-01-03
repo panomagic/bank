@@ -11,6 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.sql.DataSource;
 import java.io.*;
 import java.nio.file.Files;
@@ -18,6 +26,7 @@ import java.nio.file.Paths;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Properties;
 
 @Repository("mySQLUserDAO")
 @Scope("prototype")
@@ -47,13 +56,13 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
     @Override
     public String getCreateQuery() {
         return "INSERT INTO users (userName, " +
-                "psw, role, clients_clientID) VALUES(?,?,?,?)";
+                "psw, role, clients_clientID, email) VALUES(?,?,?,?,?)";
     }
 
     @Override
     public String getUpdateQuery() {
         return "UPDATE users SET userName=?, " +
-                "psw=?, role=?, clients_clientID=? WHERE id=?";
+                "psw=?, role=?, clients_clientID=?, email=? WHERE id=?";
     }
 
     @Override
@@ -83,6 +92,7 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
                 user.setClientID(rs.getInt("clients_clientID"));
                 user.setImage(rs.getBlob("image"));
                 user.setImagepath(rs.getString("imagepath"));
+                user.setEmail(rs.getString("email"));
                 result.add(user);
             }
         } catch (Exception e) {
@@ -98,6 +108,7 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
             statement.setString(2, object.getPsw());
             statement.setString(3, object.getRole().roleAsChar());
             statement.setInt(4, object.getClientID());
+            statement.setString(5, object.getEmail());
         } catch (Exception e) {
             throw new PersistException(e);
         }
@@ -110,7 +121,8 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
             statement.setString(2, object.getPsw());
             statement.setString(3, object.getRole().roleAsChar());
             statement.setInt(4, object.getClientID());
-            statement.setInt(5, object.getid());
+            statement.setString(5, object.getEmail());
+            statement.setInt(6, object.getid());
         } catch (Exception e) {
             throw new PersistException(e);
         }
@@ -197,5 +209,46 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
             logger.error("MySQL DB error", e);
         }
         return user.getImage();
+    }
+
+    Properties mailServerProperties;
+    Session getMailSession;
+    MimeMessage generateMailMessage;
+    public void generateAndSendEmail(String email) throws AddressException, MessagingException {
+
+        // Step1
+        logger.info("1st ===> setup Mail Server Properties..");
+        mailServerProperties = System.getProperties();
+        mailServerProperties.put("mail.smtp.port", "587");
+        mailServerProperties.put("mail.smtp.auth", "true");
+        mailServerProperties.put("mail.smtp.starttls.enable", "true");
+        logger.info("Mail Server Properties have been setup successfully..");
+
+        // Step2
+        logger.info("2nd ===> get Mail Session..");
+        getMailSession = Session.getDefaultInstance(mailServerProperties, null);
+        generateMailMessage = new MimeMessage(getMailSession);
+        generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(email));
+        //generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress("test2@crunchify.com"));
+        generateMailMessage.setSubject("Confirmation of your registration on Bank project / " +
+                "Подтверждение регистрации на проекте Банк");
+        String emailBody = "Your account on Bank project has been created with credentials:<br>" +
+                "Username: <br>" +
+                "Password: <br><br>" +
+                "Best regards, <br>" +
+                "Bank Project Admin";
+        generateMailMessage.setContent(emailBody, "text/html");
+        logger.info("Mail Session has been created successfully..");
+
+        // Step3
+        logger.info("3rd ===> Get Session and Send mail");
+        Transport transport = getMailSession.getTransport("smtp");
+
+        // Enter your correct gmail UserID and Password
+        // if you have 2FA enabled then provide App Specific Password
+        transport.connect("smtp.gmail.com", "bank.multimodule@gmail.com", "970195bank");
+        transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
+        transport.close();
+        logger.info("Confirmation email has been sent successfully");
     }
 }

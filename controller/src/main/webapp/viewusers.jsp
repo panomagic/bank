@@ -70,6 +70,7 @@
             <th><b><fmt:message key="useridcolumn" /></b></th>
             <th><b><fmt:message key="usernamecolumn" /></b></th>
             <th><b><fmt:message key="fullnamecolumn" /></b></th>
+            <th><b><fmt:message key="emailcolumn" /></b></th>
             <th><b><fmt:message key="userrole" /></b></th>
             <th colspan=2 class="text-center"><b><fmt:message key="actioncolumn" /></b></th>
           </tr>
@@ -88,6 +89,7 @@
                   </c:choose>
                 </c:forEach>
               </td>
+              <td>${user.email}</td>
               <td>
                 <c:choose>
                   <c:when test="${user.role == 'ADMINISTRATOR'}">

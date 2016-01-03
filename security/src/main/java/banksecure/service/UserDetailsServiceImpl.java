@@ -16,11 +16,11 @@ import java.util.Arrays;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    UserSecureService userSecureServiceImpl;
+    UserSecureService userSecureService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userSecureServiceImpl.getUser(username);
+        User user = userSecureService.getUser(username);
         // указываем роли для этого пользователя
         GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().name());
 

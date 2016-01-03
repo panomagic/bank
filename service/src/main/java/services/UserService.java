@@ -14,4 +14,5 @@ public interface UserService {
     List<User> getAllUsers();
     void uploadImage(File uploadedFile, User loggedUser);
     Blob retrieveImage(User loggedUser);
+    void sendEmailToUser(String email);
 }

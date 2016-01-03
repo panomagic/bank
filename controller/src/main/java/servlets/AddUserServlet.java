@@ -49,9 +49,12 @@ public class AddUserServlet extends HttpServlet {
         user.setPsw(request.getParameter("psw"));
         user.setClientID(Integer.parseInt(request.getParameter("chooseclient")));
         user.setRole(Role.CLIENT);
+        user.setEmail(request.getParameter("email"));
 
         userService.addUser(user);
         logger.info("New user was added for client with id " + user.getClientID());
+
+        userService.sendEmailToUser(user.getEmail());
 
         request.getRequestDispatcher("adduserresult.jsp").forward(request, response);
     }

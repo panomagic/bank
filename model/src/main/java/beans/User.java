@@ -13,6 +13,7 @@ public class User implements Identified<Integer> {
     private Role role;
     private int clientID;
     private Blob image;
+    private String email;
 
     private String imagepath;
 
@@ -70,6 +71,14 @@ public class User implements Identified<Integer> {
 
     public void setImagepath(String imagepath) {
         this.imagepath = imagepath;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }

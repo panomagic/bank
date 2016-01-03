@@ -21,7 +21,7 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
 
     public DataSource dataSource;
 
-    public Connection connection;
+    //public Connection connection;
 
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -75,10 +75,33 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
      */
     public abstract void prepareStatementForDelete(PreparedStatement statement, T object) throws PersistException;
 
+    private Connection establishConnection() {
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+            logger.info("DB connection is established");
+        } catch (SQLException e) {
+            logger.warn("Cannot establish DB connection", e);
+        }
+        return connection;
+    }
+
+    private static void closeConnection(Connection conn) {
+        if (conn != null) {
+            try {
+                conn.close();
+                logger.info("DB connection is closed");
+            } catch (SQLException e) {
+                logger.warn("Cannot close connection", e);
+            }
+        }
+    }
+
     public T getByPK(Integer key) throws PersistException {
         List<T> list;
         String sql = getSelectQuery();
         sql += " WHERE id = ?";
+        Connection connection = establishConnection();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setInt(1, key);
             ResultSet rs = statement.executeQuery();
@@ -105,6 +128,8 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
     }
 
     public List<T> getAll() throws PersistException {
+        Connection connection = establishConnection();
+
         List<T> list;
         String sql = getSelectQuery();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -126,17 +151,6 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
         return list;
     }
 
-    private static void closeConnection(Connection conn) {
-        if (conn != null) {
-            try {
-                conn.close();
-                logger.info("DB connection is closed");
-            } catch (SQLException e) {
-                logger.warn("Cannot close connection", e);
-            }
-        }
-    }
-
     private static void recordAddingCheck(int countRecords) throws PersistException {
         if (countRecords != 1)
             throw new PersistException("On persist modify more than 1 record: " + countRecords);
@@ -148,6 +162,8 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
         T persistInstance;
 
         String sql = getCreateQuery();
+
+        Connection connection = establishConnection();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             prepareStatementForInsert(statement, object);
             int count = statement.executeUpdate();
@@ -174,6 +190,7 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
     @Override
     public void update(T object) throws PersistException {
         String sql = getUpdateQuery();
+        Connection connection = establishConnection();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             prepareStatementForUpdate(statement, object);
             int count = statement.executeUpdate();
@@ -196,6 +213,7 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
     @Override
     public void delete(T object) throws PersistException {
         String sql = getDeleteQuery();
+        Connection connection = establishConnection();
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
             statement.setObject(1, object.getid());
             int count = statement.executeUpdate();
@@ -217,11 +235,5 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
 
     public AbstractJDBCDAO(DataSource dataSource) {
         this.dataSource = dataSource;
-        try {
-            connection = dataSource.getConnection();
-            logger.info("DB connection is established");
-        } catch (SQLException e) {
-            logger.warn("Cannot establish DB connection", e);
-        }
     }
 }

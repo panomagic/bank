@@ -71,6 +71,10 @@
         <input type="text" name="psw" value="${user.psw}" size="50">
       </div>
 
+      <div class="form-group"><b><fmt:message key="enteremail" /></b><br>
+        <input type="text" name="email" value="${user.email}" size="50">
+      </div>
+
       <div class="form-group"><b><fmt:message key="chooseclient" /></b><br>
         <select name="chooseclient">
           <c:forEach var="client" items="${allClients}">
