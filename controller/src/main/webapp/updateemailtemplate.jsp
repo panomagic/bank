@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <fmt:setLocale value="${sessionScope.language}" />
 <fmt:setBundle basename="BankBundle" />
@@ -10,7 +10,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title><fmt:message key="updateclientpagetitle" /></title>
+  <title><fmt:message key="updateemailtemplate" /></title>
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="resources/css/bootstrap.min.css">
   <!-- Optional theme -->
@@ -63,32 +63,28 @@
 
   <div class="container">
     <p><img src="image" /></p>
-    <h2><fmt:message key="clientupdate" /></h2>
-    <form name="updateclient" action="updatedeleteclient" method="POST">
-      <div class="form-group"><b><fmt:message key="clientfullname" /></b><br>
-        <input type="text" name="fullname" value="${client.fullName}" size="50">
+    <h2><fmt:message key="updateemailtemplate" /></h2>
+    <h5><fmt:message key="emailtemplatedescription" /></h5>
+    <form name="updateemailtemplate" action="updatedeleteemailtemplate" method="POST">
+      <div class="form-group"><b><fmt:message key="entersubject" /></b><br>
+        <input type="text" name="subject" value="${emailTemplate.emailTemplateSubject}" size="100" required>
       </div>
 
-      <div class="form-group"><b><fmt:message key="gender" /></b><br>
+      <div class="form-group"><b><fmt:message key="enterbody" /></b><br>
+        <textarea rows="15" cols="100" name="body" required>${emailTemplate.emailTemplateBody}</textarea>
+      </div>
+
+      <div class="form-group"><b><fmt:message key="isEnabled" /></b><br>
         <c:choose>
-          <c:when test="${client.gender == 'MALE'}">
-            <input type="radio" name="gender" value="m" checked> <fmt:message key="male" /><br>
-            <input type="radio" name="gender" value="f"> <fmt:message key="female" /><br>
+          <c:when test="${emailTemplate.isEnabled == 1}">
+            <input type="radio" name="isEnabled" value=1 checked required> <fmt:message key="yes" /><br>
+            <input type="radio" name="isEnabled" value=0> <fmt:message key="no" /><br>
           </c:when>
           <c:otherwise>
-            <input type="radio" name="gender" value="m"> <fmt:message key="male" /><br>
-            <input type="radio" name="gender" value="f" checked> <fmt:message key="female" /><br>
+            <input type="radio" name="isEnabled" value=1 required> <fmt:message key="yes" /><br>
+            <input type="radio" name="isEnabled" value=0 checked> <fmt:message key="no" /><br>
           </c:otherwise>
         </c:choose>
-      </div>
-
-      <div class="form-group"><b><fmt:message key="dateofbirth" /></b><br>
-        <input type="date" name="dateofbirth"
-               value="<fmt:formatDate value="${client.dateOfBirth}" pattern="dd.MM.yyyy" />" required>
-      </div>
-      <div class="form-group"><b><fmt:message key="dateofreg" /></b><br>
-        <input type="date" name="dateofreg"
-               value="<fmt:formatDate value="${client.dateOfReg}" pattern="dd.MM.yyyy" />" required>
       </div>
 
       <p><input type="submit" class="btn btn-success" value="<fmt:message key="savebutton" />">

@@ -63,7 +63,7 @@
     </sec:authorize>
   </div>
   <div class="footer">
-    <p align="center">© 2015</p>
+    <p align="center">© 2015-2016</p>
   </div>
 
 </div>

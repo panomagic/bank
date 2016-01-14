@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
-
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -92,7 +91,7 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
                 user.setClientID(rs.getInt("clients_clientID"));
                 user.setImage(rs.getBlob("image"));
                 user.setImagepath(rs.getString("imagepath"));
-                user.setEmail(rs.getString("email"));
+                user.setEmailAddress(rs.getString("email"));
                 result.add(user);
             }
         } catch (Exception e) {
@@ -108,7 +107,7 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
             statement.setString(2, object.getPsw());
             statement.setString(3, object.getRole().roleAsChar());
             statement.setInt(4, object.getClientID());
-            statement.setString(5, object.getEmail());
+            statement.setString(5, object.getEmailAddress());
         } catch (Exception e) {
             throw new PersistException(e);
         }
@@ -121,7 +120,7 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
             statement.setString(2, object.getPsw());
             statement.setString(3, object.getRole().roleAsChar());
             statement.setInt(4, object.getClientID());
-            statement.setString(5, object.getEmail());
+            statement.setString(5, object.getEmailAddress());
             statement.setInt(6, object.getid());
         } catch (Exception e) {
             throw new PersistException(e);
@@ -209,53 +208,5 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
             logger.error("MySQL DB error", e);
         }
         return user.getImage();
-    }
-
-    Properties mailServerProperties;
-    Session getMailSession;
-    MimeMessage generateMailMessage;
-    public void generateAndSendEmail(User user) throws AddressException, MessagingException {
-
-        // Step1
-        logger.info("1st ===> setup Mail Server Properties..");
-        mailServerProperties = System.getProperties();
-        mailServerProperties.put("mail.smtp.port", "587");
-        mailServerProperties.put("mail.smtp.auth", "true");
-        mailServerProperties.put("mail.smtp.starttls.enable", "true");
-        logger.info("Mail Server Properties have been setup successfully..");
-
-        // Step2
-        logger.info("2nd ===> get Mail Session..");
-        getMailSession = Session.getDefaultInstance(mailServerProperties, null);
-        generateMailMessage = new MimeMessage(getMailSession);
-        generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(user.getEmail()));
-        //generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress("test2@crunchify.com"));
-        generateMailMessage.setSubject("Confirmation of your registration on Bank project");
-        String userRole = null;
-
-        if (Role.ADMINISTRATOR.equals(user.getRole()))
-            userRole = "ADMINISTRATOR";
-        else if (Role.CLIENT.equals(user.getRole()))
-            userRole = "CLIENT";
-
-        String emailBody = "Congratulations! Your account on Bank project has been created with credentials:<br>" +
-                "Username: " + user.getUserName() + "<br>" +
-                "Password: " + user.getPsw() + "<br>" +
-                "Role: " + userRole + "<br><br>" +
-                "Best regards, <br>" +
-                "Bank Project Admin";
-        generateMailMessage.setContent(emailBody, "text/html");
-        logger.info("Mail Session has been created successfully..");
-
-        // Step3
-        logger.info("3rd ===> Get Session and Send mail");
-        Transport transport = getMailSession.getTransport("smtp");
-
-        // Enter your correct gmail UserID and Password
-        // if you have 2FA enabled then provide App Specific Password
-        transport.connect("smtp.gmail.com", "bank.multimodule@gmail.com", "970195bank");
-        transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
-        transport.close();
-        logger.info("Confirmation email has been sent successfully to " + user.getEmail());
     }
 }

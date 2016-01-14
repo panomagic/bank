@@ -10,7 +10,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title><fmt:message key="viewuserspagetitle" /></title>
+  <title><fmt:message key="viewemailtemplatepagetitle" /></title>
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="resources/css/bootstrap.min.css">
   <!-- Optional theme -->
@@ -37,8 +37,8 @@
             <li><a href="viewclients"><fmt:message key="gotoclientslistlink" /></a></li>
             <li><a href="viewaccounts"><fmt:message key="gotoaccountslistlink" /></a></li>
             <li><a href="transactionshistory"><fmt:message key="gototranshistorylink" /></a></li>
-            <li class="active"><a href="viewusers"><fmt:message key="gotouserslistlink" /></a></li>
-            <li><a href="viewemailtemplates"><fmt:message key="gotoemailtemplateslistlink" /></a></li>
+            <li><a href="viewusers"><fmt:message key="gotouserslistlink" /></a></li>
+            <li class="active"><a href="viewemailtemplates"><fmt:message key="gotoemailtemplateslistlink" /></a></li>
             <li class="dropdown">
               <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                 <fmt:message key="addmenuitem" />
@@ -63,49 +63,40 @@
 
     <div class="container">
       <p><img src="image" /></p>
-      <h2><fmt:message key="userstable" /></h2>
+      <h2><fmt:message key="emailtemplatestable" /></h2>
+      <h5><fmt:message key="emailtemplatedescription" /></h5>
 
       <table class="table table-condensed table-hover" style="width: auto;">
         <thead>
           <tr>
-            <th><b><fmt:message key="useridcolumn" /></b></th>
-            <th><b><fmt:message key="usernamecolumn" /></b></th>
-            <th><b><fmt:message key="fullnamecolumn" /></b></th>
-            <th><b><fmt:message key="emailcolumn" /></b></th>
-            <th><b><fmt:message key="userrole" /></b></th>
+            <th><b><fmt:message key="emailtemplateidcolumn" /></b></th>
+            <th><b><fmt:message key="emailtemplatesubject" /></b></th>
+            <th><b><fmt:message key="emailtemplatebody" /></b></th>
+            <th><b><fmt:message key="emailtemplateisenabled" /></b></th>
             <th colspan=2 class="text-center"><b><fmt:message key="actioncolumn" /></b></th>
           </tr>
         </thead>
         <tbody>
-          <c:forEach var="user" items="${allUsers}">
+          <c:forEach var="emailtemplate" items="${allEmailTemplates}">
             <tr>
-              <td>${user.id}</td>
-              <td>${user.userName}</td>
-              <td>
-                <c:forEach var="client" items="${allClients}">
-                  <c:choose>
-                    <c:when test="${user.clientID == client.id}">
-                      ${client.fullName}
-                    </c:when>
-                  </c:choose>
-                </c:forEach>
-              </td>
-              <td>${user.emailAddress}</td>
+              <td>${emailtemplate.id}</td>
+              <td>${emailtemplate.emailTemplateSubject}</td>
+              <td>${emailtemplate.emailTemplateBody}</td>
               <td>
                 <c:choose>
-                  <c:when test="${user.role == 'ADMINISTRATOR'}">
-                    ADMINISTRATOR
+                  <c:when test="${emailtemplate.isEnabled == 0}">
+                    FALSE
                   </c:when>
-                  <c:when test="${user.role == 'CLIENT'}">
-                    CLIENT
+                  <c:when test="${emailtemplate.isEnabled == 1}">
+                    TRUE
                   </c:when>
                 </c:choose>
               </td>
               <td>
-                <a href="updatedeleteuser?action=update&id=${user.id}"><fmt:message key="actionupdate" /></a>
+                <a href="updatedeleteemailtemplate?action=update&id=${emailtemplate.id}"><fmt:message key="actionupdate" /></a>
               </td>
               <td>
-                <a href="updatedeleteuser?action=delete&id=${user.id}"><fmt:message key="actiondelete" /></a>
+                <a href="updatedeleteemailtemplate?action=delete&id=${emailtemplate.id}"><fmt:message key="actiondelete" /></a>
               </td>
             </tr>
           </c:forEach>

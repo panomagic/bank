@@ -10,7 +10,7 @@
 <html>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <title><fmt:message key="updateclientpagetitle" /></title>
+  <title><fmt:message key="addemailtemplatepagetitle" /></title>
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="resources/css/bootstrap.min.css">
   <!-- Optional theme -->
@@ -63,37 +63,28 @@
 
   <div class="container">
     <p><img src="image" /></p>
-    <h2><fmt:message key="clientupdate" /></h2>
-    <form name="updateclient" action="updatedeleteclient" method="POST">
-      <div class="form-group"><b><fmt:message key="clientfullname" /></b><br>
-        <input type="text" name="fullname" value="${client.fullName}" size="50">
-      </div>
+    <h2><fmt:message key="addnewemailtemplate" /></h2>
+    <h5><fmt:message key="emailtemplatedescription" /></h5>
+      <form name="addemailtemplate" method="POST">
+        <div class="form-group">
+          <b><fmt:message key="entersubject" /></b><br>
+          <input type="text" name="subject" size="100" required>
+        </div>
 
-      <div class="form-group"><b><fmt:message key="gender" /></b><br>
-        <c:choose>
-          <c:when test="${client.gender == 'MALE'}">
-            <input type="radio" name="gender" value="m" checked> <fmt:message key="male" /><br>
-            <input type="radio" name="gender" value="f"> <fmt:message key="female" /><br>
-          </c:when>
-          <c:otherwise>
-            <input type="radio" name="gender" value="m"> <fmt:message key="male" /><br>
-            <input type="radio" name="gender" value="f" checked> <fmt:message key="female" /><br>
-          </c:otherwise>
-        </c:choose>
-      </div>
+        <div class="form-group"><b><fmt:message key="enterbody" /></b><br>
+          <textarea rows="15" cols="100" name="body" required></textarea>
+        </div>
 
-      <div class="form-group"><b><fmt:message key="dateofbirth" /></b><br>
-        <input type="date" name="dateofbirth"
-               value="<fmt:formatDate value="${client.dateOfBirth}" pattern="dd.MM.yyyy" />" required>
-      </div>
-      <div class="form-group"><b><fmt:message key="dateofreg" /></b><br>
-        <input type="date" name="dateofreg"
-               value="<fmt:formatDate value="${client.dateOfReg}" pattern="dd.MM.yyyy" />" required>
-      </div>
+        <div class="form-group"><b><fmt:message key="isEnabled" /></b><br>
+          <input type="radio" name="isEnabled" value="1" required> <fmt:message key="yes" /><br>
+          <input type="radio" name="isEnabled" value="0"> <fmt:message key="no" /><br>
+        </div>
 
-      <p><input type="submit" class="btn btn-success" value="<fmt:message key="savebutton" />">
-        <input type="reset" class="btn btn-default" value="<fmt:message key="cancelbutton" />"></p>
-    </form>
+        <p><input type="submit" class="btn btn-success" value="<fmt:message key="savebutton" />">
+          <input type="reset" class="btn btn-default" value="<fmt:message key="clearbutton" />"></p>
+      </form>
+
   </div>
+
 </body>
 </html>

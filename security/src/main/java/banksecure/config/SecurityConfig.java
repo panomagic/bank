@@ -69,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/clientinfo", "/addtransaction", "/transactionshistorybyclient", "/transcurrencymismatch",
                             "/transoverdraft", "/upload").access("hasRole('CLIENT') or hasRole('ADMINISTRATOR')")
                 .antMatchers("/admin", "viewclients", "viewaccounts", "/transactionshistory", "/viewusers",
-                        "/addclient", "/addaccount", "/adduser").access("hasRole('ADMINISTRATOR')")
+                        "/addclient", "/addaccount", "/adduser", "/viewemailtemplates").access("hasRole('ADMINISTRATOR')")
                 .antMatchers("/resources/**").permitAll()
                 .anyRequest().authenticated()
                 .and();

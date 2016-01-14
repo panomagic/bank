@@ -6,8 +6,6 @@ import daos.AbstractJDBCDAO;
 import daos.ClientDAO;
 import daos.PersistException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
 import java.sql.Date;
 import java.sql.PreparedStatement;

@@ -95,12 +95,4 @@ public class UserServiceImpl implements UserService {
         return mySQLUserDAO.getImageFromDB(loggedUser);
     }
 
-    @Override
-    public void sendEmailToUser(User user) {
-        try {
-            mySQLUserDAO.generateAndSendEmail(user);
-        } catch (MessagingException e) {
-            logger.error("Error during sending email", e);
-        }
-    }
 }

@@ -21,8 +21,6 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
 
     public DataSource dataSource;
 
-    //public Connection connection;
-
     public void setDataSource(DataSource dataSource) {
         this.dataSource = dataSource;
     }

@@ -38,6 +38,7 @@
           <li><a href="viewaccounts"><fmt:message key="gotoaccountslistlink" /></a></li>
           <li><a href="transactionshistory"><fmt:message key="gototranshistorylink" /></a></li>
           <li><a href="viewusers"><fmt:message key="gotouserslistlink" /></a></li>
+          <li><a href="viewemailtemplates"><fmt:message key="gotoemailtemplateslistlink" /></a></li>
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
               <fmt:message key="addmenuitem" />
@@ -49,6 +50,7 @@
               <li><a href="addtransaction"><fmt:message key="addtransactionlink" /></a></li>
               <li><a href="upload"><fmt:message key="addimagelink" /></a></li>
               <li><a href="adduser"><fmt:message key="gotoadduserlink" /></a></li>
+              <li><a href="addemailtemplate"><fmt:message key="gotoaddemailtemplatelink" /></a></li>
             </ul>
           </li>
         </ul>
@@ -62,7 +64,7 @@
   <div class="container">
     <p><img src="image" /></p>
     <h2><fmt:message key="addnewuser" /></h2>
-    <form name="addaccount" method="POST">
+    <form name="adduser" method="POST">
       <div class="form-group">
         <b><fmt:message key="enterusername" /></b><br>
         <input type="text" name="userName" placeholder="Username" size="30" required>

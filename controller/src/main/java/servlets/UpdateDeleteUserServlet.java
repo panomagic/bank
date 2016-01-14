@@ -59,15 +59,13 @@ public class UpdateDeleteUserServlet extends HttpServlet {
     public void updateUser(HttpServletRequest request) {
         user.setUserName(request.getParameter("username"));
         user.setPsw(request.getParameter("psw"));
-        System.out.println("нач" + request.getParameter("chooseclient") + "кон");
-        System.out.println(request.getParameter("chooseclient").equals(""));
         if (request.getParameter("chooseclient").equals("")) {
             Integer a = null;
             user.setClientID(a);
         } else
             user.setClientID(Integer.parseInt(request.getParameter("chooseclient")));
         user.setRole(Role.CLIENT);
-        user.setEmail(request.getParameter("email"));
+        user.setEmailAddress(request.getParameter("emailAddress"));
 
         userService.updateUser(user);
         logger.info("User with id " + user.getid() + " was updated");

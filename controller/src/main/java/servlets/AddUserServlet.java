@@ -1,5 +1,6 @@
 package servlets;
 
+import beans.EmailTemplate;
 import beans.Role;
 import beans.User;
 import org.apache.log4j.Logger;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 import services.ClientService;
+import services.EmailTemplateService;
 import services.UserService;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -26,6 +28,9 @@ public class AddUserServlet extends HttpServlet {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    EmailTemplateService emailTemplateService;
 
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
@@ -49,13 +54,33 @@ public class AddUserServlet extends HttpServlet {
         user.setPsw(request.getParameter("psw"));
         user.setClientID(Integer.parseInt(request.getParameter("chooseclient")));
         user.setRole(Role.CLIENT);
-        user.setEmail(request.getParameter("email"));
+        user.setEmailAddress(request.getParameter("email"));
 
         userService.addUser(user);
         logger.info("New user was added for client with id " + user.getClientID());
 
-        userService.sendEmailToUser(user);
+        EmailTemplate enabledEmailTemplate = emailTemplateService.getEnabledEmailTemplate();
 
+        if (enabledEmailTemplate != null) {
+            String templateBody = enabledEmailTemplate.getEmailTemplateBody();
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(templateBody);
+
+            if (templateBody.contains("%username%")) {
+                stringBuilder.replace(stringBuilder.indexOf("%username%"),
+                        stringBuilder.indexOf("%username%") + 10, user.getUserName());
+            }
+            if (templateBody.contains("%password%")) {
+                stringBuilder.replace(stringBuilder.indexOf("%password%"),
+                        stringBuilder.indexOf("%password%") + 10, user.getPsw());
+            }
+            enabledEmailTemplate.setEmailTemplateBody(stringBuilder.toString());
+
+            emailTemplateService.sendEmailToUser(enabledEmailTemplate, user);
+
+        } else {
+            logger.debug("No email templates were enabled. Cannot send registration confirmation email!");
+        }
         request.getRequestDispatcher("adduserresult.jsp").forward(request, response);
     }
 }
