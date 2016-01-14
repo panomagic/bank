@@ -209,4 +209,42 @@ public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements 
         }
         return user.getImage();
     }
+
+    public User getUserByName(String name) throws PersistException {
+        List<User> list;
+        String sql = getSelectQuery();
+        sql += " WHERE userName = ?";
+
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+            logger.info("DB connection is established");
+        } catch (SQLException e) {
+            logger.warn("Cannot establish DB connection", e);
+        }
+
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setString(1, name);
+            ResultSet rs = statement.executeQuery();
+            list = parseResultSet(rs);
+        } catch (Exception e) {
+            throw new PersistException(e);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                    logger.info("DB connection is closed");
+                } catch (SQLException e) {
+                    logger.warn("Cannot close connection", e);
+                }
+            }
+        }
+
+        if ((list == null) || (list.isEmpty()))
+            return null;
+        if (list.size() > 1)
+            throw new PersistException("Received more than one record");
+
+        return list.iterator().next();
+    }
 }

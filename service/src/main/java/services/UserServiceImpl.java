@@ -50,6 +50,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByName(String name) {
+        try {
+            return mySQLUserDAO.getUserByName(name);
+        } catch (PersistException e) {
+            logger.error("MySQL DB error", e);
+            return null;
+        }
+    }
+
+    @Override
     public boolean updateUser(User user) {
         try {
             mySQLUserDAO.update(user);
