@@ -17,6 +17,8 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.sql.DataSource;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -121,14 +123,26 @@ public class MySQLEmailTemplateDAOImpl extends AbstractJDBCDAO<EmailTemplate, In
 
     public void generateAndSendEmail(EmailTemplate emailTemplate, User user) throws AddressException, MessagingException {
         logger.info("Sending email to user 1st step - Setup Mail Server Properties..");
-        Properties mailServerProperties = System.getProperties();
-        mailServerProperties.put("mail.smtp.port", "587");
-        mailServerProperties.put("mail.smtp.auth", "true");
-        mailServerProperties.put("mail.smtp.starttls.enable", "true");
+        Properties mailConfig = new Properties();
+        InputStream inputStream = null;
+        try {
+            inputStream = getClass().getClassLoader().getResourceAsStream("mailconfig.properties");
+            mailConfig.load(inputStream);
+        } catch (IOException e) {
+            logger.error("Cannot load mail configuration properties file!", e);
+        } finally {
+            if (inputStream != null) {
+                try {
+                    inputStream.close();
+                } catch (IOException e) {
+                    logger.error("Cannot close InputStream!", e);
+                }
+            }
+        }
         logger.info("Mail Server Properties have been setup successfully..");
 
         logger.info("Sending email to user 2nd step - Get Mail Session..");
-        Session getMailSession = Session.getDefaultInstance(mailServerProperties, null);
+        Session getMailSession = Session.getDefaultInstance(mailConfig, null);
         MimeMessage generateMailMessage = new MimeMessage(getMailSession);
         generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(user.getEmailAddress()));
         generateMailMessage.setSubject(emailTemplate.getEmailTemplateSubject());
@@ -139,10 +153,10 @@ public class MySQLEmailTemplateDAOImpl extends AbstractJDBCDAO<EmailTemplate, In
         logger.info("Sending email to user 3rd step - Get Session and Send mail");
         Transport transport = getMailSession.getTransport("smtp");
 
-        transport.connect("smtp.gmail.com", "bank.multimodule@gmail.com", "970195bank");
+        transport.connect(mailConfig.getProperty("host"), mailConfig.getProperty("user"),
+                mailConfig.getProperty("psw"));
         transport.sendMessage(generateMailMessage, generateMailMessage.getAllRecipients());
         transport.close();
         logger.info("Confirmation email has been sent successfully to " + user.getEmailAddress() );
-
     }
 }
