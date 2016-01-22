@@ -3,6 +3,7 @@ package services;
 import beans.Account;
 import beans.Transaction;
 import daos.PersistException;
+import daos.TransactionDAO;
 import mysql.MySQLTransactionDAOImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,18 +18,18 @@ public class TransactionServiceImpl implements TransactionService {
     private static final Logger logger = Logger.getLogger(TransactionServiceImpl.class);
 
     @Autowired
-    MySQLTransactionDAOImpl mySQLTransactionDAO;
+    TransactionDAO transactionDAO;
 
     @Autowired
     public TransactionServiceImpl(MySQLTransactionDAOImpl mySQLTransactionDAO) {
-        this.mySQLTransactionDAO = mySQLTransactionDAO;
+        this.transactionDAO = mySQLTransactionDAO;
     }
 
     @Autowired
-    AccountServiceImpl accountServicePayer;
+    AccountService accountServicePayer;
 
     @Autowired
-    AccountServiceImpl accountServiceRecipient;
+    AccountService accountServiceRecipient;
 
     public TransactionServiceImpl() {
     }
@@ -69,7 +70,7 @@ public class TransactionServiceImpl implements TransactionService {
         }
 
         try {
-            mySQLTransactionDAO.addTransaction(transaction);
+            transactionDAO.addTransaction(transaction);
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
@@ -80,7 +81,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public Transaction getTransactionByID(Integer id) {
         try {
-            return mySQLTransactionDAO.getByPK(id);
+            return transactionDAO.getByPK(id);
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
             return null;
@@ -90,7 +91,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public boolean updateTransaction(Transaction transaction) {     //todo maybe REMOVE because of unnecessary
         try {
-            mySQLTransactionDAO.update(transaction);
+            transactionDAO.update(transaction);
             return true;
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
@@ -101,7 +102,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public boolean deleteTransaction(Transaction transaction) {     //todo maybe REMOVE because of unnecessary
         try {
-            mySQLTransactionDAO.delete(transaction);
+            transactionDAO.delete(transaction);
             return true;
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
@@ -112,7 +113,7 @@ public class TransactionServiceImpl implements TransactionService {
     @Override
     public List<Transaction> getAllTransactions() {
         try {
-            return mySQLTransactionDAO.getAll();
+            return transactionDAO.getAll();
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
             return null;

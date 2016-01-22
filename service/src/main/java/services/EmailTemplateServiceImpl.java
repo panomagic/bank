@@ -2,26 +2,30 @@ package services;
 
 import beans.EmailTemplate;
 import beans.User;
+import daos.EmailTemplateDAO;
 import daos.PersistException;
 import mysql.MySQLEmailTemplateDAOImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.mail.MessagingException;
 import java.util.List;
 
 @Service("emailTemplateService")
 @Scope("prototype")
+@Transactional
 public class EmailTemplateServiceImpl implements EmailTemplateService {
     private static final Logger logger = Logger.getLogger(EmailTemplateServiceImpl.class);
 
     @Autowired
-    MySQLEmailTemplateDAOImpl mySQLEmailTemplateDAO;
+    EmailTemplateDAO emailTemplateDAO;
 
     @Autowired
     public EmailTemplateServiceImpl(MySQLEmailTemplateDAOImpl mySQLEmailTemplateDAO) {
-        this.mySQLEmailTemplateDAO = mySQLEmailTemplateDAO;
+        this.emailTemplateDAO = mySQLEmailTemplateDAO;
     }
 
     public EmailTemplateServiceImpl() {
@@ -30,7 +34,7 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
     @Override
     public int addEmailTemplate(EmailTemplate emailTemplate) {
         try {
-            List<EmailTemplate> emailTemplateList = mySQLEmailTemplateDAO.getAll();
+            List<EmailTemplate> emailTemplateList = emailTemplateDAO.getAll();
             int countEnabledTemplates = 0;
             for (int i = 0; i < emailTemplateList.size(); i++) {
                 if (emailTemplateList.get(i).getIsEnabled() == 1)   //1 - TRUE, 0 - FALSE
@@ -42,7 +46,7 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
 
             if (countEnabledTemplates == 1 && emailTemplate.getIsEnabled() == 1)
                 return 2;
-            mySQLEmailTemplateDAO.persist(emailTemplate);
+            emailTemplateDAO.persist(emailTemplate);
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
@@ -52,7 +56,7 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
     @Override
     public EmailTemplate getEmailTemplateByID(Integer id) {
         try {
-            return mySQLEmailTemplateDAO.getByPK(id);
+            return emailTemplateDAO.getByPK(id);
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
             return null;
@@ -62,7 +66,7 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
     @Override
     public List<EmailTemplate> getAllEmailTemplates() {
         try {
-            return mySQLEmailTemplateDAO.getAll();
+            return emailTemplateDAO.getAll();
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
             return null;
@@ -72,7 +76,7 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
     @Override
     public boolean updateEmailTemplate(EmailTemplate emailTemplate) {
         try {
-            mySQLEmailTemplateDAO.update(emailTemplate);
+            emailTemplateDAO.update(emailTemplate);
             return true;
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
@@ -83,7 +87,7 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
     @Override
     public boolean deleteEmailTemplate(EmailTemplate emailTemplate) {
         try {
-            mySQLEmailTemplateDAO.delete(emailTemplate);
+            emailTemplateDAO.delete(emailTemplate);
             return true;
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
@@ -94,7 +98,7 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
     @Override
     public EmailTemplate getEnabledEmailTemplate() {
         try {
-            List<EmailTemplate> emailTemplateList = mySQLEmailTemplateDAO.getAll();
+            List<EmailTemplate> emailTemplateList = emailTemplateDAO.getAll();
             EmailTemplate enabledEmailTemplate = null;
             int countTempates = 0;
             for (int i = 0; i < emailTemplateList.size(); i++) {
@@ -122,7 +126,7 @@ public class EmailTemplateServiceImpl implements EmailTemplateService {
 
     public void sendEmailToUser(EmailTemplate emailTemplate, User user) {
         try {
-            mySQLEmailTemplateDAO.generateAndSendEmail(emailTemplate, user);
+            emailTemplateDAO.generateAndSendEmail(emailTemplate, user);
         } catch (MessagingException e) {
             logger.error("Error during sending email", e);
         }

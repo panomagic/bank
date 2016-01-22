@@ -2,11 +2,13 @@ package services;
 
 import beans.User;
 import daos.PersistException;
+import daos.UserDAO;
 import mysql.MySQLUserDAOImpl;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import java.io.File;
@@ -19,11 +21,11 @@ public class UserServiceImpl implements UserService {
     private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
 
     @Autowired
-    MySQLUserDAOImpl mySQLUserDAO;
+    UserDAO userDAO;
 
     @Autowired
     public UserServiceImpl(MySQLUserDAOImpl mySQLUserDAO) {
-        this.mySQLUserDAO = mySQLUserDAO;
+        this.userDAO = mySQLUserDAO;
     }
 
     public UserServiceImpl() {
@@ -32,7 +34,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User addUser(User user) {
         try {
-            return mySQLUserDAO.persist(user);
+            return userDAO.persist(user);
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
             return null;
@@ -42,7 +44,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByID(Integer id) {
         try {
-            return mySQLUserDAO.getByPK(id);
+            return userDAO.getByPK(id);
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
             return null;
@@ -52,7 +54,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByName(String name) {
         try {
-            return mySQLUserDAO.getUserByName(name);
+            return userDAO.getUserByName(name);
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
             return null;
@@ -62,7 +64,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean updateUser(User user) {
         try {
-            mySQLUserDAO.update(user);
+            userDAO.update(user);
             return true;
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
@@ -73,7 +75,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean deleteUser(User user) {
         try {
-            mySQLUserDAO.delete(user);
+            userDAO.delete(user);
             return true;
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
@@ -84,7 +86,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers() {
         try {
-            return mySQLUserDAO.getAll();
+            return userDAO.getAll();
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
             return null;
@@ -94,7 +96,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void uploadImage(File uploadedFile, User loggedUser) {
         try {
-            mySQLUserDAO.addImageToDB(uploadedFile, loggedUser);
+            userDAO.addImageToDB(uploadedFile, loggedUser);
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
         }
@@ -102,7 +104,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Blob retrieveImage(User loggedUser) {
-        return mySQLUserDAO.getImageFromDB(loggedUser);
+        return userDAO.getImageFromDB(loggedUser);
     }
 
 }

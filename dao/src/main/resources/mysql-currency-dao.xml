@@ -3,7 +3,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-       <bean id="mySQLCurrencyDAO" class="mysql.MySQLCurrencyDAOImpl" scope="prototype" autowire="byName">
+       <bean id="currencyDAO" class="mysql.MySQLCurrencyDAOImpl" scope="prototype" autowire="byName">
               <constructor-arg ref="dataSource"/>
        </bean>
 

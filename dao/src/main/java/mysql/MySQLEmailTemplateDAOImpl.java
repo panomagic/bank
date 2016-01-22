@@ -26,7 +26,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
-@Repository("mySQLEmailTemplateDAO")
+@Repository("emailTemplateDAO")
 @Scope("prototype")
 public class MySQLEmailTemplateDAOImpl extends AbstractJDBCDAO<EmailTemplate, Integer> implements EmailTemplateDAO {
     private static final Logger logger = Logger.getLogger(MySQLEmailTemplateDAOImpl.class);

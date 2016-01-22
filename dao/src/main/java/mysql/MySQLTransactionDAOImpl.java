@@ -13,7 +13,7 @@ import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
-@Repository("mySQLTransactionDAO")
+@Repository("transactionDAO")
 @Scope("prototype")
 public class MySQLTransactionDAOImpl extends AbstractJDBCDAO<Transaction, Integer> implements TransactionDAO {
     private static final Logger logger = Logger.getLogger(MySQLTransactionDAOImpl.class);

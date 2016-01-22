@@ -4,9 +4,7 @@ import beans.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import services.UserService;
-
 import java.util.List;
-
 
 @Service
 public class UserSecureServiceImpl implements UserSecureService {
