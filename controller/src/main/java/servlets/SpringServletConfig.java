@@ -17,10 +17,10 @@ public class SpringServletConfig {
     @Autowired
     DataSource dataSource;
 
-    @Bean(name="txName")
-    public DataSourceTransactionManager txName() throws IOException {
-        DataSourceTransactionManager txName= new DataSourceTransactionManager();
-        txName.setDataSource(dataSource);
-        return txName;
+    @Bean(name="txManager")
+    public DataSourceTransactionManager txManager() throws IOException {
+        DataSourceTransactionManager txManager= new DataSourceTransactionManager();
+        txManager.setDataSource(dataSource);
+        return txManager;
     }
 }
