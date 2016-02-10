@@ -5,9 +5,8 @@ import beans.Currency;
 import daos.AbstractJDBCDAO;
 import daos.CurrencyDAO;
 import daos.PersistException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,8 +14,7 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
-//@Repository("mySQLCurrencyDAO")
-//@Scope("prototype")
+@Transactional
 public class MySQLCurrencyDAOImpl extends AbstractJDBCDAO<Currency, Integer> implements CurrencyDAO {
 
     private class PersistCurrency extends Currency {
@@ -29,7 +27,6 @@ public class MySQLCurrencyDAOImpl extends AbstractJDBCDAO<Currency, Integer> imp
         this.dataSource = dataSource;
     }
 
-    //@Autowired
     public MySQLCurrencyDAOImpl(DataSource dataSource) {
         super(dataSource);
     }

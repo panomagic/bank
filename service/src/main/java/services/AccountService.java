@@ -4,7 +4,7 @@ import beans.Account;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
-@Transactional
+//@Transactional
 public interface AccountService {
     Account addAccount(Account account);
     Account getAccountByID(Integer id);

@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -28,6 +29,7 @@ import java.util.Properties;
 
 @Repository("emailTemplateDAO")
 @Scope("prototype")
+@Transactional
 public class MySQLEmailTemplateDAOImpl extends AbstractJDBCDAO<EmailTemplate, Integer> implements EmailTemplateDAO {
     private static final Logger logger = Logger.getLogger(MySQLEmailTemplateDAOImpl.class);
 

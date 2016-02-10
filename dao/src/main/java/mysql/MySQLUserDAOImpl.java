@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import javax.sql.DataSource;
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,6 +25,7 @@ import java.util.List;
 
 @Repository("userDAO")
 @Scope("prototype")
+@Transactional
 public class MySQLUserDAOImpl extends AbstractJDBCDAO<User, Integer> implements UserDAO {
     private static final Logger logger = Logger.getLogger(MySQLUserDAOImpl.class);
 

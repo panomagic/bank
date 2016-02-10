@@ -5,11 +5,13 @@ import daos.DAOFactory;
 import daos.GenericDAO;
 import daos.PersistException;
 import org.apache.log4j.Logger;
+import org.springframework.transaction.annotation.Transactional;
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 
+@Transactional
 public class MySQLDAOFactory implements DAOFactory<Connection> {
 
     //private static final String URL = "jdbc:mysql://127.6.230.130:3306/bank"; //openshift MySQLDB settings
