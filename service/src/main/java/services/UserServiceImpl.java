@@ -17,6 +17,7 @@ import java.util.List;
 
 @Service("userService")
 @Scope("prototype")
+@Transactional
 public class UserServiceImpl implements UserService {
     private static final Logger logger = Logger.getLogger(UserServiceImpl.class);
 
@@ -32,6 +33,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(rollbackFor = PersistException.class)
     public User addUser(User user) {
         try {
             return userDAO.persist(user);
