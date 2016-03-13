@@ -2,21 +2,40 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context.xsd">
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+       <!--profile="test"-->
 
-       <context:component-scan
-               base-package="mysql" />
 
-       <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-              <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-              <property name="url" value="jdbc:mysql://localhost:3306/bank" />
-              <!--<property name="url" value="jdbc:mysql://127.6.230.130:3306/bank" />-->
-              <property name="username" value="root" />
-              <property name="password" value="970195" />
-              <property name="defaultAutoCommit" value="false" />
+       <context:component-scan base-package="mysql" />
+       <context:annotation-config />
+       <tx:annotation-driven  transaction-manager="txManagerTest"/>
+
+       <!--<bean id="dataSourceTest" class="org.apache.commons.dbcp.BasicDataSource">
+              <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+              <property name="url" value="jdbc:mysql://localhost:3306/bank"/>
+              &lt;!&ndash;<property name="url" value="jdbc:mysql://127.6.230.130:3306/bank" />&ndash;&gt;
+              <property name="username" value="root"/>
+              <property name="password" value="970195"/>
+              <property name="defaultAutoCommit" value="false"/>
+              &lt;!&ndash;<qualifier value="dataSourceTest"/>&ndash;&gt;
+       </bean>-->
+
+       <bean id="txManagerTest"
+             class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+              <property name="dataSource" ref="dataSource" />
+
        </bean>
+
+       <aop:aspectj-autoproxy proxy-target-class = "true"/>
+
+       <import resource="spring-dao-module.xml" />
 
 </beans>
