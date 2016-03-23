@@ -2,18 +2,26 @@ package services_test;
 
 import beans.Account;
 import daos.AccountDAO;
+import daos.PersistException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import services.AccountService;
 import services.AccountServiceImpl;
+
+import javax.sql.DataSource;
 import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import static org.junit.Assert.assertEquals;
@@ -22,17 +30,26 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.when;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:spring-dao-module.xml", "classpath:test-app-context.xml"})
+@ContextConfiguration({ "classpath:test-app-context.xml"})
+//@Transactional(isolation = Isolation.READ_UNCOMMITTED)
 @Transactional
+@TransactionConfiguration(transactionManager = "txManager", defaultRollback = false)
 /*@TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
         TransactionalTestExecutionListener.class})*/
 public class AccountServiceImplTest {
 
-    @Mock
+    //@Mock
+    @Autowired
     private AccountDAO accountDAO;
 
+    @Autowired
+    DataSource dataSource;
+
     @InjectMocks
-    private AccountService accountService = new AccountServiceImpl(); //непр - ?
+    private AccountService accountServiceMock = new AccountServiceImpl(); //непр - ?
+
+    @Autowired
+    AccountService accountService;
 
     @Before
     public void setUp() {
@@ -49,7 +66,7 @@ public class AccountServiceImplTest {
         // specify mock behavior when method is called
         when(accountDAO.persist(account)).thenReturn(account);
 
-        Account addedAccount = accountService.addAccount(account);
+        Account addedAccount = accountServiceMock.addAccount(account);
         assertEquals(addedAccount.getClientID(), account.getClientID());
         assertEquals(addedAccount.getCurrencyID(), account.getCurrencyID());
         assertEquals(addedAccount.getAccTypeID(), account.getAccTypeID());
@@ -69,7 +86,7 @@ public class AccountServiceImplTest {
         // specify mock behavior when method is called
         when(accountDAO.getByPK(accountID)).thenReturn(account);
 
-        Account retrievedAccount = accountService.getAccountByID(accountID);
+        Account retrievedAccount = accountServiceMock.getAccountByID(accountID);
         assertEquals(retrievedAccount.getClientID(), account.getClientID());
         assertEquals(retrievedAccount.getCurrencyID(), account.getCurrencyID());
         assertEquals(retrievedAccount.getAccTypeID(), account.getAccTypeID());
@@ -88,7 +105,7 @@ public class AccountServiceImplTest {
         // specify mock behavior when method is called
         //when(accountDAO.update(account)).thenReturn(true);
         //when(accountDAO.update(account)).thenReturn(30);
-        assertTrue(accountService.updateAccount(account));
+        assertTrue(accountServiceMock.updateAccount(account));
         assertEquals(accountDAO.getByPK(10).getClientID(), account.getClientID());
     }
 
@@ -118,7 +135,7 @@ public class AccountServiceImplTest {
 
         accountList.remove(1);
 
-        List<Account> retrievedAccountList = accountService.getAllAccounts();
+        List<Account> retrievedAccountList = accountServiceMock.getAllAccounts();
         assertEquals(retrievedAccountList, accountList);
     }
 
@@ -145,7 +162,19 @@ public class AccountServiceImplTest {
         // specify mock behavior when method is called
         when(accountDAO.getAll()).thenReturn(accountList);
 
-        List<Account> retrievedAccountList = accountService.getAllAccounts();
+        List<Account> retrievedAccountList = accountServiceMock.getAllAccounts();
         assertEquals(retrievedAccountList, accountList);
+    }
+
+
+    @Test
+    public void testInsertAndGetAccountByID() {
+        Account account = new Account();
+        account.setClientID(17);
+        account.setCurrencyID(2);
+        account.setAccTypeID(1);
+
+        Account addedAccount = accountService.insertAndGetAccountByID(account);
+        assertEquals(account.getClientID(), addedAccount.getClientID());
     }
 }

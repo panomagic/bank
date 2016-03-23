@@ -2,6 +2,8 @@ package services;
 
 import beans.Account;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.Connection;
 import java.util.List;
 
 @Transactional
@@ -11,4 +13,5 @@ public interface AccountService {
     boolean updateAccount(Account account);
     boolean deleteAccount(Account account);
     List<Account> getAllAccounts();
+    Account insertAndGetAccountByID(Account account);
 }

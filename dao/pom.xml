@@ -14,7 +14,7 @@
     <url>http://maven.apache.org</url>
 
     <properties>
-        <spring.framework.version>4.0.0.RELEASE</spring.framework.version>
+        <spring.framework.version>4.2.2.RELEASE</spring.framework.version>
         <mysql.connector.version>5.1.37</mysql.connector.version>
     </properties>
 
@@ -99,6 +99,13 @@
             <artifactId>commons-dbcp</artifactId>
             <version>1.4</version>
         </dependency>
+
+        <dependency>
+            <groupId>c3p0</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.1.2</version>
+        </dependency>
+
 
     </dependencies>
 

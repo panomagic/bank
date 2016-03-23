@@ -15,7 +15,7 @@
     <url>http://maven.apache.org</url>
 
     <properties>
-        <spring.web>4.0.0.RELEASE</spring.web>
+        <spring.web>4.2.2.RELEASE</spring.web>
         <javax.servlet>3.0.1</javax.servlet>
         <jstl.version>1.2</jstl.version>
         <spring.securiry>3.2.0.RELEASE</spring.securiry>

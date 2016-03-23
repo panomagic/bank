@@ -14,21 +14,26 @@
 
        <context:component-scan
                base-package="mysql, services" />
+       <context:annotation-config />
 
-       <!--<tx:annotation-driven transaction-manager="txManager"/>
+       <tx:annotation-driven transaction-manager="txManagerTest"/>
 
-       <bean id="txManager"
+       <bean id="txManagerTest"
              class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
               <property name="dataSource" ref="dataSource" />
-       </bean>-->
+       </bean>
 
-       <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+       <!--<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
               <property name="driverClassName" value="com.mysql.jdbc.Driver" />
               <property name="url" value="jdbc:mysql://localhost:3306/bank" />
-              <!--<property name="url" value="jdbc:mysql://127.6.230.130:3306/bank" />-->
+              &lt;!&ndash;<property name="url" value="jdbc:mysql://127.6.230.130:3306/bank" />&ndash;&gt;
               <property name="username" value="root" />
               <property name="password" value="970195" />
               <property name="defaultAutoCommit" value="false" />
-       </bean>
+       </bean>-->
+
+       <aop:aspectj-autoproxy proxy-target-class = "true"/>
+
+       <import resource="spring-dao-module.xml" />
 
 </beans>

@@ -125,6 +125,27 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
         return list.iterator().next();
     }
 
+    public T getByPK(Integer key, Connection connection) throws PersistException {
+        List<T> list;
+        String sql = getSelectQuery();
+        sql += " WHERE id = ?";
+        //Connection connection = establishConnection();
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, key);
+            ResultSet rs = statement.executeQuery();
+            list = parseResultSet(rs);
+        } catch (Exception e) {
+            throw new PersistException(e);
+        }
+
+        if ((list == null) || (list.isEmpty()))
+            return null;
+        if (list.size() > 1)
+            throw new PersistException("Received more than one record");
+
+        return list.iterator().next();
+    }
+
     public List<T> getAll() throws PersistException {
         Connection connection = establishConnection();
 
@@ -184,6 +205,36 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Integ
         }
         return persistInstance;
     }
+
+    public T persist(T object, Connection connection) throws PersistException {    //method to create a record about an object
+        if (object.getid() != null)
+            throw new PersistException("Object is already persist");
+        T persistInstance;
+
+        String sql = getCreateQuery();
+
+        //Connection connection = establishConnection();
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            prepareStatementForInsert(statement, object);
+            int count = statement.executeUpdate();
+            recordAddingCheck(count);
+        } catch (Exception e) {
+            throw new PersistException(e);
+        }
+
+        sql = getSelectQuery() + " WHERE id = last_insert_id();";
+        try (PreparedStatement statement = connection.prepareStatement(sql)) {
+            ResultSet rs = statement.executeQuery();
+            List<T> list = parseResultSet(rs);
+            if ((list == null) || (list.size() != 1))
+                throw new PersistException("Exception in findByPK new persist data");
+            persistInstance = list.iterator().next();
+        } catch (Exception e) {
+            throw new PersistException(e);
+        }
+        return persistInstance;
+    }
+
 
     @Override
     public void update(T object) throws PersistException {

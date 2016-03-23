@@ -10,6 +10,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 
 @Service("accountService")
@@ -27,6 +30,9 @@ public class AccountServiceImpl implements AccountService {
 
     public AccountServiceImpl() {
     }
+
+    @Autowired
+    public DataSource dataSource;
 
     public void setMySQLAccountDAO(MySQLAccountDAOImpl mySQLAccountDAO) {
         this.accountDAO = mySQLAccountDAO;
@@ -81,6 +87,34 @@ public class AccountServiceImpl implements AccountService {
         } catch (PersistException e) {
             logger.error("MySQL DB error", e);
             return null;
+        }
+    }
+
+
+
+    public Account insertAndGetAccountByID(Account account) {
+        Connection connection = null;
+        try {
+            connection = dataSource.getConnection();
+            logger.info("DB connection is established");
+        } catch (SQLException e) {
+            logger.warn("Cannot establish DB connection", e);
+        }
+        try {
+            Account addedAccount = accountDAO.persist(account, connection);
+            return accountDAO.getByPK(addedAccount.getid(), connection);
+        } catch (PersistException e) {
+            logger.error("MySQL DB error", e);
+            return null;
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                    logger.info("DB connection is closed");
+                } catch (SQLException e) {
+                    logger.warn("Cannot close connection", e);
+                }
+            }
         }
     }
 }
