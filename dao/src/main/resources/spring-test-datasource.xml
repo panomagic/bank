@@ -12,4 +12,5 @@
               <property name="password" value="970195" />
               <property name="defaultAutoCommit" value="false" />
        </bean>
+
 </beans>
