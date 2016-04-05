@@ -1,7 +1,7 @@
 package account.dao;
 
 import beans.Account;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,7 +34,7 @@ public class HSQLAccountDAOImpl extends JdbcDaoSupport implements HSQLAccountDAO
     @Override
     public Account getAccountByPK(final Integer id) {
         String sqlQuery = "SELECT * FROM accounts WHERE id=?";
-        return getJdbcTemplate().queryForObject(sqlQuery, new ParameterizedRowMapper<Account>() {
+        return getJdbcTemplate().queryForObject(sqlQuery, new RowMapper<Account>() {
             @Override
             public Account mapRow(ResultSet rs, int i) throws SQLException {
                 Account account = new Account();

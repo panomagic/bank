@@ -1,22 +1,35 @@
-package beans;
+package entity;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Client implements Identified<Integer> {
+@Entity
+@Table(name = "clients")
+public class Client {
 
     public Client() {
         //no-args constructor
     }
 
+    @Id
+    @GeneratedValue
+    @Column(name = "id")
     private Integer id;
-    private String fullName;
-    private Gender gender;
-    private Date dateOfBirth;
-    private Date dateOfReg;
 
-    //private Set clientsAccounts = new HashSet();    //temp.
+    @Column(name = "fullName")
+    private String fullName;
+
+    @Column(name = "gender")
+    //@Enumerated(EnumType.STRING)
+    private String gender;
+
+    @Column(name = "dateOfBirth")
+    private Date dateOfBirth;
+
+    @Column(name = "dateOfReg")
+    private Date dateOfReg;
 
 
     public Integer getid() {
@@ -35,11 +48,11 @@ public class Client implements Identified<Integer> {
         this.fullName = fullName;
     }
 
-    public Gender getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Gender gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
@@ -58,13 +71,4 @@ public class Client implements Identified<Integer> {
     public void setDateOfReg(Date dateOfReg) {
         this.dateOfReg = dateOfReg;
     }
-
-
-    /*public Set getClientsAccounts() {
-        return clientsAccounts;
-    }
-
-    public void setClientsAccounts(Set clientsAccounts) {
-        this.clientsAccounts = clientsAccounts;
-    }*/
 }

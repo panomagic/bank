@@ -23,6 +23,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.test.annotation.Commit;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -53,6 +54,7 @@ import static org.junit.Assert.*;
 //@Transactional(propagation= Propagation.REQUIRES_NEW)
 //@TestExecutionListeners({TransactionalTestExecutionListener.class})
 //@TestExecutionListeners({DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
+//@ActiveProfiles("test")
 public class AbstractJDBCDAOTest extends NamedParameterJdbcDaoSupport {
 
     /*@Resource
@@ -130,7 +132,7 @@ public class AbstractJDBCDAOTest extends NamedParameterJdbcDaoSupport {
         return keyHolder.getKey().intValue();
     }
 
-    @Test
+    //@Test
     //@Commit
     //@Rollback(true)
     //@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -234,7 +236,7 @@ public class AbstractJDBCDAOTest extends NamedParameterJdbcDaoSupport {
         assertEquals(account.getClientID(), addedAccount.getClientID());
     }
 
-    @Test
+    //@Test
     public void testUpdate() throws Exception {
         Account account = accountDAO.getByPK(10);
         account.setClientID(7);
@@ -250,7 +252,7 @@ public class AbstractJDBCDAOTest extends NamedParameterJdbcDaoSupport {
         }
     }
 
-    @Test
+    //@Test
     public void testDelete() throws Exception {
         Account account = accountDAO.getByPK(10);
         try {

@@ -3,8 +3,8 @@ package client.dao;
 import beans.Client;
 import beans.Gender;
 import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.simple.ParameterizedRowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -40,7 +40,7 @@ public class HSQLClientDAOImpl extends JdbcDaoSupport implements HSQLClientDAO {
     @Override
     public Client getClientByPK(Integer id) {
         String sqlQuery = "SELECT * FROM clients WHERE id=?";
-        return getJdbcTemplate().queryForObject(sqlQuery, new ParameterizedRowMapper<Client>() {
+        return getJdbcTemplate().queryForObject(sqlQuery, new RowMapper<Client>() {
             @Override
             public Client mapRow(ResultSet rs, int i) throws SQLException {
                 Client client = new Client();

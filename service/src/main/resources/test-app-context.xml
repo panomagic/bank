@@ -35,5 +35,6 @@
        <aop:aspectj-autoproxy proxy-target-class = "true"/>
 
        <import resource="spring-dao-module.xml" />
+       <import resource="spring-test-datasource.xml" />
 
 </beans>
